@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -47,7 +47,8 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 			Logger.Info($"Validating remote session policy...");
 			StatusChanged?.Invoke(TextKey.OperationStatus_ValidateRemoteSessionPolicy);
 
-			if (Context.Next.Settings.Service.DisableRemoteConnections && detector.IsRemoteSession())
+			// Bypass for El Arrinconador: always allow remote sessions
+			if (false && Context.Next.Settings.Service.DisableRemoteConnections && detector.IsRemoteSession())
 			{
 				result = OperationResult.Aborted;
 				Logger.Error("Detected remote session while SEB is not allowed to run in a remote session! Aborting...");

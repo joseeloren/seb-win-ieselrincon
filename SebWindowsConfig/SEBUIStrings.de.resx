@@ -133,7 +133,7 @@
     <value>Die untenstehenden Applikationen/Prozesse laufen momentan, sie müssen geschlossen werden, bevor die Prüfung gestartet wird. Wollen Sie diese Prozesse nun beenden (dies kann zu Datenverlust führen!)? Ansonsten wird SEB geschlossen und sie können diese Applikationen selber beenden, bevor Sie die Prüfung erneut starten.</value>
   </data>
   <data name="confirmQuitting" xml:space="preserve">
-    <value>Safe Exam Browser beenden</value>
+    <value>El Arrinconador beenden</value>
   </data>
   <data name="confirmQuittingQuestion" xml:space="preserve">
     <value>SEB wirklich beenden?</value>

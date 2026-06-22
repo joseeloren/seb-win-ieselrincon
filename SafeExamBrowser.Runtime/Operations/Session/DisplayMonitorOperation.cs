@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -48,6 +48,13 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 			StatusChanged?.Invoke(TextKey.OperationStatus_ValidateDisplayConfiguration);
 
 			var validation = displayMonitor.ValidateConfiguration(Context.Next.Settings.Display);
+			
+			// El Arrinconador Bypass: Allow 0 physical displays (common in VMs and RDP sessions)
+			if (validation.InternalDisplays == 0 && validation.ExternalDisplays == 0)
+			{
+				validation.IsAllowed = true;
+			}
+
 			var result = validation.IsAllowed ? OperationResult.Success : OperationResult.Failed;
 
 			if (validation.IsAllowed)

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -118,6 +118,11 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		public IPasswordDialog CreatePasswordDialog(TextKey message, TextKey title)
 		{
 			return windowFactory.CreatePasswordDialog(text.Get(message), text.Get(title));
+		}
+
+		public ITelemetryDialog CreateTelemetryDialog()
+		{
+			return windowFactory.CreateTelemetryDialog();
 		}
 
 		public ISystemControl CreatePowerSupplyControl(IPowerSupply powerSupply, Location location)

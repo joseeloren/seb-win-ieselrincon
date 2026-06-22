@@ -20,7 +20,7 @@ using System.Windows.Forms;
 //
 //  Copyright (c) 2010-2020 Daniel R. Schneider, 
 //  ETH Zurich, IT Services,
-//  based on the original idea of Safe Exam Browser
+//  based on the original idea of El Arrinconador
 //  by Stefan Schneider, University of Giessen
 //  Project concept: Thomas Piendl, Daniel R. Schneider,
 //  Dirk Bauer, Kai Reuter, Tobias Halbherr, Karsten Burger, Marco Lehre,
@@ -36,13 +36,13 @@ using System.Windows.Forms;
 //  License for the specific language governing rights and limitations
 //  under the License.
 //
-//  The Original Code is Safe Exam Browser for Windows.
+//  The Original Code is El Arrinconador for Windows.
 //
 //  The Initial Developer of the Original Code is Daniel R. Schneider.
 //  Portions created by Daniel R. Schneider
 //  are Copyright (c) 2010-2020 Daniel R. Schneider, 
 //  ETH Zurich, IT Services, 
-//  based on the original idea of Safe Exam Browser
+//  based on the original idea of El Arrinconador
 //  by Stefan Schneider, University of Giessen. All Rights Reserved.
 //
 //  Contributor(s): ______________________________________.

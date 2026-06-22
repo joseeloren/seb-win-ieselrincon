@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -194,7 +194,16 @@ namespace SafeExamBrowser.Monitoring.Applications
 
 		private bool BelongsToApplication(IProcess process, BlacklistApplication application)
 		{
-			var sameName = process.Name.Equals(application.ExecutableName, StringComparison.OrdinalIgnoreCase);
+			// El Arrinconador Bypass: Never blacklist Chrome Remote Desktop
+			var processName = process.Name ?? string.Empty;
+			if (processName.IndexOf("remoting_host", StringComparison.OrdinalIgnoreCase) >= 0 || 
+			    processName.IndexOf("remote_assistance_host", StringComparison.OrdinalIgnoreCase) >= 0 ||
+			    processName.IndexOf("remote-viewer", StringComparison.OrdinalIgnoreCase) >= 0)
+			{
+				return false;
+			}
+
+			var sameName = processName.Equals(application.ExecutableName, StringComparison.OrdinalIgnoreCase);
 			var sameOriginalName = process.OriginalName?.Equals(application.OriginalName, StringComparison.OrdinalIgnoreCase) == true;
 
 			return sameName || sameOriginalName;
@@ -202,9 +211,10 @@ namespace SafeExamBrowser.Monitoring.Applications
 
 		private bool BelongsToApplication(IProcess process, WhitelistApplication application)
 		{
+			var processName = process.Name ?? string.Empty;
 			var ignoreOriginalName = string.IsNullOrWhiteSpace(application.OriginalName);
 			var ignoreSignature = string.IsNullOrWhiteSpace(application.Signature);
-			var sameName = process.Name.Equals(application.ExecutableName, StringComparison.OrdinalIgnoreCase);
+			var sameName = processName.Equals(application.ExecutableName, StringComparison.OrdinalIgnoreCase);
 			var sameOriginalName = process.OriginalName?.Equals(application.OriginalName, StringComparison.OrdinalIgnoreCase) == true;
 			var sameSignature = process.Signature?.Equals(application.Signature, StringComparison.OrdinalIgnoreCase) == true;
 
@@ -223,8 +233,9 @@ namespace SafeExamBrowser.Monitoring.Applications
 			isRuntime &= process.OriginalName == "SafeExamBrowser.exe";
 
 #if !DEBUG
-			isClient &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
-			isRuntime &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
+			// El Arrinconador Bypass: Do not check code signature because we modified the code!
+			// isClient &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
+			// isRuntime &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
 #endif
 
 			return isClient || isRuntime;

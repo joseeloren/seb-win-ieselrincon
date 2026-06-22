@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -24,5 +24,10 @@ namespace SafeExamBrowser.Browser.Contracts
 		/// The currently loaded URL, or <c>default(string)</c> in case no navigation has happened yet.
 		/// </summary>
 		string Url { get; }
+
+		/// <summary>
+		/// Executes JavaScript in the browser window.
+		/// </summary>
+		void ExecuteJavaScript(string code, System.Action<bool, object> callback = null);
 	}
 }

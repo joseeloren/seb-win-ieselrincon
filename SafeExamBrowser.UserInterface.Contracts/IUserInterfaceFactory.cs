@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -103,6 +103,11 @@ namespace SafeExamBrowser.UserInterface.Contracts
 		/// Creates a password dialog with the given message and title.
 		/// </summary>
 		IPasswordDialog CreatePasswordDialog(TextKey message, TextKey title);
+
+		/// <summary>
+		/// Creates a telemetry dialog to request Student Name and Exam Code.
+		/// </summary>
+		ITelemetryDialog CreateTelemetryDialog();
 
 		/// <summary>
 		/// Creates a system control displaying the power supply status of the computer.

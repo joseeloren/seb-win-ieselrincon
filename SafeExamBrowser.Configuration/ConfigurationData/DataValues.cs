@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -136,10 +136,11 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "PCMonitorSrv.exe", OriginalName = "PCMonitorSrv.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "pcmontask.exe", OriginalName = "pcmontask.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "ptoneclk.exe", OriginalName = "ptoneclk.exe" });
-			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remote_assistance_host.exe" });
-			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remoting_native_messaging_host.exe" });
+			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remote_assistance_host.exe" });
+			// El Arrinconador: Allow Chrome Remote Desktop / Remoting hosts
+			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remoting_native_messaging_host.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RemotePCDesktop.exe", OriginalName = "RemotePCDesktop.exe" });
-			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remoting_host.exe", OriginalName = "remoting_host.exe" });
+			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remoting_host.exe", OriginalName = "remoting_host.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RPCService.exe", OriginalName = "RPCService.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RPCSuite.exe", OriginalName = "RPCSuite.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "rustdesk.exe", OriginalName = "rustdesk.exe" });
@@ -294,7 +295,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Service.DisableNetworkOptions = true;
 			settings.Service.DisablePasswordChange = true;
 			settings.Service.DisablePowerOptions = true;
-			settings.Service.DisableRemoteConnections = true;
+			settings.Service.DisableRemoteConnections = false;
 			settings.Service.DisableSignout = true;
 			settings.Service.DisableTaskManager = true;
 			settings.Service.DisableUserLock = true;

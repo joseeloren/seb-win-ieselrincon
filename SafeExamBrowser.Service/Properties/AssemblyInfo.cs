@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.Service")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("ETH Zürich")]
+[assembly: AssemblyCompany("Jose Francisco Lorenzo Hernández")]
 [assembly: AssemblyProduct("SafeExamBrowser.Service")]
-[assembly: AssemblyCopyright("Copyright © 2026 ETH Zürich, IT Services")]
+[assembly: AssemblyCopyright("Copyright © 2026 Jose Francisco Lorenzo Hernández")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

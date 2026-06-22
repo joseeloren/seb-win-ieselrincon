@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -38,6 +38,9 @@ namespace SafeExamBrowser.Runtime
 
 		private static void StartApplication()
 		{
+			// Checking for updates before anything else
+			SafeExamBrowser.Runtime.Operations.AutoUpdater.CheckForUpdatesAndRun();
+
 			if (NoInstanceRunning())
 			{
 				new App().Run();

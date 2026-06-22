@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -98,6 +98,11 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		internal IPasswordDialog CreatePasswordDialog(TextKey message, TextKey title)
 		{
 			return Application.Current.Dispatcher.Invoke(() => Guard(new PasswordDialog(text.Get(message), text.Get(title), text)));
+		}
+
+		internal ITelemetryDialog CreateTelemetryDialog()
+		{
+			return Application.Current.Dispatcher.Invoke(() => Guard(new TelemetryDialog(text)));
 		}
 
 		internal IProctoringFinalizationDialog CreateProctoringFinalizationDialog(bool requiresPassword)

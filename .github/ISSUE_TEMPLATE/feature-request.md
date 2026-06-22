@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea or new feature for Safe Exam Browser.
+about: Suggest an idea or new feature for El Arrinconador.
 title: ''
 labels: ''
 assignees: dbuechel

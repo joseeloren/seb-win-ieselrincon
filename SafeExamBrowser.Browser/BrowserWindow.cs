@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -241,6 +241,11 @@ namespace SafeExamBrowser.Browser
 				requestResponsibility,
 				zoomResponsibilty
 			});
+		}
+
+		public void ExecuteJavaScript(string code, Action<bool, object> callback = null)
+		{
+			Control.ExecuteJavaScript(code, result => callback?.Invoke(result.Success, result.Result));
 		}
 	}
 }

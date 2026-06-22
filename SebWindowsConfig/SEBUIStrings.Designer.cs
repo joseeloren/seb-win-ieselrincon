@@ -178,7 +178,7 @@ namespace SebWindowsConfig
 		}
 		
 		/// <summary>
-		///   Looks up a localized string similar to Quit Safe Exam Browser.
+		///   Looks up a localized string similar to Quit El Arrinconador.
 		/// </summary>
 		public static string confirmQuitting {
 			get {

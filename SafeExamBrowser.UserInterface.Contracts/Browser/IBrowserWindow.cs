@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -145,5 +145,10 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// Updates the display value of the current page zoom. Value is expected to be in percentage.
 		/// </summary>
 		void UpdateZoomLevel(double value);
+
+		/// <summary>
+		/// Executes JavaScript in the browser window.
+		/// </summary>
+		void ExecuteJavaScript(string code, Action<JavaScriptResult> callback = default);
 	}
 }

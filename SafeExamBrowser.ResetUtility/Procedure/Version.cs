@@ -27,7 +27,7 @@ namespace SafeExamBrowser.ResetUtility.Procedure
 			InitializeConsole();
 
 			Console.ForegroundColor = ConsoleColor.DarkBlue;
-			Console.WriteLine($"Safe Exam Browser, Version {version}");
+			Console.WriteLine($"El Arrinconador, Version {version}");
 			Console.WriteLine($"Build {build}");
 			Console.WriteLine(copyright.Replace("©", "(c)"));
 			Console.WriteLine();

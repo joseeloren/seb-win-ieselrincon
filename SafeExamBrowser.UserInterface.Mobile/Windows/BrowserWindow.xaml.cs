@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -632,6 +632,11 @@ if (typeof __SEB_focusElement === 'undefined') {
 			HomeButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_HomeButton));
 			MenuButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_MenuButton));
 			UrlTextBox.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_UrlTextBox));
+		}
+
+		public void ExecuteJavaScript(string code, Action<JavaScriptResult> callback = default)
+		{
+			browserControl.ExecuteJavaScript(code, callback);
 		}
 	}
 }

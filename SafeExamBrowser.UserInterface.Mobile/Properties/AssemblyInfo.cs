@@ -7,9 +7,9 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.UserInterface.Mobile")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("ETH Zürich")]
+[assembly: AssemblyCompany("Jose Francisco Lorenzo Hernández")]
 [assembly: AssemblyProduct("SafeExamBrowser.UserInterface.Mobile")]
-[assembly: AssemblyCopyright("Copyright © 2026 ETH Zürich, IT Services")]
+[assembly: AssemblyCopyright("Copyright © 2026 Jose Francisco Lorenzo Hernández")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

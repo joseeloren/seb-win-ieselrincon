@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a bug report to help us improve Safe Exam Browser.
+about: Create a bug report to help us improve El Arrinconador.
 title: ''
 labels: ''
 assignees: dbuechel

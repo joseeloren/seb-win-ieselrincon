@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -358,14 +358,10 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 
 		private bool AbortAfterClientConfiguration()
 		{
-			var message = TextKey.MessageBox_ClientConfigurationQuestion;
-			var title = TextKey.MessageBox_ClientConfigurationQuestionTitle;
-			var result = ShowMessageBox(message, title, MessageBoxAction.YesNo, MessageBoxIcon.Question);
-			var abort = result == MessageBoxResult.Yes;
-
-			Logger.Info($"The user chose to {(abort ? "abort" : "continue")} startup after successful client configuration.");
-
-			return abort;
+			// Se ha solicitado omitir este mensaje para no interrumpir el flujo.
+			// Asumimos "No" por defecto para que la configuración prosiga y SEB inicie el examen.
+			Logger.Info($"Bypassing the client configuration prompt automatically (defaulting to continue).");
+			return false;
 		}
 
 		private void ShowFailureMessage(LoadStatus status, Uri uri)

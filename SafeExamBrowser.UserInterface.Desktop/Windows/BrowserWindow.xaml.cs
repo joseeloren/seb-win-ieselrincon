@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -628,6 +628,11 @@ if (typeof __SEB_focusElement === 'undefined') {
 			FindPreviousButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_SearchPrevious));
 			FindNextButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_SearchNext));
 			FindbarCloseButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_CloseButton));
+		}
+
+		public void ExecuteJavaScript(string code, Action<JavaScriptResult> callback = default)
+		{
+			browserControl.ExecuteJavaScript(code, callback);
 		}
 	}
 }
