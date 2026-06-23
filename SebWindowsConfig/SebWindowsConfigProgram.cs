@@ -8,8 +8,8 @@ using System.Windows.Forms;
 //  SafeExamBrowser
 //
 //  Copyright (c) 2010-2020 Viktor Tomas, Dirk Bauer, Daniel R. Schneider, Pascal Wyss,
-//  ETH Zurich, IT Services,
-//  based on the original idea of El Arrinconador
+//  Dpto. Informática IES El Rincón, IT Services,
+//  based on the original idea of El Rincón Seguro
 //  by Stefan Schneider, University of Giessen
 //  Project concept: Thomas Piendl, Daniel R. Schneider,
 //  Dirk Bauer, Kai Reuter, Tobias Halbherr, Karsten Burger, Marco Lehre,
@@ -25,14 +25,14 @@ using System.Windows.Forms;
 //  License for the specific language governing rights and limitations
 //  under the License.
 //
-//  The Original Code is El Arrinconador for Windows.
+//  The Original Code is El Rincón Seguro for Windows.
 //
 //  The Initial Developers of the Original Code are Viktor Tomas, 
 //  Dirk Bauer, Daniel R. Schneider, Pascal Wyss.
 //  Portions created by Viktor Tomas, Dirk Bauer, Daniel R. Schneider, Pascal Wyss
 //  are Copyright (c) 2010-2020 Viktor Tomas, Dirk Bauer, Daniel R. Schneider, 
-//  Pascal Wyss, ETH Zurich, IT Services, 
-//  based on the original idea of El Arrinconador
+//  Pascal Wyss, Dpto. Informática IES El Rincón, IT Services, 
+//  based on the original idea of El Rincón Seguro
 //  by Stefan Schneider, University of Giessen. All Rights Reserved.
 //
 //  Contributor(s): ______________________________________.

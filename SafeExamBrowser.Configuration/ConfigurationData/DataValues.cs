@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -137,7 +137,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "pcmontask.exe", OriginalName = "pcmontask.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "ptoneclk.exe", OriginalName = "ptoneclk.exe" });
 			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remote_assistance_host.exe" });
-			// El Arrinconador: Allow Chrome Remote Desktop / Remoting hosts
+			// El Rincón Seguro: Allow Chrome Remote Desktop / Remoting hosts
 			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remote_assistance_host.exe", OriginalName = "remoting_native_messaging_host.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RemotePCDesktop.exe", OriginalName = "RemotePCDesktop.exe" });
 			// settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "remoting_host.exe", OriginalName = "remoting_host.exe" });

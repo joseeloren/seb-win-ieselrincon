@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -47,7 +47,7 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 			Logger.Info($"Validating remote session policy...");
 			StatusChanged?.Invoke(TextKey.OperationStatus_ValidateRemoteSessionPolicy);
 
-			// Bypass for El Arrinconador: always allow remote sessions
+			// Bypass for El Rincón Seguro: always allow remote sessions
 			if (false && Context.Next.Settings.Service.DisableRemoteConnections && detector.IsRemoteSession())
 			{
 				result = OperationResult.Aborted;

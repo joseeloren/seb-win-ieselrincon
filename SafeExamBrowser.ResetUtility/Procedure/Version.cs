@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -27,7 +27,7 @@ namespace SafeExamBrowser.ResetUtility.Procedure
 			InitializeConsole();
 
 			Console.ForegroundColor = ConsoleColor.DarkBlue;
-			Console.WriteLine($"El Arrinconador, Version {version}");
+			Console.WriteLine($"El Rincón Seguro, Version {version}");
 			Console.WriteLine($"Build {build}");
 			Console.WriteLine(copyright.Replace("©", "(c)"));
 			Console.WriteLine();

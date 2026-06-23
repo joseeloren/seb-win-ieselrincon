@@ -178,7 +178,7 @@ namespace SebWindowsConfig
 		}
 		
 		/// <summary>
-		///   Looks up a localized string similar to Quit El Arrinconador.
+		///   Looks up a localized string similar to Quit El Rincón Seguro.
 		/// </summary>
 		public static string confirmQuitting {
 			get {

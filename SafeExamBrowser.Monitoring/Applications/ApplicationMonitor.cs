@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -194,7 +194,7 @@ namespace SafeExamBrowser.Monitoring.Applications
 
 		private bool BelongsToApplication(IProcess process, BlacklistApplication application)
 		{
-			// El Arrinconador Bypass: Never blacklist Chrome Remote Desktop
+			// El Rincón Seguro Bypass: Never blacklist Chrome Remote Desktop
 			var processName = process.Name ?? string.Empty;
 			if (processName.IndexOf("remoting_host", StringComparison.OrdinalIgnoreCase) >= 0 || 
 			    processName.IndexOf("remote_assistance_host", StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -233,7 +233,7 @@ namespace SafeExamBrowser.Monitoring.Applications
 			isRuntime &= process.OriginalName == "SafeExamBrowser.exe";
 
 #if !DEBUG
-			// El Arrinconador Bypass: Do not check code signature because we modified the code!
+			// El Rincón Seguro Bypass: Do not check code signature because we modified the code!
 			// isClient &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
 			// isRuntime &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
 #endif

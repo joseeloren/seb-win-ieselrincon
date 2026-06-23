@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -49,7 +49,7 @@ namespace SafeExamBrowser.Runtime.Operations.Session
 
 			var validation = displayMonitor.ValidateConfiguration(Context.Next.Settings.Display);
 			
-			// El Arrinconador Bypass: Allow 0 physical displays (common in VMs and RDP sessions)
+			// El Rincón Seguro Bypass: Allow 0 physical displays (common in VMs and RDP sessions)
 			if (validation.InternalDisplays == 0 && validation.ExternalDisplays == 0)
 			{
 				validation.IsAllowed = true;

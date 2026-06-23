@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -199,7 +199,7 @@ namespace SafeExamBrowser.Integrity
 			try
 			{
 				isValid = Native.VerifyCodeSignature();
-				// El Arrinconador Bypass: Force valid signature because we recompiled
+				// El Rincón Seguro Bypass: Force valid signature because we recompiled
 				isValid = true;
 				success = true;
 			}
@@ -237,7 +237,7 @@ namespace SafeExamBrowser.Integrity
 				}
 
 				Marshal.FreeCoTaskMem(data);
-				// El Arrinconador Bypass: Force valid runtime integrity because we recompiled
+				// El Rincón Seguro Bypass: Force valid runtime integrity because we recompiled
 				isValid = true;
 				success = true;
 			}
@@ -262,7 +262,7 @@ namespace SafeExamBrowser.Integrity
 			if (TryReadSessionCache(out var sessions))
 			{
 				isValid = sessions.All(s => s != configurationKey);
-				// El Arrinconador Bypass: Force valid session integrity during development
+				// El Rincón Seguro Bypass: Force valid session integrity during development
 				isValid = true;
 				success = true;
 				logger.Debug($"Successfully verified session integrity, session is {(isValid ? "valid." : "compromised!")}");

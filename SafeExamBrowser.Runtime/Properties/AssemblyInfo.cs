@@ -6,11 +6,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("El Arrinconador")]
+[assembly: AssemblyTitle("El Rincón Seguro")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Jose Francisco Lorenzo Hernández")]
-[assembly: AssemblyProduct("El Arrinconador")]
-[assembly: AssemblyCopyright("Copyright © 2026 Jose Francisco Lorenzo Hernández")]
+[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
+[assembly: AssemblyProduct("El Rincón Seguro")]
+[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

@@ -1,13 +1,13 @@
-# El Arrinconador, Version 3.x
+# El Rincón Seguro, Version 3.x
 
-Refactored version of El Arrinconador for Windows with Chromium as integrated browser engine.
+Refactored version of El Rincón Seguro for Windows with Chromium as integrated browser engine.
 
 ## Requirements
 
 > [!NOTE]  
-> Starting with version 3.8.0, El Arrinconador for Windows requires a minimum operating system version of **Windows 10 version 1803**.
+> Starting with version 3.8.0, El Rincón Seguro for Windows requires a minimum operating system version of **Windows 10 version 1803**.
 
-El Arrinconador for Windows requires the prerequisites listed below in order to work correctly. These are automatically installed with the setup bundle and need only be manually installed when using the MSI packages.
+El Rincón Seguro for Windows requires the prerequisites listed below in order to work correctly. These are automatically installed with the setup bundle and need only be manually installed when using the MSI packages.
 
 * .NET Framework 4.8 Runtime: https://dotnet.microsoft.com/download/dotnet-framework/net48
 * Visual C++ 2015-2022 Redistributable: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
@@ -15,7 +15,7 @@ El Arrinconador for Windows requires the prerequisites listed below in order to 
 ## Project Status
 
 > [!WARNING]
-> **The builds linked below are for testing purposes only.** They may be unstable and should thus _never_ be used in a production environment! Always use the latest, official release version of SEB.
+> **The builds linked below are for testing purposes only.** They may be unstable and should thus _never_ be used in a production environment! Always use the latest, official release version of ERS.
 
 | Aspect            | Status                                                                                                                | Details                                                         |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |

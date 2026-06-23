@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2026 ETH Zürich, IT Services
+ * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,7 +24,7 @@ namespace SafeExamBrowser.Service
 
 			service = new ServiceInstaller();
 			service.Description = "Performs operations which require elevated privileges.";
-			service.DisplayName = "El Arrinconador Service";
+			service.DisplayName = "El Rincón Seguro Service";
 			service.ServiceName = nameof(SafeExamBrowser);
 			service.StartType = ServiceStartMode.Automatic;
 

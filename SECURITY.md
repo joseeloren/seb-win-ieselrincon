@@ -29,7 +29,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Version Information**
  - OS: [e.g. Windows 10 Professional, Version 1803]
- - SEB-Version [e.g. SEB 3.0.1]
+ - ERS-Version [e.g. ERS 3.0.1]
 
 **Additional Context**
 Add any other context about the vulnerability here.

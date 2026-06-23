@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("SafeExamBrowser.I18n.UnitTests")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Jose Francisco Lorenzo Hernández")]
+[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
 [assembly: AssemblyProduct("SafeExamBrowser.I18n.UnitTests")]
-[assembly: AssemblyCopyright("Copyright © 2026 Jose Francisco Lorenzo Hernández")]
+[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
 
 [assembly: ComVisible(false)]
 
