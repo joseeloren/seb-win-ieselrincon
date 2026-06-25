@@ -35,7 +35,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 					"\"studentName\":\"" + EscapeJson(currentStudentName) + "\"" +
 				"}";
 
-				var requestUrl = $"https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/exams/{System.Uri.EscapeDataString(currentExamCode)}/request-url";
+				var requestUrl = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/exams/{System.Uri.EscapeDataString(currentExamCode)}/request-url";
 
 				var request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(requestUrl);
 				request.Method = "POST";

@@ -88,13 +88,13 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		{
 			if (string.IsNullOrWhiteSpace(StudentName.Text) || string.IsNullOrWhiteSpace(ExamCode.Text))
 			{
-				MessageBox.Show(this, "Debe introducir tanto el Nombre como el Código del Examen.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(this, "Debe introducir tanto el correo como el Código del Examen.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
 			}
 
 			if (!StudentName.Text.Trim().EndsWith("@alumno.ieselrincon.es", System.StringComparison.OrdinalIgnoreCase))
 			{
-				MessageBox.Show(this, "El nombre de alumno debe ser un correo válido terminado en @alumno.ieselrincon.es", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(this, "El correo de alumno debe ser un correo válido terminado en @alumno.ieselrincon.es", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
 			}
 
@@ -105,7 +105,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 				using (var client = new System.Net.WebClient())
 				{
-					string url = $"https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/exams/{System.Uri.EscapeDataString(ExamCode.Text.Trim())}/validate?student={System.Uri.EscapeDataString(StudentName.Text.Trim())}";
+					string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/exams/{System.Uri.EscapeDataString(ExamCode.Text.Trim())}/validate?student={System.Uri.EscapeDataString(StudentName.Text.Trim())}";
 					client.DownloadString(url);
 				}
 			}

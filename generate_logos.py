@@ -1,7 +1,7 @@
 import os
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
-source_image_path = r"C:\Users\Jose\.gemini\antigravity-ide\brain\4de36729-dc6d-4056-b388-77f77b8dba72\el_arrinconador_logo_1782064281719.png"
+source_image_path = r"c:\Users\Jose\workspace\el-arrinconador-server\public\logo.png"
 base_dir = r"c:\Users\Jose\workspace\seb-win-ieselrincon"
 
 img = Image.open(source_image_path).convert("RGBA")
@@ -10,7 +10,25 @@ img = Image.open(source_image_path).convert("RGBA")
 # Create a 550x300 white or dark canvas and center the logo
 splash = Image.new("RGBA", (550, 300), (255, 255, 255, 255)) # White background
 logo_splash = img.resize((200, 200), Image.Resampling.LANCZOS)
-splash.paste(logo_splash, ((550-200)//2, (300-200)//2), logo_splash)
+# Move logo up slightly to leave room for text
+logo_y = (300 - 200) // 2 - 20
+splash.paste(logo_splash, ((550-200)//2, logo_y), logo_splash)
+
+# Draw text "El Rincón Seguro"
+draw = ImageDraw.Draw(splash)
+try:
+    font = ImageFont.truetype(r"C:\Windows\Fonts\segoeui.ttf", 36)
+except IOError:
+    font = ImageFont.load_default()
+
+text = "El Rincón Seguro"
+bbox = draw.textbbox((0, 0), text, font=font)
+text_w = bbox[2] - bbox[0]
+text_x = (550 - text_w) // 2
+text_y = logo_y + 200 + 10 # 10 pixels below logo
+
+draw.text((text_x, text_y), text, fill=(60, 60, 60, 255), font=font)
+
 for p in [r"SafeExamBrowser.UserInterface.Desktop\Images\SplashScreen.png", r"SafeExamBrowser.UserInterface.Mobile\Images\SplashScreen.png"]:
     splash.save(os.path.join(base_dir, p))
     print(f"Saved {p}")

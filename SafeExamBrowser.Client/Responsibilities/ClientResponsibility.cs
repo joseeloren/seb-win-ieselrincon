@@ -52,7 +52,7 @@ namespace SafeExamBrowser.Client.Responsibilities
 				{
 					using (var client = new System.Net.WebClient())
 					{
-						string url = "https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/verify-exit?password=" + Uri.EscapeDataString(password);
+						string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/verify-exit?password=" + Uri.EscapeDataString(password);
 						string json = client.DownloadString(url);
 						if (json.Contains("\"valid\":true"))
 						{
@@ -177,7 +177,7 @@ namespace SafeExamBrowser.Client.Responsibilities
 						{
 							using (var client = new System.Net.WebClient())
 							{
-								string url = "https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/verify-exit?password=" + Uri.EscapeDataString(result.Password);
+								string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/verify-exit?password=" + Uri.EscapeDataString(result.Password);
 								string json = client.DownloadString(url);
 								if (json.Contains("\"valid\":true"))
 								{

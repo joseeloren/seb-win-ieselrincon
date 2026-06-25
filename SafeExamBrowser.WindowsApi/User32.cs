@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -55,6 +55,9 @@ namespace SafeExamBrowser.WindowsApi
 
 		[DllImport("user32.dll", SetLastError = true)]
 		internal static extern IntPtr GetProcessWindowStation();
+
+		[DllImport("user32.dll", SetLastError = true)]
+		internal static extern IntPtr GetForegroundWindow();
 
 		[DllImport("user32.dll", SetLastError = true)]
 		internal static extern bool GetUserObjectInformation(IntPtr hObj, int nIndex, IntPtr pvInfo, int nLength, ref int lpnLengthNeeded);

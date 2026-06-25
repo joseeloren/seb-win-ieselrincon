@@ -177,6 +177,8 @@ namespace SafeExamBrowser.Client.Operations
 						"\"hostname\":\"" + EscapeJson(hostname) + "\"," +
 						"\"desktopName\":\"" + EscapeJson(desktopName) + "\"," +
 						"\"localIp\":\"" + EscapeJson(localIp) + "\"," +
+						"\"globalKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.GlobalKeystrokes + "," +
+						"\"sebKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.SebKeystrokes + "," +
 						"\"publicIp\":\"" + EscapeJson(publicIp) + "\"" +
 					"}";
 				}
@@ -188,6 +190,8 @@ namespace SafeExamBrowser.Client.Operations
 						"\"hostname\":\"" + EscapeJson(hostname) + "\"," +
 						"\"desktopName\":\"" + EscapeJson(desktopName) + "\"," +
 						"\"localIp\":\"" + EscapeJson(localIp) + "\"," +
+						"\"globalKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.GlobalKeystrokes + "," +
+						"\"sebKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.SebKeystrokes + "," +
 						"\"publicIp\":\"" + EscapeJson(publicIp) + "\"" +
 					"}";
 				}
@@ -197,7 +201,7 @@ namespace SafeExamBrowser.Client.Operations
 					client.Timeout = TimeSpan.FromSeconds(10);
 					var content = new StringContent(json, Encoding.UTF8, "application/json");
 					
-					var serverUrl = "https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/telemetry";
+					var serverUrl = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/telemetry";
 					logger.Debug($"Sending telemetry POST to {serverUrl} : {json}");
 					
 					var response = await client.PostAsync(serverUrl, content);

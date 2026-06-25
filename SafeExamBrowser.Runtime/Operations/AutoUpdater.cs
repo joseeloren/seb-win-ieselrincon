@@ -16,7 +16,7 @@ namespace SafeExamBrowser.Runtime.Operations
             {
                 using (var client = new WebClient())
                 {
-                    string url = "https://cf289235-5e01-4122-afbe.a2a2d422d2c6.sites.escritorios.ieselrincon.es/api/version";
+                    string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/version";
                     string json = client.DownloadString(url);
                     
                     var versionMatch = Regex.Match(json, @"""version""\s*:\s*""([^""]+)""");
@@ -32,18 +32,61 @@ namespace SafeExamBrowser.Runtime.Operations
                         // Si la versión de la API es diferente a la del cliente (ej. la de la API es más nueva o distinta)
                         if (apiVersion != currentVersion)
                         {
-                            MessageBox.Show($"Hay una actualización obligatoria ({apiVersion}). La versión actual es {currentVersion}. Descargando el nuevo instalador...", "Actualización Obligatoria", MessageBoxButton.OK, MessageBoxImage.Information);
-                            
-                            string tempPath = Path.Combine(Path.GetTempPath(), "ElArrinconadorUpdate.msi");
-                            client.DownloadFile(downloadUrl, tempPath);
-                            
-                            Process.Start(new ProcessStartInfo
+                            System.Windows.Window progressWindow = new System.Windows.Window
                             {
-                                FileName = "msiexec.exe",
-                                Arguments = $"/i \"{tempPath}\"",
-                                UseShellExecute = true
-                            });
+                                Title = "Actualizando El Rincón Seguro",
+                                Width = 450,
+                                Height = 150,
+                                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+                                ResizeMode = System.Windows.ResizeMode.NoResize,
+                                Topmost = true
+                            };
+
+                            System.Windows.Controls.StackPanel panel = new System.Windows.Controls.StackPanel { Margin = new System.Windows.Thickness(20) };
+                            System.Windows.Controls.TextBlock label = new System.Windows.Controls.TextBlock { Text = $"Descargando versión {apiVersion}...", Margin = new System.Windows.Thickness(0, 0, 0, 10) };
+                            System.Windows.Controls.ProgressBar progressBar = new System.Windows.Controls.ProgressBar { Height = 25, Minimum = 0, Maximum = 100 };
                             
+                            panel.Children.Add(label);
+                            panel.Children.Add(progressBar);
+                            progressWindow.Content = panel;
+
+                            string tempPath = Path.Combine(Path.GetTempPath(), "ElArrinconadorUpdate.msi");
+                            
+                            client.DownloadProgressChanged += (s, e) => 
+                            {
+                                progressWindow.Dispatcher.Invoke(() => 
+                                {
+                                    progressBar.Value = e.ProgressPercentage;
+                                    double receivedMB = e.BytesReceived / 1048576.0;
+                                    double totalMB = e.TotalBytesToReceive / 1048576.0;
+                                    label.Text = $"Descargando versión {apiVersion}... {receivedMB:F1} MB / {totalMB:F1} MB";
+                                });
+                            };
+
+                            client.DownloadFileCompleted += (s, e) => 
+                            {
+                                if (e.Error == null && !e.Cancelled)
+                                {
+                                    Process.Start(new ProcessStartInfo
+                                    {
+                                        FileName = "msiexec.exe",
+                                        Arguments = $"/i \"{tempPath}\"",
+                                        UseShellExecute = true
+                                    });
+                                }
+
+                                progressWindow.Dispatcher.Invoke(() => 
+                                {
+                                    progressWindow.Close();
+                                });
+                            };
+
+                            client.DownloadFileAsync(new Uri(downloadUrl), tempPath);
+                            
+                            // ShowDialog bloquea la ejecución hasta que la ventana se cierre
+                            progressWindow.ShowDialog();
+                            
+                            // Si el usuario cierra la ventana forzosamente antes de terminar la descarga, cerramos la app.
                             Environment.Exit(0);
                         }
                     }

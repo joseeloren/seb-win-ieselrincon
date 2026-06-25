@@ -1,4 +1,4 @@
-﻿<Window x:Class="SafeExamBrowser.UserInterface.Desktop.Windows.RuntimeWindow" x:ClassModifier="internal"
+<Window x:Class="SafeExamBrowser.UserInterface.Desktop.Windows.RuntimeWindow" x:ClassModifier="internal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,7 +27,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Grid.ColumnSpan="2" Margin="-25,0,0,0" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" />
+                    <Image Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Uniform" Margin="0" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" />
                     <TextBlock x:Name="InfoTextBlock" Grid.Column="1" FontSize="10" Foreground="DimGray" Margin="10,70,250,10" TextWrapping="Wrap" />
                 </Grid>
                 <ProgressBar x:Name="ProgressBar" Grid.Row="1" Background="WhiteSmoke" BorderThickness="0" Foreground="DodgerBlue"
