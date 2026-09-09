@@ -80,42 +80,17 @@ namespace SafeExamBrowser.Client.Operations
 				return OperationResult.Success;
 			}
 
-			var dialog = uiFactory.CreateTelemetryDialog();
-			
-			// TelemetryDialog might not be supported on all platforms (e.g. Mobile fallback returns null)
-			if (dialog == null)
+			logger.Warn("No token found in StartUrl. Redirecting to El Arrinconador to force authentication.");
+			if (Context.Settings?.Browser != null)
 			{
-				logger.Warn("Telemetry dialog is not supported on this platform.");
-				return OperationResult.Success;
-			}
-
-			var result = dialog.Show();
-
-			if (result != null && result.Success)
-			{
-				CurrentExamCode = result.ExamCode;
-				CurrentStudentName = result.StudentName;
-				Environment.SetEnvironmentVariable("SEB_CURRENT_EXAM_CODE", result.ExamCode);
-				Environment.SetEnvironmentVariable("SEB_CURRENT_STUDENT_NAME", result.StudentName);
-				logger.Info($"Student '{result.StudentName}' connected to exam '{result.ExamCode}'. Starting continuous telemetry ping...");
-				
-				if (pingTask == null)
+				Context.Settings.Browser.StartUrl = SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl + "/alumno";
+				if (Context.Settings.Security != null)
 				{
-					pingTask = Task.Run(async () => 
-					{
-						while (true)
-						{
-							await SendTelemetryAsync(result.ExamCode, result.StudentName, false);
-							await Task.Delay(TimeSpan.FromSeconds(5));
-						}
-					});
+					Context.Settings.Security.AllowReconfiguration = true;
+					Context.Settings.Security.ReconfigurationUrl = "*";
 				}
-				
-				return OperationResult.Success;
 			}
-
-			logger.Warn("Telemetry dialog cancelled by user.");
-			return OperationResult.Aborted;
+			return OperationResult.Success;
 		}
 
 		public override OperationResult Revert()

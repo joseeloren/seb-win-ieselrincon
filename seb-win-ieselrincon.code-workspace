@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../seb-firefox-extension"
 		}
 	],
 	"settings": {}

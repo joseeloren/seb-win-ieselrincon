@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Border BorderBrush="DodgerBlue" BorderThickness="1">
+        <Border BorderBrush="#1B3A5C" BorderThickness="1">
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
@@ -24,18 +24,18 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Uniform" Margin="0" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" />
-                    <TextBlock x:Name="InfoTextBlock" Grid.Column="1" FontSize="10" Foreground="DimGray" Margin="10,70,250,10" TextWrapping="Wrap" />
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Margin="5" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" />
+                    <TextBlock x:Name="InfoTextBlock" Grid.Column="1" FontSize="10" Foreground="DimGray" Margin="10,10,10,10" VerticalAlignment="Center" TextWrapping="Wrap" />
                 </Grid>
-                <ProgressBar x:Name="ProgressBar" Grid.Row="1" Background="WhiteSmoke" BorderThickness="0" Foreground="DodgerBlue"
+                <ProgressBar x:Name="ProgressBar" Grid.Row="1" Background="WhiteSmoke" BorderThickness="0" Foreground="#1B3A5C"
                              IsIndeterminate="{Binding IsIndeterminate}" Maximum="{Binding MaxProgress}" Value="{Binding CurrentProgress}"
                              Visibility="{Binding ProgressBarVisibility}" />
                 <TextBlock x:Name="StatusTextBlock" Grid.Row="1" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"
                            Text="{Binding Status}" VerticalAlignment="Center" />
-                <Border Grid.Row="2" BorderBrush="DodgerBlue" BorderThickness="0,0.5,0,0">
+                <Border Grid.Row="2" BorderBrush="#1B3A5C" BorderThickness="0,0.5,0,0">
                     <ScrollViewer x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0"
                                   Template="{StaticResource SmallBarScrollViewer}" Visibility="Collapsed">
                         <TextBlock x:Name="LogTextBlock" Background="Transparent" FontFamily="Consolas" FontSize="10" />
@@ -45,3 +45,4 @@
         </Border>
     </Grid>
 </Window>
+

@@ -92,9 +92,12 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 				return;
 			}
 
-			if (!StudentName.Text.Trim().EndsWith("@alumno.ieselrincon.es", System.StringComparison.OrdinalIgnoreCase))
+			string email = StudentName.Text.Trim();
+			if (!email.EndsWith("@alumno.ieselrincon.es", System.StringComparison.OrdinalIgnoreCase) &&
+			    !email.EndsWith("@alumnos.ieselrincon.es", System.StringComparison.OrdinalIgnoreCase) &&
+			    !email.EndsWith("@alu.ulpgc.es", System.StringComparison.OrdinalIgnoreCase))
 			{
-				MessageBox.Show(this, "El correo de alumno debe ser un correo válido terminado en @alumno.ieselrincon.es", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(this, "El correo de alumno debe ser un correo válido terminado en @alumnos.ieselrincon.es o @alu.ulpgc.es", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
 			}
 

@@ -5,24 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop"
         mc:Ignorable="d"
-        Title="SplashScreen" Background="White" Height="200" Width="350" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Title="SplashScreen" Background="White" Height="200" Width="400" WindowStyle="None" WindowStartupLocation="CenterScreen"
         Cursor="Wait" Icon="../Images/SafeExamBrowser.ico" ResizeMode="NoResize" Topmost="True">
-    <Border BorderBrush="DodgerBlue" BorderThickness="1">
+    <Border BorderBrush="#1B3A5C" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="10">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="155" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Uniform" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" />
-                <TextBlock x:Name="InfoTextBlock" Grid.Column="1" Foreground="Gray" Margin="10,75,10,10" TextWrapping="Wrap" />
+                <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SplashScreen.png" Margin="5" />
+                <TextBlock x:Name="InfoTextBlock" Grid.Column="1" Foreground="Gray" Margin="10,10,10,10" VerticalAlignment="Center" TextWrapping="Wrap" />
             </Grid>
-            <ProgressBar x:Name="ProgressBar" Grid.Row="1" Minimum="0" Maximum="{Binding Path=MaxProgress}" Value="{Binding Path=CurrentProgress}" IsIndeterminate="{Binding Path=IsIndeterminate}" BorderThickness="0" />
+            <ProgressBar x:Name="ProgressBar" Grid.Row="1" Minimum="0" Maximum="{Binding Path=MaxProgress}" Value="{Binding Path=CurrentProgress}" IsIndeterminate="{Binding Path=IsIndeterminate}" BorderThickness="0" Foreground="#1B3A5C" />
             <TextBlock x:Name="StatusTextBlock" Grid.Row="1" Text="{Binding Path=Status}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
     </Border>
 </Window>
+

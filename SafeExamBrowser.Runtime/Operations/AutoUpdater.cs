@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Reflection;
+using System.Threading;
 
 namespace SafeExamBrowser.Runtime.Operations
 {
@@ -24,14 +25,20 @@ namespace SafeExamBrowser.Runtime.Operations
                     
                     if (versionMatch.Success && downloadUrlMatch.Success)
                     {
-                        string apiVersion = versionMatch.Groups[1].Value;
+                        string apiVersion = versionMatch.Groups[1].Value.Trim();
                         string downloadUrl = downloadUrlMatch.Groups[1].Value;
                         
                         string currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                         
-                        // Si la versión de la API es diferente a la del cliente (ej. la de la API es más nueva o distinta)
-                        if (apiVersion != currentVersion)
+                        // Log para depuración
+                        string logPath = Path.Combine(Path.GetTempPath(), "ElArrinconador_update.log");
+                        File.AppendAllText(logPath, $"[{DateTime.Now}] API version: '{apiVersion}' | Current version: '{currentVersion}'\n");
+                        
+                        // Solo actualizamos si la versión de la API es estrictamente mayor
+                        if (Version.TryParse(apiVersion, out Version apiVer) && Version.TryParse(currentVersion, out Version currentVer) && apiVer > currentVer)
                         {
+                            File.AppendAllText(logPath, $"[{DateTime.Now}] Update needed: {apiVer} > {currentVer}\n");
+
                             System.Windows.Window progressWindow = new System.Windows.Window
                             {
                                 Title = "Actualizando El Rincón Seguro",
@@ -51,6 +58,7 @@ namespace SafeExamBrowser.Runtime.Operations
                             progressWindow.Content = panel;
 
                             string tempPath = Path.Combine(Path.GetTempPath(), "ElArrinconadorUpdate.msi");
+                            bool downloadSucceeded = false;
                             
                             client.DownloadProgressChanged += (s, e) => 
                             {
@@ -67,12 +75,11 @@ namespace SafeExamBrowser.Runtime.Operations
                             {
                                 if (e.Error == null && !e.Cancelled)
                                 {
-                                    Process.Start(new ProcessStartInfo
-                                    {
-                                        FileName = "msiexec.exe",
-                                        Arguments = $"/i \"{tempPath}\"",
-                                        UseShellExecute = true
-                                    });
+                                    downloadSucceeded = true;
+                                }
+                                else
+                                {
+                                    File.AppendAllText(logPath, $"[{DateTime.Now}] Download error: {e.Error?.Message}\n");
                                 }
 
                                 progressWindow.Dispatcher.Invoke(() => 
@@ -86,14 +93,38 @@ namespace SafeExamBrowser.Runtime.Operations
                             // ShowDialog bloquea la ejecución hasta que la ventana se cierre
                             progressWindow.ShowDialog();
                             
-                            // Si el usuario cierra la ventana forzosamente antes de terminar la descarga, cerramos la app.
+                            // Lanzar el instalador DESPUÉS de que ShowDialog termine
+                            if (downloadSucceeded && File.Exists(tempPath))
+                            {
+                                File.AppendAllText(logPath, $"[{DateTime.Now}] Launching installer: {tempPath}\n");
+                                Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = "msiexec.exe",
+                                    Arguments = $"/i \"{tempPath}\"",
+                                    UseShellExecute = true
+                                });
+                                // Dar tiempo a que msiexec arranque antes de salir
+                                Thread.Sleep(2000);
+                            }
+
                             Environment.Exit(0);
+                        }
+                        else
+                        {
+                            File.AppendAllText(logPath, $"[{DateTime.Now}] No update needed.\n");
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                try
+                {
+                    string logPath = Path.Combine(Path.GetTempPath(), "ElArrinconador_update.log");
+                    File.AppendAllText(logPath, $"[{DateTime.Now}] Exception: {ex}\n");
+                }
+                catch { }
+
                 // Si no hay red, bloqueamos por seguridad según requerimiento
                 MessageBox.Show("No se pudo comprobar la versión de El Rincón Seguro. Compruebe su conexión a internet.", "Error de conexión", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(1);

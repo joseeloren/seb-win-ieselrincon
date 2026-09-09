@@ -18,12 +18,14 @@
             <RowDefinition Height="1.2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Image Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Uniform" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Mobile;component/Images/SplashScreen.png" Margin="0,5,0,0" />
-        <TextBlock x:Name="VersionInfo" Grid.Row="0" Grid.Column="1" Foreground="DimGray" Margin="35,95,100,10" TextWrapping="Wrap" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Mobile;component/Images/SplashScreen.png" Margin="10,5,5,5" />
+            <TextBlock x:Name="VersionInfo" Grid.Column="1" Foreground="DimGray" Margin="10,10,10,10" VerticalAlignment="Center" TextWrapping="Wrap" />
+        </Grid>
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Template="{StaticResource SmallBarScrollViewer}" VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="MainText" Margin="10" TextWrapping="Wrap">
                 <LineBreak />

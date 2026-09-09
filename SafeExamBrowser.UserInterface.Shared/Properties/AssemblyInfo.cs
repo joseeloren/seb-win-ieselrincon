@@ -1,4 +1,4 @@
-ï»¿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -7,9 +7,9 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.UserInterface.Shared")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
 [assembly: AssemblyProduct("SafeExamBrowser.UserInterface.Shared")]
-[assembly: AssemblyCopyright("Copyright Â© 2026 Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
