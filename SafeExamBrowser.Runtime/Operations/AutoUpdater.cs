@@ -5,109 +5,12 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Reflection;
-using System.Threading;
-using Microsoft.Win32;
 
 namespace SafeExamBrowser.Runtime.Operations
 {
     public static class AutoUpdater
     {
-        // UpgradeCode fijo del instalador WiX (Product.wxs)
-        private const string UpgradeCode = "{97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB}";
         private const string NoRestartArguments = "/norestart REBOOT=ReallySuppress";
-
-        /// <summary>
-        /// Busca el ProductCode instalado actualmente usando el UpgradeCode en el registro de Windows.
-        /// Devuelve null si no se encuentra ninguna instalación.
-        /// </summary>
-        private static string FindInstalledProductCode()
-        {
-            try
-            {
-                // La clave de upgrades está en HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UpgradeCodes
-                // con el UpgradeCode transformado (invertido por bloques)
-                string transformedUpgrade = TransformGuid(UpgradeCode);
-                string upgradeKeyPath = $@"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UpgradeCodes\{transformedUpgrade}";
-
-                using (var key = Registry.LocalMachine.OpenSubKey(upgradeKeyPath))
-                {
-                    if (key != null)
-                    {
-                        foreach (var valueName in key.GetValueNames())
-                        {
-                            // Cada valor es un ProductCode transformado — lo revertimos
-                            string productCode = ReverseTransformGuid(valueName);
-                            if (!string.IsNullOrEmpty(productCode))
-                            {
-                                return productCode;
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-            return null;
-        }
-
-        /// <summary>
-        /// Transforma un GUID al formato comprimido que usa Windows Installer en el registro.
-        /// </summary>
-        private static string TransformGuid(string guid)
-        {
-            guid = guid.Trim('{', '}').Replace("-", "").ToUpper();
-            if (guid.Length != 32) return guid;
-
-            return Reverse(guid.Substring(0, 8))
-                 + Reverse(guid.Substring(8, 4))
-                 + Reverse(guid.Substring(12, 4))
-                 + Reverse(guid.Substring(16, 2)) + Reverse(guid.Substring(18, 2))
-                 + Reverse(guid.Substring(20, 2)) + Reverse(guid.Substring(22, 2))
-                 + Reverse(guid.Substring(24, 2)) + Reverse(guid.Substring(26, 2))
-                 + Reverse(guid.Substring(28, 2)) + Reverse(guid.Substring(30, 2));
-        }
-
-        private static string ReverseTransformGuid(string compressed)
-        {
-            try
-            {
-                if (compressed.Length != 32) return null;
-                string p1 = Reverse(compressed.Substring(0, 8));
-                string p2 = Reverse(compressed.Substring(8, 4));
-                string p3 = Reverse(compressed.Substring(12, 4));
-                string p4a = Reverse(compressed.Substring(16, 2)) + Reverse(compressed.Substring(18, 2));
-                string p4b = Reverse(compressed.Substring(20, 2)) + Reverse(compressed.Substring(22, 2))
-                           + Reverse(compressed.Substring(24, 2)) + Reverse(compressed.Substring(26, 2))
-                           + Reverse(compressed.Substring(28, 2)) + Reverse(compressed.Substring(30, 2));
-                return $"{{{p1}-{p2}-{p3}-{p4a}-{p4b}}}";
-            }
-            catch { return null; }
-        }
-
-        private static string Reverse(string s)
-        {
-            var arr = s.ToCharArray();
-            Array.Reverse(arr);
-            return new string(arr);
-        }
-
-        /// <summary>
-        /// Lanza msiexec con los argumentos dados, espera hasta 5 minutos y devuelve el código de salida.
-        /// </summary>
-        private static int RunMsiexec(string arguments, string logPath)
-        {
-            arguments = $"{arguments} {NoRestartArguments}";
-            File.AppendAllText(logPath, $"[{DateTime.Now}] Running: msiexec {arguments}\n");
-            var proc = Process.Start(new ProcessStartInfo
-            {
-                FileName = "msiexec.exe",
-                Arguments = arguments,
-                UseShellExecute = true
-            });
-            proc.WaitForExit(300000); // máx 5 min
-            int exitCode = proc.HasExited ? proc.ExitCode : -1;
-            File.AppendAllText(logPath, $"[{DateTime.Now}] msiexec exit code: {exitCode}\n");
-            return exitCode;
-        }
 
         public static void CheckForUpdatesAndRun()
         {
@@ -183,41 +86,16 @@ namespace SafeExamBrowser.Runtime.Operations
 
                             if (downloadSucceeded && File.Exists(tempPath))
                             {
-                                bool installed = false;
-
-                                // --- Paso 1: REPARAR si hay una instalación previa ---
-                                string installedProductCode = FindInstalledProductCode();
-
-                                if (!string.IsNullOrEmpty(installedProductCode))
+                                // Una versión nueva tiene otro ProductCode: se instala con /i.
+                                // MajorUpgrade del MSI sustituye la versión anterior automáticamente.
+                                File.AppendAllText(logPath, $"[{DateTime.Now}] Launching upgrade installer: {tempPath}\n");
+                                Process.Start(new ProcessStartInfo
                                 {
-                                    File.AppendAllText(logPath, $"[{DateTime.Now}] Found installed product: {installedProductCode}. Attempting repair...\n");
-                                    // /fecums: reinstala ficheros faltantes/corruptos, shortcuts y entradas de registro
-                                    int repairCode = RunMsiexec($"/fecums \"{tempPath}\"", logPath);
-                                    // 3010 indica éxito con reinicio pendiente; no reinstalar ni pedir reiniciar.
-                                    installed = (repairCode == 0 || repairCode == 3010);
-
-                                    if (installed)
-                                        File.AppendAllText(logPath, $"[{DateTime.Now}] Repair succeeded.\n");
-                                    else
-                                        File.AppendAllText(logPath, $"[{DateTime.Now}] Repair failed (exit {repairCode}). Falling back to full reinstall...\n");
-                                }
-                                else
-                                {
-                                    File.AppendAllText(logPath, $"[{DateTime.Now}] No existing installation found. Fresh install.\n");
-                                }
-
-                                // --- Paso 2: REINSTALAR si la reparación falló o no había instalación ---
-                                if (!installed)
-                                {
-                                    File.AppendAllText(logPath, $"[{DateTime.Now}] Launching full installer: {tempPath}\n");
-                                    Process.Start(new ProcessStartInfo
-                                    {
-                                        FileName = "msiexec.exe",
-                                        Arguments = $"/i \"{tempPath}\" {NoRestartArguments}",
-                                        UseShellExecute = true
-                                    });
-                                    Thread.Sleep(2000);
-                                }
+                                    FileName = "msiexec.exe",
+                                    Arguments = $"/i \"{tempPath}\" {NoRestartArguments}",
+                                    UseShellExecute = true
+                                });
+                                // Salir inmediatamente para liberar los archivos que se van a actualizar.
                             }
 
                             Environment.Exit(0);

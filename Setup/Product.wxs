@@ -5,6 +5,8 @@
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
         <!-- No solicitar ni ejecutar reinicios, también al abrir el MSI manualmente. -->
         <Property Id="REBOOT" Value="ReallySuppress" />
+        <!-- Reponer también DLL antiguas con numeración 1.0.0.0 al migrar a 0.0.x. -->
+        <Property Id="REINSTALLMODE" Value="amus" />
         <MediaTemplate EmbedCab="yes" />
         <!-- UI personalizada para saltar los Términos de Uso -->
         <UI Id="WixUI_MyMinimal">
