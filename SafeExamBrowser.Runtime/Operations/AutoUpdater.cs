@@ -5,12 +5,55 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Reflection;
+using System.Text;
 
 namespace SafeExamBrowser.Runtime.Operations
 {
     public static class AutoUpdater
     {
         private const string NoRestartArguments = "/norestart REBOOT=ReallySuppress";
+
+        private static string PowerShellLiteral(string value) => "'" + value.Replace("'", "''") + "'";
+
+        private static void DeleteDownload(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.SetAttributes(path, FileAttributes.Normal);
+                File.Delete(path);
+            }
+        }
+
+        private static string BuildInstallerScript(string installerPath, string logPath)
+        {
+            // A separate process survives the runtime exiting and waits for Windows Installer.
+            // Literal paths and an encoded command keep spaces/apostrophes out of shell syntax.
+            return "$ErrorActionPreference = 'Stop'; $msi = " + PowerShellLiteral(installerPath) +
+                "; $log = " + PowerShellLiteral(logPath) + "; try { " +
+                "Wait-Process -Id " + Process.GetCurrentProcess().Id + " -ErrorAction SilentlyContinue; " +
+                "$process = Start-Process -FilePath ($env:SystemRoot + '\\System32\\msiexec.exe') " +
+                "-ArgumentList ('/i \"' + $msi + '\" " + NoRestartArguments + "') -Wait -PassThru; " +
+                "Add-Content -LiteralPath $log -Value ('Installer exit code: ' + $process.ExitCode) " +
+                "} catch { Add-Content -LiteralPath $log -Value $_.Exception.Message } finally { " +
+                "for ($attempt = 0; $attempt -lt 60; $attempt++) { try { " +
+                "if (Test-Path -LiteralPath $msi) { Remove-Item -LiteralPath $msi -Force }; break " +
+                "} catch { if ($attempt -eq 59) { Add-Content -LiteralPath $log -Value ('Cleanup failed: ' + $_.Exception.Message) }; Start-Sleep -Seconds 2 } }; " +
+                "try { [System.IO.Directory]::Delete([System.IO.Path]::GetDirectoryName($msi)) } catch {} }";
+
+        }
+
+        private static void LaunchInstallerAndCleanup(string installerPath, string logPath)
+        {
+            string script = BuildInstallerScript(installerPath, logPath);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
+                Arguments = "-NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand " + Convert.ToBase64String(Encoding.Unicode.GetBytes(script)),
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
+        }
 
         public static void CheckForUpdatesAndRun()
         {
@@ -57,8 +100,22 @@ namespace SafeExamBrowser.Runtime.Operations
                             panel.Children.Add(progressBar);
                             progressWindow.Content = panel;
 
-                            string tempPath = Path.Combine(Path.GetTempPath(), "ElArrinconadorUpdate.msi");
+                            string downloadDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                "ElRinconSeguro", "Updates", Guid.NewGuid().ToString("N"));
+                            Directory.CreateDirectory(downloadDirectory);
+                            File.SetAttributes(Path.GetDirectoryName(downloadDirectory), FileAttributes.Directory | FileAttributes.Hidden);
+                            File.SetAttributes(downloadDirectory, FileAttributes.Directory | FileAttributes.Hidden);
+                            string tempPath = Path.Combine(downloadDirectory, "update.msi");
                             bool downloadSucceeded = false;
+                            bool downloadFinished = false;
+                            progressWindow.Closing += (s, e) =>
+                            {
+                                if (!downloadFinished && client.IsBusy)
+                                {
+                                    e.Cancel = true;
+                                    client.CancelAsync();
+                                }
+                            };
 
                             client.DownloadProgressChanged += (s, e) =>
                             {
@@ -73,6 +130,7 @@ namespace SafeExamBrowser.Runtime.Operations
 
                             client.DownloadFileCompleted += (s, e) =>
                             {
+                                downloadFinished = true;
                                 if (e.Error == null && !e.Cancelled)
                                     downloadSucceeded = true;
                                 else
@@ -81,21 +139,29 @@ namespace SafeExamBrowser.Runtime.Operations
                                 progressWindow.Dispatcher.Invoke(() => progressWindow.Close());
                             };
 
-                            client.DownloadFileAsync(new Uri(downloadUrl), tempPath);
-                            progressWindow.ShowDialog();
-
-                            if (downloadSucceeded && File.Exists(tempPath))
+                            bool cleanupHandedOff = false;
+                            try
                             {
-                                // Una versión nueva tiene otro ProductCode: se instala con /i.
-                                // MajorUpgrade del MSI sustituye la versión anterior automáticamente.
-                                File.AppendAllText(logPath, $"[{DateTime.Now}] Launching upgrade installer: {tempPath}\n");
-                                Process.Start(new ProcessStartInfo
+                                client.DownloadFileAsync(new Uri(downloadUrl), tempPath);
+                                progressWindow.ShowDialog();
+
+                                if (downloadSucceeded && File.Exists(tempPath))
                                 {
-                                    FileName = "msiexec.exe",
-                                    Arguments = $"/i \"{tempPath}\" {NoRestartArguments}",
-                                    UseShellExecute = true
-                                });
-                                // Salir inmediatamente para liberar los archivos que se van a actualizar.
+                                    File.SetAttributes(tempPath, FileAttributes.Hidden);
+                                    // MajorUpgrade del MSI sustituye la versión anterior automáticamente.
+                                    File.AppendAllText(logPath, $"[{DateTime.Now}] Launching upgrade installer: {tempPath}\n");
+                                    LaunchInstallerAndCleanup(tempPath, logPath);
+                                    cleanupHandedOff = true;
+                                }
+                            }
+                            finally
+                            {
+                                if (!cleanupHandedOff)
+                                {
+                                    client.Dispose();
+                                    DeleteDownload(tempPath);
+                                    Directory.Delete(downloadDirectory);
+                                }
                             }
 
                             Environment.Exit(0);
