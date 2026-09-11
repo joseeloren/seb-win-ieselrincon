@@ -1,4 +1,4 @@
-using System.Reflection;
+ï»¿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.Core")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
+[assembly: AssemblyCompany("Dpto. InformÃ¡tica IES El RincÃ³n")]
 [assembly: AssemblyProduct("SafeExamBrowser.Core")]
-[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
+[assembly: AssemblyCopyright("Copyright Â© 2026 Dpto. InformÃ¡tica IES El RincÃ³n")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.65")]
-[assembly: AssemblyFileVersion("0.0.65")]
-[assembly: AssemblyInformationalVersion("0.0.65")]
+// [assembly: AssemblyVersion("0.0.70")]
+[assembly: AssemblyVersion("0.0.70")]
+[assembly: AssemblyFileVersion("0.0.70")]
+[assembly: AssemblyInformationalVersion("0.0.70")]

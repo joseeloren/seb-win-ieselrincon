@@ -680,8 +680,8 @@ namespace SebWindowsConfig
 			SEBSettings.strArrayDefault[SEBSettings.ValMainBrowserWindowHeight] = "100%";
 
 			// Default settings for group "Browser"
-			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByLinkPolicy, 2);
-			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByScriptPolicy, 2);
+			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByLinkPolicy, 1);
+			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByScriptPolicy, 1);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByLinkBlockForeign, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByScriptBlockForeign, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyNewBrowserWindowByLinkWidth, "1000");

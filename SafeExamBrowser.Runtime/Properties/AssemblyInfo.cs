@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -6,11 +6,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("El Rincón Seguro")]
+[assembly: AssemblyTitle("El RincÃ³n Seguro")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
-[assembly: AssemblyProduct("El Rincón Seguro")]
-[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
+[assembly: AssemblyCompany("Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyProduct("El RincÃ³n Seguro")]
+[assembly: AssemblyCopyright("Copyright Â© 2026 Dpto. InformÃ¡tica IES El RincÃ³n")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -50,7 +50,7 @@ using System.Windows;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.65")]
-[assembly: AssemblyFileVersion("0.0.65")]
-[assembly: AssemblyInformationalVersion("0.0.65")]
+// [assembly: AssemblyVersion("0.0.70")]
+[assembly: AssemblyVersion("0.0.70")]
+[assembly: AssemblyFileVersion("0.0.70")]
+[assembly: AssemblyInformationalVersion("0.0.70")]
