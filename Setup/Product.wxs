@@ -3,6 +3,8 @@
     <Product Name="El Rincón Seguro !(bind.fileVersion.MainExecutable) ($(var.Platform))" Manufacturer="Dpto. Informática IES El Rincón" Language="1034" Codepage="1252"
              Id="*" Version="!(bind.fileVersion.MainExecutable)" UpgradeCode="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+        <!-- No solicitar ni ejecutar reinicios, también al abrir el MSI manualmente. -->
+        <Property Id="REBOOT" Value="ReallySuppress" />
         <MediaTemplate EmbedCab="yes" />
         <!-- UI personalizada para saltar los Términos de Uso -->
         <UI Id="WixUI_MyMinimal">

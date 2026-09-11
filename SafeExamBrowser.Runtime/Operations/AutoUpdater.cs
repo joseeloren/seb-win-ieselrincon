@@ -14,6 +14,7 @@ namespace SafeExamBrowser.Runtime.Operations
     {
         // UpgradeCode fijo del instalador WiX (Product.wxs)
         private const string UpgradeCode = "{97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB}";
+        private const string NoRestartArguments = "/norestart REBOOT=ReallySuppress";
 
         /// <summary>
         /// Busca el ProductCode instalado actualmente usando el UpgradeCode en el registro de Windows.
@@ -94,6 +95,7 @@ namespace SafeExamBrowser.Runtime.Operations
         /// </summary>
         private static int RunMsiexec(string arguments, string logPath)
         {
+            arguments = $"{arguments} {NoRestartArguments}";
             File.AppendAllText(logPath, $"[{DateTime.Now}] Running: msiexec {arguments}\n");
             var proc = Process.Start(new ProcessStartInfo
             {
@@ -191,7 +193,8 @@ namespace SafeExamBrowser.Runtime.Operations
                                     File.AppendAllText(logPath, $"[{DateTime.Now}] Found installed product: {installedProductCode}. Attempting repair...\n");
                                     // /fecums: reinstala ficheros faltantes/corruptos, shortcuts y entradas de registro
                                     int repairCode = RunMsiexec($"/fecums \"{tempPath}\"", logPath);
-                                    installed = (repairCode == 0);
+                                    // 3010 indica éxito con reinicio pendiente; no reinstalar ni pedir reiniciar.
+                                    installed = (repairCode == 0 || repairCode == 3010);
 
                                     if (installed)
                                         File.AppendAllText(logPath, $"[{DateTime.Now}] Repair succeeded.\n");
@@ -210,7 +213,7 @@ namespace SafeExamBrowser.Runtime.Operations
                                     Process.Start(new ProcessStartInfo
                                     {
                                         FileName = "msiexec.exe",
-                                        Arguments = $"/i \"{tempPath}\"",
+                                        Arguments = $"/i \"{tempPath}\" {NoRestartArguments}",
                                         UseShellExecute = true
                                     });
                                     Thread.Sleep(2000);

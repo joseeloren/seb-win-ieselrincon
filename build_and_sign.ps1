@@ -13,6 +13,7 @@ Write-Host "2. Firmando ejecutables principales..."
 $exesToSign = @(
     "SafeExamBrowser.Runtime\bin\x64\Release\SafeExamBrowser.exe",
     "SafeExamBrowser.Client\bin\x64\Release\SafeExamBrowser.Client.exe",
+    "SafeExamBrowser.Runtime\bin\x64\Release\SafeExamBrowser.Client.exe",
     "SafeExamBrowser.Service\bin\x64\Release\SafeExamBrowser.Service.exe",
     "SafeExamBrowser.ResetUtility\bin\x64\Release\SafeExamBrowser.ResetUtility.exe"
 )
@@ -26,7 +27,8 @@ foreach ($exe in $exesToSign) {
 }
 
 Write-Host "3. Re-empaquetando el MSI con los ejecutables firmados..."
-& $msbuild /t:Setup:Rebuild /p:Configuration=Release /p:Platform=x64 SafeExamBrowser.sln
+# No recompilar los ejecutables después de firmarlos: se perderían sus firmas.
+& $msbuild /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:BuildProjectReferences=false "/p:SolutionDir=$PSScriptRoot/" Setup\Setup.wixproj
 if ($LASTEXITCODE -ne 0) { throw "Error re-empaquetando MSI" }
 
 Write-Host "4. Generando y firmando el MSI final..."
