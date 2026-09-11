@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SafeExamBrowser.Browser.Contracts;
@@ -73,9 +74,40 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 				messageBox.Object,
 				runtime.Object,
 				splashScreen.Object,
-				taskbar.Object);
+				taskbar.Object, () => { });
 
 			sut.Assume(ClientTask.RegisterEvents);
+		}
+
+		[DataTestMethod]
+		[DataRow(true)]
+		[DataRow(false)]
+		public void PortalConfiguration_MustKeepClientAndReleaseLock(bool valid)
+		{
+			var path = Path.GetTempFileName();
+			try
+			{
+				File.WriteAllText(path, valid ? "<?xml version=\"1.0\"?><plist><dict><key>startURL</key><string>https://exam.example/?token=abc&amp;lang=es</string><key>hashedQuitPassword</key><string>abc</string><key>URLFilterEnable</key><true/><key>URLFilterRules</key><array/><key>allowedDisplaysMaxNumber</key><integer>2</integer></dict></plist>" : "invalid");
+				settings.Security.AllowReconfiguration = true;
+				appConfig.TemporaryDirectory = Path.GetTempPath();
+				coordinator.Setup(c => c.RequestReconfigurationLock()).Returns(true);
+				var args = new DownloadEventArgs { Url = "https://elrinconseguro.ieselrincon.es/api/alumno/seb-config?token=abc" };
+				browser.Raise(b => b.ConfigurationDownloadRequested += null, "exam.seb", args);
+				Assert.IsTrue(args.AllowDownload);
+				args.Callback(true, args.Url, path);
+				runtime.Verify(r => r.RequestReconfiguration(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+				browser.Verify(b => b.Terminate(), Times.Never);
+				browser.Verify(b => b.ApplyExamSettings(), valid ? Times.Once() : Times.Never());
+				coordinator.Verify(c => c.ReleaseReconfigurationLock(), Times.Once);
+				Assert.IsFalse(File.Exists(path));
+				if (valid)
+				{
+					Assert.AreEqual("https://exam.example/?token=abc&lang=es", settings.Browser.StartUrl);
+					Assert.IsTrue(settings.Browser.Filter.ProcessMainRequests);
+					Assert.AreEqual(2, settings.Display.AllowedDisplays);
+				}
+			}
+			finally { File.Delete(path); }
 		}
 
 		[TestMethod]

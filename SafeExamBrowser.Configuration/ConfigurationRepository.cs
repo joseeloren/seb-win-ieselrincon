@@ -92,6 +92,27 @@ namespace SafeExamBrowser.Configuration
 			return dataValues.InitializeSessionConfiguration();
 		}
 
+		/// <summary>Reads only the portal's exam settings that can be applied to a running client.</summary>
+		public static AppSettings ReadPortalExamSettings(string path, ILogger logger)
+		{
+			using (var stream = File.OpenRead(path))
+			{
+				var parser = new DataFormats.XmlParser(new DataCompression.GZipCompressor(logger), logger);
+				var result = parser.TryParse(stream);
+				var supported = new[] { "startURL", "allowedDisplaysMaxNumber", "hashedQuitPassword", "additionalResources", "URLFilterEnable", "URLFilterEnableContentFilter", "URLFilterRules" };
+				if (result.Status != LoadStatus.Success || result.RawData.Keys.Any(key => !supported.Contains(key)))
+					throw new InvalidDataException("Unsupported portal exam configuration.");
+				if (!result.RawData.TryGetValue("startURL", out var start) || !(start is string startUrl) ||
+					!Uri.TryCreate(startUrl, UriKind.Absolute, out var uri) || (uri.Scheme != "https" && uri.Scheme != "http") ||
+					!uri.Query.TrimStart('?').Split('&').Any(pair => pair.StartsWith("token=") && pair.Length > 6) ||
+					!result.RawData.ContainsKey("URLFilterRules") || !result.RawData.ContainsKey("hashedQuitPassword"))
+					throw new InvalidDataException("Incomplete portal exam configuration.");
+				var settings = new DataValues().LoadDefaultSettings();
+				new DataMapper().Map(result.RawData, settings);
+				return settings;
+			}
+		}
+
 		public AppSettings LoadDefaultSettings()
 		{
 			return dataValues.LoadDefaultSettings();

@@ -41,5 +41,8 @@ namespace SafeExamBrowser.Browser.Contracts
 		/// receives focus (passing forward of focus). Otherwise, the last element receives focus.
 		/// </summary>
 		void Focus(bool forward);
+
+		/// <summary>Refreshes the exam filters and navigates the existing main window.</summary>
+		void ApplyExamSettings();
 	}
 }

@@ -27,6 +27,18 @@ namespace SafeExamBrowser.Browser.UnitTests.Filters
 		}
 
 		[TestMethod]
+		public void ClearMustRemovePreviousExamRules()
+		{
+			var rule = new Mock<IRule>();
+			rule.SetupGet(r => r.Result).Returns(FilterResult.Allow);
+			rule.Setup(r => r.IsMatch(It.IsAny<Request>())).Returns(true);
+			sut.Load(rule.Object);
+			Assert.AreEqual(FilterResult.Allow, sut.Process(new Request()));
+			sut.Clear();
+			Assert.AreEqual(FilterResult.Block, sut.Process(new Request()));
+		}
+
+		[TestMethod]
 		public void MustProcessBlockRulesFirst()
 		{
 			var allow = new Mock<IRule>();

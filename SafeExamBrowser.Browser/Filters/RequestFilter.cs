@@ -27,15 +27,21 @@ namespace SafeExamBrowser.Browser.Filters
 			Default = FilterResult.Block;
 		}
 
+		internal void Clear()
+		{
+			allowRules = new List<IRule>();
+			blockRules = new List<IRule>();
+		}
+
 		public void Load(IRule rule)
 		{
 			switch (rule.Result)
 			{
 				case FilterResult.Allow:
-					allowRules.Add(rule);
+					allowRules = new List<IRule>(allowRules) { rule };
 					break;
 				case FilterResult.Block:
-					blockRules.Add(rule);
+					blockRules = new List<IRule>(blockRules) { rule };
 					break;
 				default:
 					throw new NotImplementedException($"Filter processing for result '{rule.Result}' is not yet implemented!");

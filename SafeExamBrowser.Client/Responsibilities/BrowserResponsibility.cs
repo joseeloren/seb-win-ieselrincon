@@ -26,6 +26,7 @@ namespace SafeExamBrowser.Client.Responsibilities
 	internal class BrowserResponsibility : ClientResponsibility
 	{
 		private readonly ICoordinator coordinator;
+		private readonly Action activateExamTelemetry;
 		private readonly IMessageBox messageBox;
 		private readonly IRuntimeProxy runtime;
 		private readonly ISplashScreen splashScreen;
@@ -40,9 +41,10 @@ namespace SafeExamBrowser.Client.Responsibilities
 			IMessageBox messageBox,
 			IRuntimeProxy runtime,
 			ISplashScreen splashScreen,
-			ITaskbar taskbar) : base(context, logger)
+			ITaskbar taskbar, Action activateExamTelemetry = null) : base(context, logger)
 		{
 			this.coordinator = coordinator;
+			this.activateExamTelemetry = activateExamTelemetry ?? (() => new Operations.TelemetryOperation(Context, Logger, Context.UserInterfaceFactory).Perform());
 			this.messageBox = messageBox;
 			this.runtime = runtime;
 			this.splashScreen = splashScreen;
@@ -152,8 +154,42 @@ namespace SafeExamBrowser.Client.Responsibilities
 			return allow;
 		}
 
+		private static bool IsPortalExamConfiguration(string url)
+		{
+			var portal = new Uri(SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl);
+			return Uri.TryCreate(url, UriKind.Absolute, out var uri) && uri.Scheme == Uri.UriSchemeHttps &&
+				uri.Authority.Equals(portal.Authority, StringComparison.OrdinalIgnoreCase) && uri.AbsolutePath == "/api/alumno/seb-config";
+		}
+
 		private void Browser_ConfigurationDownloadFinished(bool success, string url, string filePath = null)
 		{
+			if (success && IsPortalExamConfiguration(url))
+			{
+				try
+				{
+					var next = SafeExamBrowser.Configuration.ConfigurationRepository.ReadPortalExamSettings(filePath, Logger);
+					Settings.Security.QuitPasswordHash = next.Security.QuitPasswordHash;
+					Settings.Display.AllowedDisplays = next.Display.AllowedDisplays;
+					Settings.Browser.StartUrl = next.Browser.StartUrl;
+					Settings.Browser.Filter = next.Browser.Filter;
+					activateExamTelemetry();
+					Browser.ApplyExamSettings();
+					Logger.Info("Applied portal exam configuration in the existing client and browser.");
+				}
+				catch (Exception e)
+				{
+					Logger.Error("Could not apply portal exam configuration.", e);
+					messageBox.Show(TextKey.MessageBox_ReconfigurationError, TextKey.MessageBox_ReconfigurationErrorTitle, icon: MessageBoxIcon.Error, parent: splashScreen);
+				}
+				finally
+				{
+					splashScreen.Hide();
+					coordinator.ReleaseReconfigurationLock();
+					try { File.Delete(filePath); } catch (Exception e) { Logger.Warn($"Could not remove temporary exam configuration: {e.Message}"); }
+				}
+				return;
+			}
+
 			if (success)
 			{
 				PrepareShutdown();

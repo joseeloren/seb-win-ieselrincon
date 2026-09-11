@@ -91,6 +91,14 @@ namespace SafeExamBrowser.Browser
 			};
 		}
 
+		public void ApplyExamSettings()
+		{
+			foreach (var window in new List<BrowserWindow>(Windows))
+			{
+				window.ApplyExamSettings();
+			}
+		}
+
 		public void Focus(bool forward)
 		{
 			foreach (var window in Windows)

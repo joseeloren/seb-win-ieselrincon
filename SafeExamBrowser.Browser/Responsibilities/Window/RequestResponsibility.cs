@@ -57,6 +57,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 
 		private void InitializeRequestFilter()
 		{
+			requestFilter.Clear();
 			if (Settings.Filter.ProcessContentRequests || Settings.Filter.ProcessMainRequests)
 			{
 				var factory = new RuleFactory();

@@ -83,6 +83,13 @@ namespace SafeExamBrowser.Browser
 			this.sessionMode = sessionMode;
 		}
 
+		internal void ApplyExamSettings()
+		{
+			responsibilities.Delegate(WindowTask.InitializeRequestFilter);
+			// Secondary windows must also leave pages no longer permitted by the exam.
+			Control.NavigateTo(Settings.StartUrl);
+		}
+
 		public void Activate()
 		{
 			Window.BringToForeground();

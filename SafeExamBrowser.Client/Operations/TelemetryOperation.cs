@@ -37,6 +37,7 @@ namespace SafeExamBrowser.Client.Operations
 		}
 
 		private static Task pingTask;
+		private static volatile string activeToken;
 
 		public override OperationResult Perform()
 		{
@@ -65,13 +66,15 @@ namespace SafeExamBrowser.Client.Operations
 				CurrentStudentName = "Token-Session";
 				logger.Info($"Token found in StartUrl. Skipping TelemetryDialog. Starting continuous telemetry ping with token...");
 				
+				activeToken = examToken;
 				if (pingTask == null)
 				{
 					pingTask = Task.Run(async () => 
 					{
 						while (true)
 						{
-							await SendTelemetryAsync(examToken, null, true);
+							var token = activeToken;
+							if (!string.IsNullOrEmpty(token)) await SendTelemetryAsync(token, null, true);
 							await Task.Delay(TimeSpan.FromSeconds(5));
 						}
 					});
@@ -95,6 +98,7 @@ namespace SafeExamBrowser.Client.Operations
 
 		public override OperationResult Revert()
 		{
+			activeToken = null;
 			return OperationResult.Success;
 		}
 
