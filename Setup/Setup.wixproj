@@ -30,6 +30,7 @@
     <SuppressIces>ICE61</SuppressIces>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <Cultures>es-ES</Cultures>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Application.wxs" />
