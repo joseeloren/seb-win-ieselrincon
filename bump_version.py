@@ -4,14 +4,15 @@ import sys
 
 def replace_in_file(filepath, pattern, repl):
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
+        # Las fuentes históricas mezclan UTF-8 y Windows-1252; la versión es ASCII.
+        with open(filepath, 'rb') as f:
             content = f.read()
-        new_content = re.sub(pattern, repl, content)
+        new_content = re.sub(pattern.encode('ascii'), repl.encode('ascii'), content)
         if new_content != content:
-            with open(filepath, 'w', encoding='utf-8') as f:
+            with open(filepath, 'wb') as f:
                 f.write(new_content)
-    except:
-        pass
+    except OSError as error:
+        raise RuntimeError(f'No se pudo actualizar {filepath}') from error
 
 def bulk_bump_version(root_dir, old_v, new_v):
     pattern = old_v.replace('.', r'\.')

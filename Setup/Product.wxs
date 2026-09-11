@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Name="El Rincón Seguro !(bind.fileVersion.MainExecutable) ($(var.Platform))" Manufacturer="Dpto. Informática IES El Rincón" Language="1034" Codepage="1252"
-             Id="*" Version="!(bind.fileVersion.MainExecutable)" UpgradeCode="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
+    <?define ProductReleaseVersion="0.0.59" ?>
+    <Product Name="El Rincón Seguro $(var.ProductReleaseVersion) ($(var.Platform))" Manufacturer="Dpto. Informática IES El Rincón" Language="1034" Codepage="1252"
+             Id="*" Version="$(var.ProductReleaseVersion)" UpgradeCode="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
         <!-- No solicitar ni ejecutar reinicios, también al abrir el MSI manualmente. -->
         <Property Id="REBOOT" Value="ReallySuppress" />
@@ -45,7 +46,8 @@
         </UI>
         <UIRef Id="WixUI_Common" />
         
-        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." AllowSameVersionUpgrades="yes" />
+        <!-- Retirar la versión anterior antes de copiar la nueva, con rollback si falla. -->
+        <MajorUpgrade DowngradeErrorMessage="Ya hay una versión más reciente de [ProductName] instalada." AllowSameVersionUpgrades="yes" Schedule="afterInstallInitialize" IgnoreRemoveFailure="no" />
         <Icon Id="ApplicationIcon" SourceFile="Resources\Application.ico" />
         <Icon Id="ConfigurationToolIcon" SourceFile="Resources\ConfigurationTool.ico" />
         <Icon Id="ResetUtilityIcon" SourceFile="Resources\ResetUtility.ico" />
