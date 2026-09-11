@@ -94,6 +94,8 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 				var args = new DownloadEventArgs { Url = "https://elrinconseguro.ieselrincon.es/api/alumno/seb-config?token=abc" };
 				browser.Raise(b => b.ConfigurationDownloadRequested += null, "exam.seb", args);
 				Assert.IsTrue(args.AllowDownload);
+				splashScreen.Verify(s => s.Show(), Times.Never);
+				splashScreen.Verify(s => s.BringToForeground(), Times.Never);
 				args.Callback(true, args.Url, path);
 				runtime.Verify(r => r.RequestReconfiguration(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 				browser.Verify(b => b.Terminate(), Times.Never);

@@ -107,10 +107,13 @@ namespace SafeExamBrowser.Client.Responsibilities
 					args.Callback = Browser_ConfigurationDownloadFinished;
 					args.DownloadPath = Path.Combine(Context.AppConfig.TemporaryDirectory, fileName);
 
-					splashScreen.Show();
-					splashScreen.BringToForeground();
-					splashScreen.SetIndeterminate();
-					splashScreen.UpdateStatus(TextKey.OperationStatus_InitializeSession, true);
+					if (!IsPortalExamConfiguration(args.Url))
+					{
+						splashScreen.Show();
+						splashScreen.BringToForeground();
+						splashScreen.SetIndeterminate();
+						splashScreen.UpdateStatus(TextKey.OperationStatus_InitializeSession, true);
+					}
 
 					Logger.Info($"Allowed download request for configuration file '{fileName}'.");
 				}
