@@ -47,7 +47,6 @@
         <Icon Id="ResetUtilityIcon" SourceFile="Resources\ResetUtility.ico" />
         <Property Id="ARPPRODUCTICON" Value="ApplicationIcon" />
         
-        <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="PLEASE NOTE: In order to run ERS, you first need to install all the required dependencies as specified under https://github.com/SafeExamBrowser/seb-win-refactoring#readme." />
         <WixVariable Id="WixUIBannerBmp" Value="Resources\Banner.bmp" />
         <WixVariable Id="WixUIDialogBmp" Value="Resources\Dialog.bmp" />
         <Feature Id="ProductFeature" Title="El Rincón Seguro" Level="1">
