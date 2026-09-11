@@ -530,6 +530,10 @@ if (typeof __SEB_focusElement === 'undefined') {
 
 		private void InitializeBounds()
 		{
+			WindowState = WindowState.Maximized;
+			WindowStyle = WindowStyle.None;
+			ResizeMode = ResizeMode.NoResize;
+
 			if (isMainWindow && WindowSettings.FullScreenMode)
 			{
 				Top = 0;
@@ -542,6 +546,8 @@ if (typeof __SEB_focusElement === 'undefined') {
 			else if (WindowSettings.RelativeHeight == 100 && WindowSettings.RelativeWidth == 100)
 			{
 				WindowState = WindowState.Maximized;
+				WindowStyle = WindowStyle.None;
+				ResizeMode = ResizeMode.NoResize;
 			}
 			else
 			{

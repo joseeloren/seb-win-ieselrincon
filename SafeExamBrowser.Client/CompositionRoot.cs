@@ -259,6 +259,7 @@ namespace SafeExamBrowser.Client
 
 		private IOperation BuildBrowserOperation()
 		{
+			context.Settings.Browser.MainWindow.FullScreenMode = true;
 			var fileSystemDialog = BuildFileSystemDialog();
 			var keyGenerator = new KeyGenerator(context.AppConfig, context.IntegrityModule, ModuleLogger(nameof(KeyGenerator)));
 			var moduleLogger = ModuleLogger(nameof(BrowserApplication));
