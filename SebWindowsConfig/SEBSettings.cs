@@ -1034,7 +1034,7 @@ namespace SebWindowsConfig
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowDictation, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyDetectStoppedProcess, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowDisplayMirroring, false);
-			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowedDisplaysMaxNumber, 1);
+			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowedDisplaysMaxNumber, 2);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowedDisplayBuiltin, true);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowedDisplayBuiltinEnforce, false);
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyAllowedDisplayIgnoreFailure, false);
@@ -1052,8 +1052,8 @@ namespace SebWindowsConfig
 			SEBSettings.strArrayDefault[SEBSettings.ValMinMacOSVersion] = "OS X 10.11 El Capitan";
 
 			// Default selected index and string in combo box for allowedDisplaysMaxNumber
-			SEBSettings.intArrayDefault[SEBSettings.ValAllowedDisplaysMaxNumber] = 0;
-			SEBSettings.strArrayDefault[SEBSettings.ValAllowedDisplaysMaxNumber] = "1";
+			SEBSettings.intArrayDefault[SEBSettings.ValAllowedDisplaysMaxNumber] = 1;
+			SEBSettings.strArrayDefault[SEBSettings.ValAllowedDisplaysMaxNumber] = "2";
 
 			// Default settings for group "Inside SEB"
 			SEBSettings.settingsDefault.Add(SEBSettings.KeyInsideSebEnableSwitchUser, false);
