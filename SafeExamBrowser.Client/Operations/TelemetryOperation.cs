@@ -152,8 +152,6 @@ namespace SafeExamBrowser.Client.Operations
 						"\"hostname\":\"" + EscapeJson(hostname) + "\"," +
 						"\"desktopName\":\"" + EscapeJson(desktopName) + "\"," +
 						"\"localIp\":\"" + EscapeJson(localIp) + "\"," +
-						"\"globalKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.GlobalKeystrokes + "," +
-						"\"sebKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.SebKeystrokes + "," +
 						"\"publicIp\":\"" + EscapeJson(publicIp) + "\"" +
 					"}";
 				}
@@ -165,8 +163,6 @@ namespace SafeExamBrowser.Client.Operations
 						"\"hostname\":\"" + EscapeJson(hostname) + "\"," +
 						"\"desktopName\":\"" + EscapeJson(desktopName) + "\"," +
 						"\"localIp\":\"" + EscapeJson(localIp) + "\"," +
-						"\"globalKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.GlobalKeystrokes + "," +
-						"\"sebKeystrokes\":" + SafeExamBrowser.WindowsApi.KeystrokeTracker.SebKeystrokes + "," +
 						"\"publicIp\":\"" + EscapeJson(publicIp) + "\"" +
 					"}";
 				}

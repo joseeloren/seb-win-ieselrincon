@@ -55,21 +55,7 @@ namespace SafeExamBrowser.WindowsApi.Hooks
 				var state = GetState(wParam.ToInt32());
 				if (state == KeyState.Pressed)
 				{
-					KeystrokeTracker.IncrementGlobal();
-					var fgWindow = User32.GetForegroundWindow();
-					if (fgWindow != IntPtr.Zero)
-					{
-						User32.GetWindowThreadProcessId(fgWindow, out uint pid);
-						try
-						{
-							var proc = System.Diagnostics.Process.GetProcessById((int)pid);
-							if (proc.ProcessName.IndexOf("SafeExamBrowser", StringComparison.OrdinalIgnoreCase) >= 0)
-							{
-								KeystrokeTracker.IncrementSeb();
-							}
-						}
-						catch { }
-					}
+					// Keystroke telemetry has been removed
 				}
 
 				var keyData = (KBDLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));

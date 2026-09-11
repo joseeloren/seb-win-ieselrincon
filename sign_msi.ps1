@@ -1,7 +1,8 @@
+$version = (Get-Item "SafeExamBrowser.Runtime\bin\x64\Release\SafeExamBrowser.exe").VersionInfo.FileVersion
 $certPath = "IESElRincon.pfx"
 $certPasswordString = "ies2024"
-$signtool = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe"
-$msiPath = "Setup\bin\x64\Release\Setup_Signed.msi"
+$signtool = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe"
+$msiPath = "Setup\bin\x64\Release\ElRinconSeguro_$version.msi"
 
 Copy-Item "Setup\bin\x64\Release\Setup.msi" -Destination $msiPath -Force
 

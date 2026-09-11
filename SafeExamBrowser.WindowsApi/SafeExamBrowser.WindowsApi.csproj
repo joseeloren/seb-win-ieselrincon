@@ -85,7 +85,6 @@
     <Compile Include="Constants\SystemCommand.cs" />
     <Compile Include="Kernel32.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
-    <Compile Include="KeystrokeTracker.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\SPI.cs" />
