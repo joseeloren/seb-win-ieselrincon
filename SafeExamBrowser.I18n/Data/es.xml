@@ -292,7 +292,7 @@
         Página bloqueada
     </Entry>
     <Entry key="MessageBox_BrowserQuitUrlConfirmation">
-        ¡La aplicación del navegador ha detectado una URL de salida! ¿Desea finalizar SEB ahora?
+        ¡La aplicación del navegador ha detectado una URL de salida! ¿Desea finalizar El Rincón Seguro ahora?
     </Entry>
     <Entry key="MessageBox_BrowserQuitUrlConfirmationTitle">
         URL de salida detectada
@@ -391,7 +391,7 @@
         ¿Recargar?
     </Entry>
     <Entry key="MessageBox_Quit">
-        ¿Quiere terminar El Rincón Seguro?
+        ¿Desea finalizar El Rincón Seguro ahora?
     </Entry>
     <Entry key="MessageBox_QuitTitle">
         ¿Terminar?

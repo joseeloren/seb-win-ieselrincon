@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -68,8 +68,8 @@ namespace SafeExamBrowser.Client.Operations
 				{
 					invigilator.Initialize(Context.Settings.Server.Invigilation);
 
-					actionCenter.AddNotificationControl(uiFactory.CreateRaiseHandControl(invigilator, Location.ActionCenter, Context.Settings.Server.Invigilation));
-					taskbar.AddNotificationControl(uiFactory.CreateRaiseHandControl(invigilator, Location.Taskbar, Context.Settings.Server.Invigilation));
+					// actionCenter.AddNotificationControl(uiFactory.CreateRaiseHandControl(invigilator, Location.ActionCenter, Context.Settings.Server.Invigilation));
+					// taskbar.AddNotificationControl(uiFactory.CreateRaiseHandControl(invigilator, Location.Taskbar, Context.Settings.Server.Invigilation));
 				}
 			}
 

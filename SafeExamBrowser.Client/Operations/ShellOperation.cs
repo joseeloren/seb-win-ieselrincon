@@ -360,10 +360,10 @@ namespace SafeExamBrowser.Client.Operations
 
 		private void InitializeVerificatorNotificationForTaskbar()
 		{
-			if (Context.Settings.UserInterface.Taskbar.ShowVerificator)
-			{
-				taskbar.AddNotificationControl(uiFactory.CreateNotificationControl(verificatorNotification, Location.Taskbar));
-			}
+			// if (Context.Settings.UserInterface.Taskbar.ShowVerificator)
+			// {
+			// 	taskbar.AddNotificationControl(uiFactory.CreateNotificationControl(verificatorNotification, Location.Taskbar));
+			// }
 		}
 
 		private void TerminateActivators()

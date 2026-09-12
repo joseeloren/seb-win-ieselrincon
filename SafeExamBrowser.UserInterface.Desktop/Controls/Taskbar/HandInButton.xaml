@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop.Controls"
              x:Name="root"
-             mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="120">
+             mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="120"
+             Visibility="Collapsed">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

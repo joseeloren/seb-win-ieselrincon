@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Text>
     <Entry key="AboutWindow_LicenseInfo">
         This application is subject to the terms of the Mozilla Public License, version 2.0. Safe Exam Browser uses the following frameworks and third-party libraries:
@@ -292,7 +292,7 @@
         Page Blocked
     </Entry>
     <Entry key="MessageBox_BrowserQuitUrlConfirmation">
-        The browser application has detected a quit URL! Would you like to terminate SEB now?
+        The browser application has detected a quit URL! Would you like to terminate El Rincón Seguro now?
     </Entry>
     <Entry key="MessageBox_BrowserQuitUrlConfirmationTitle">
         Quit URL Detected
@@ -391,7 +391,7 @@
         Reload?
     </Entry>
     <Entry key="MessageBox_Quit">
-        Do you want to quit SEB?
+        Do you want to quit El Rincón Seguro?
     </Entry>
     <Entry key="MessageBox_QuitTitle">
         Quit?
