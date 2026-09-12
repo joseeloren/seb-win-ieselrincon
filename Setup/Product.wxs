@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <?define ProductReleaseVersion="0.0.88" ?>
+    <?define ProductReleaseVersion="0.0.90" ?>
     <Product Name="El Rincón Seguro $(var.ProductReleaseVersion) ($(var.Platform))" Manufacturer="Dpto. Informática IES El Rincón" Language="1034" Codepage="1252"
              Id="*" Version="$(var.ProductReleaseVersion)" UpgradeCode="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
