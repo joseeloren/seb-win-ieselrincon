@@ -31,7 +31,6 @@
         <StackPanel Grid.Column="2" x:Name="SystemControlStackPanel" Orientation="Horizontal" VerticalAlignment="Stretch" />
         <local:Clock Grid.Column="3" x:Name="Clock" Foreground="{StaticResource SecondaryTextBrush}" Padding="10,0,10,0" />
         <StackPanel Grid.Column="4" Orientation="Horizontal">
-            <local:HandInButton x:Name="HandInButton" Margin="0,0,5,0" />
             <local:QuitButton x:Name="QuitButton" />
         </StackPanel>
     </Grid>
