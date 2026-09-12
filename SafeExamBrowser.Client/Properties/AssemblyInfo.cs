@@ -8,9 +8,9 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.Client")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
 [assembly: AssemblyProduct("SafeExamBrowser.Client")]
-[assembly: AssemblyCopyright("Copyright Â© 2026 Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -50,7 +50,7 @@ using System.Windows;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("0.0.85")]
-[assembly: AssemblyVersion("0.0.85")]
-[assembly: AssemblyFileVersion("0.0.85")]
-[assembly: AssemblyInformationalVersion("0.0.85")]
+// [assembly: AssemblyVersion("0.0.86")]
+[assembly: AssemblyVersion("0.0.86")]
+[assembly: AssemblyFileVersion("0.0.86")]
+[assembly: AssemblyInformationalVersion("0.0.86")]
