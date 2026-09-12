@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Text>
     <Entry key="AboutWindow_LicenseInfo">
         Esta aplicación está sujeta a los términos de la Licencia Pública de Mozilla, versión 2.0. Safe Exam Browser utiliza los siguientes frameworks y bibliotecas de terceros:
@@ -100,13 +100,13 @@
         Build
     </Entry>
     <Entry key="CredentialsDialog_PasswordLabel">
-        Contraseña:
+        Clave de examen:
     </Entry>
     <Entry key="CredentialsDialog_UsernameLabel">
-        Nombre de usuario:
+        Correo electrónico:
     </Entry>
     <Entry key="CredentialsDialog_UsernameOptionalLabel">
-        Nombre de usuario (si se requiere):
+        Correo electrónico (si se requiere):
     </Entry>
     <Entry key="CredentialsDialog_WirelessNetworkMessage">
         Por favor, introduzca las credenciales necesarias para establecer una conexión con la red inalámbrica "%%_NAME_%%".
