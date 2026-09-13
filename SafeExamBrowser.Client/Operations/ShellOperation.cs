@@ -354,13 +354,14 @@ namespace SafeExamBrowser.Client.Operations
 			var url = Context.Settings.UserInterface.Taskbar.PdfUrl;
 			if (!string.IsNullOrWhiteSpace(url))
 			{
-				var browserApp = Context.Applications.FirstOrDefault(a => a is SafeExamBrowser.Browser.Contracts.IBrowserApplication) as SafeExamBrowser.Browser.Contracts.IBrowserApplication;
+				var browserApp = Context.Browser;
 				if (browserApp != null)
 				{
-					var window = browserApp.GetWindows().FirstOrDefault();
+					var window = browserApp.GetWindows().FirstOrDefault(w => w.IsMainWindow);
 					if (window != null)
 					{
-						window.ExecuteJavaScript($"window.open('{url}', '_blank');");
+						var escapedUrl = url.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\r", "\\r").Replace("\n", "\\n");
+						window.ExecuteJavaScript($"window.open('{escapedUrl}', '_blank');");
 					}
 				}
 			}

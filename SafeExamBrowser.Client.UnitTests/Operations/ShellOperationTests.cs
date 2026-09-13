@@ -98,6 +98,24 @@ namespace SafeExamBrowser.Client.UnitTests.Operations
 		}
 
 		[TestMethod]
+		public void PdfButton_MustUseContextBrowserAndCurrentExamUrl()
+		{
+			var browser = new Mock<SafeExamBrowser.Browser.Contracts.IBrowserApplication>();
+			var window = new Mock<SafeExamBrowser.Browser.Contracts.IBrowserWindow>();
+			window.SetupGet(w => w.IsMainWindow).Returns(true);
+			browser.Setup(b => b.GetWindows()).Returns(new[] { window.Object });
+			context.Browser = browser.Object;
+			context.Settings.UserInterface.Taskbar.EnableTaskbar = true;
+			sut.Perform();
+			context.Settings.UserInterface.Taskbar.PdfUrl = "https://exam.example/exam.pdf?token=abc";
+			taskbar.Raise(t => t.PdfButtonClicked += null);
+			window.Verify(w => w.ExecuteJavaScript("window.open('https://exam.example/exam.pdf?token=abc', '_blank');", null), Times.Once);
+			context.Settings.UserInterface.Taskbar.PdfUrl = null;
+			taskbar.Raise(t => t.PdfButtonClicked += null);
+			window.Verify(w => w.ExecuteJavaScript(It.IsAny<string>(), It.IsAny<System.Action<bool, object>>()), Times.Once);
+		}
+
+		[TestMethod]
 		public void Perform_MustInitializeActivators()
 		{
 			var actionCenterActivator = new Mock<IActionCenterActivator>();
