@@ -112,6 +112,34 @@ namespace SafeExamBrowser.Client.UnitTests.Responsibilities
 			finally { File.Delete(path); }
 		}
 
+		[DataTestMethod]
+		[DataRow(true)]
+		[DataRow(false)]
+		public void PortalConfiguration_MustRefreshPdfButtonAfterWaitingRoom(bool hasPdf)
+		{
+			var path = Path.GetTempFileName();
+			const string pdfUrl = "https://elrinconseguro.ieselrincon.es/uploads/exam.pdf?token=abc&exam=1";
+			try
+			{
+				// An exam without a PDF must also clear any previous exam's URL and button.
+				settings.UserInterface.Taskbar.PdfUrl = hasPdf ? null : "https://example.org/old.pdf";
+				var pdf = hasPdf ? "<key>pdfUrl</key><string>" + pdfUrl.Replace("&", "&amp;") + "</string>" : "";
+				File.WriteAllText(path, "<?xml version=\"1.0\"?><plist><dict><key>startURL</key><string>https://exam.example/?token=abc</string><key>hashedQuitPassword</key><string>abc</string><key>URLFilterRules</key><array/>" + pdf + "</dict></plist>");
+				settings.Security.AllowReconfiguration = true;
+				appConfig.TemporaryDirectory = Path.GetTempPath();
+				coordinator.Setup(c => c.RequestReconfigurationLock()).Returns(true);
+				var args = new DownloadEventArgs { Url = "https://elrinconseguro.ieselrincon.es/api/alumno/seb-config?token=abc" };
+				browser.Raise(b => b.ConfigurationDownloadRequested += null, "exam.seb", args);
+				Assert.IsTrue(args.AllowDownload);
+				args.Callback(true, args.Url, path);
+				Assert.AreEqual(hasPdf ? pdfUrl : null, settings.UserInterface.Taskbar.PdfUrl);
+				taskbar.VerifySet(t => t.ShowPdfButton = hasPdf, Times.Once);
+				browser.Verify(b => b.ApplyExamSettings(), Times.Once);
+				coordinator.Verify(c => c.ReleaseReconfigurationLock(), Times.Once);
+			}
+			finally { File.Delete(path); }
+		}
+
 		[TestMethod]
 		public void MustAutoStartBrowser()
 		{

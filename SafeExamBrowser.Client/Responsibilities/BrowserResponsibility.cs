@@ -174,6 +174,8 @@ namespace SafeExamBrowser.Client.Responsibilities
 					Settings.Display.AllowedDisplays = next.Display.AllowedDisplays;
 					Settings.Browser.StartUrl = next.Browser.StartUrl;
 					Settings.Browser.Filter = next.Browser.Filter;
+					Settings.UserInterface.Taskbar.PdfUrl = next.UserInterface.Taskbar.PdfUrl;
+					taskbar.ShowPdfButton = !string.IsNullOrWhiteSpace(Settings.UserInterface.Taskbar.PdfUrl);
 					activateExamTelemetry();
 					Browser.ApplyExamSettings();
 					Logger.Info("Applied portal exam configuration in the existing client and browser.");
