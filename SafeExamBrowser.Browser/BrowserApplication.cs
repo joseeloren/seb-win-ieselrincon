@@ -44,6 +44,7 @@ namespace SafeExamBrowser.Browser
 		private readonly SessionMode sessionMode;
 		private readonly IText text;
 		private readonly IUserInterfaceFactory uiFactory;
+		private WindowHandlingResponsibility windowHandlingResponsibility;
 
 		private IResponsibilityCollection<BrowserTask> Responsibilities => context.Responsibilities;
 		private IList<BrowserWindow> Windows => context.Windows;
@@ -97,6 +98,11 @@ namespace SafeExamBrowser.Browser
 			{
 				window.ApplyExamSettings();
 			}
+		}
+
+		public void OpenExamPdf(string url)
+		{
+			windowHandlingResponsibility.OpenExamPdf(url);
 		}
 
 		public void Focus(bool forward)
@@ -180,7 +186,7 @@ namespace SafeExamBrowser.Browser
 
 		private void InitializeResponsibilities()
 		{
-			var windowHandlingResponsibility = new WindowHandlingResponsibility(context, fileSystemDialog, hashAlgorithm, keyGenerator, messageBox, nativeMethods, sessionMode, text, uiFactory);
+			windowHandlingResponsibility = new WindowHandlingResponsibility(context, fileSystemDialog, hashAlgorithm, keyGenerator, messageBox, nativeMethods, sessionMode, text, uiFactory);
 
 			windowHandlingResponsibility.ConfigurationDownloadRequested += (f, a) => ConfigurationDownloadRequested?.Invoke(f, a);
 			windowHandlingResponsibility.LoseFocusRequested += (f) => LoseFocusRequested?.Invoke(f);

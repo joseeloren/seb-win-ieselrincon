@@ -154,7 +154,7 @@ namespace SafeExamBrowser.Browser
 				requestHandler,
 				resourceHandler);
 
-			if (IsMainWindow)
+			if (!context.IsPopup)
 			{
 				responsibilities.Delegate(WindowTask.InitializeLifeSpanHandler);
 				cefSharpControl = new CefSharpBrowserControl(context.LifeSpanHandler, context.StartUrl);

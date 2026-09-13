@@ -44,5 +44,8 @@ namespace SafeExamBrowser.Browser.Contracts
 
 		/// <summary>Refreshes the exam filters and navigates the existing main window.</summary>
 		void ApplyExamSettings();
+
+		/// <summary>Opens the configured exam PDF in a managed SEB window without page JavaScript.</summary>
+		void OpenExamPdf(string url);
 	}
 }

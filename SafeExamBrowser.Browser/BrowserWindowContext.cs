@@ -24,6 +24,7 @@ namespace SafeExamBrowser.Browser
 		internal BrowserIconResource Icon { get; set; }
 		internal int Id { get; set; }
 		internal bool IsMainWindow { get; set; }
+		internal bool IsPopup { get; set; }
 		internal ILifeSpanHandler LifeSpanHandler { get; set; }
 		internal IModuleLogger Logger { get; set; }
 		internal IMessageBox MessageBox { get; set; }

@@ -34,6 +34,8 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 		private readonly IUserInterfaceFactory uiFactory;
 
 		private int counter = default;
+		private BrowserWindow pdfWindow;
+		private string pdfUrl;
 
 		private IList<BrowserWindow> Windows => Context.Windows;
 
@@ -88,10 +90,32 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 			}
 		}
 
-		private void CreateNewWindow(PopupRequestedEventArgs args = default)
+		internal void OpenExamPdf(string url)
+		{
+			if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeHttp))
+			{
+				throw new ArgumentException("Invalid exam PDF URL.", nameof(url));
+			}
+
+			if (pdfWindow != null && Windows.Contains(pdfWindow) && pdfUrl == url)
+			{
+				pdfWindow.Activate();
+				return;
+			}
+
+			if (pdfWindow != null && Windows.Contains(pdfWindow))
+			{
+				pdfWindow.Close();
+			}
+
+			Logger.Info("Opening exam PDF in a managed browser window.");
+			pdfWindow = CreateNewWindow(startUrl: url);
+			pdfUrl = url;
+		}
+
+		private BrowserWindow CreateNewWindow(PopupRequestedEventArgs args = default, string startUrl = null)
 		{
 			var id = ++counter;
-			var startUrl = GenerateStartUrl();
 			var windowContext = new BrowserWindowContext
 			{
 				Logger = Logger.CloneFor($"Browser Window #{id}"),
@@ -99,9 +123,10 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 				Icon = new BrowserIconResource(),
 				Id = id,
 				IsMainWindow = Windows.Count == 0,
+				IsPopup = args != default,
 				MessageBox = messageBox,
 				Settings = Settings,
-				StartUrl = startUrl,
+				StartUrl = startUrl ?? GenerateStartUrl(),
 				Text = text,
 				UserInterfaceFactory = uiFactory
 			};
@@ -129,6 +154,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 
 			Logger.Info($"Created browser window #{window.Id}.");
 			WindowsChanged?.Invoke();
+			return window;
 		}
 
 		private string GenerateStartUrl()

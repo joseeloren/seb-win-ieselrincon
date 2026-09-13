@@ -23,7 +23,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 		public PdfButton()
 		{
 			InitializeComponent();
-			LoadIcon();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,9 +30,5 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 			Clicked?.Invoke();
 		}
 
-		private void LoadIcon()
-		{
-			Button.Content = new TextBlock { Text = "PDF", FontWeight = FontWeights.Bold, Margin = new Thickness(6, 0, 6, 0) };
-		}
 	}
 }

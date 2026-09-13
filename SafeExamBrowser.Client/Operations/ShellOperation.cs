@@ -352,18 +352,20 @@ namespace SafeExamBrowser.Client.Operations
 		private void Taskbar_PdfButtonClicked()
 		{
 			var url = Context.Settings.UserInterface.Taskbar.PdfUrl;
-			if (!string.IsNullOrWhiteSpace(url))
+			if (string.IsNullOrWhiteSpace(url))
 			{
-				var browserApp = Context.Browser;
-				if (browserApp != null)
-				{
-					var window = browserApp.GetWindows().FirstOrDefault(w => w.IsMainWindow);
-					if (window != null)
-					{
-						var escapedUrl = url.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\r", "\\r").Replace("\n", "\\n");
-						window.ExecuteJavaScript($"window.open('{escapedUrl}', '_blank');");
-					}
-				}
+				return;
+			}
+
+			try
+			{
+				logger.Info("PDF button clicked; opening the configured exam document.");
+				Context.Browser.OpenExamPdf(url);
+			}
+			catch (System.Exception e)
+			{
+				logger.Error("Could not open exam PDF window.", e);
+				Context.MessageBox.Show("No se pudo abrir el PDF del examen. Vuelve a intentarlo o avisa al profesorado.", "PDF del examen");
 			}
 		}
 
