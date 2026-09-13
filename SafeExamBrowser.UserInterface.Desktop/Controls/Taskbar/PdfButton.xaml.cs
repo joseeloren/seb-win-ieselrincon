@@ -33,7 +33,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 
 		private void LoadIcon()
 		{
-			var uri = new Uri("pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/Information.xaml");
+			var uri = new Uri("pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/AboutNotification.xaml");
 			var resource = new XamlIconResource { Uri = uri };
 
 			Button.Content = IconResourceLoader.Load(resource);
