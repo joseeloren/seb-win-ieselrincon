@@ -546,8 +546,8 @@ if (typeof __SEB_focusElement === 'undefined') {
 			else if (WindowSettings.RelativeHeight == 100 && WindowSettings.RelativeWidth == 100)
 			{
 				WindowState = WindowState.Maximized;
-				WindowStyle = WindowStyle.None;
-				ResizeMode = ResizeMode.NoResize;
+				WindowStyle = WindowStyle.SingleBorderWindow;
+				ResizeMode = ResizeMode.CanResizeWithGrip;
 			}
 			else
 			{
