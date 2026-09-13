@@ -1,17 +1,17 @@
-ï»¿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("SafeExamBrowser.Runtime.UnitTests")]
 [assembly: AssemblyDescription("Safe Exam Browser")]
-[assembly: AssemblyCompany("Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCompany("Dpto. Informática IES El Rincón")]
 [assembly: AssemblyProduct("SafeExamBrowser.Runtime.UnitTests")]
-[assembly: AssemblyCopyright("Copyright Â© 2026 Dpto. InformÃ¡tica IES El RincÃ³n")]
+[assembly: AssemblyCopyright("Copyright © 2026 Dpto. Informática IES El Rincón")]
 
 [assembly: ComVisible(false)]
 
 [assembly: Guid("b716a8b2-df72-4143-9941-25e033089f5f")]
 
-// [assembly: AssemblyVersion("0.0.122")]
-[assembly: AssemblyVersion("0.0.122")]
-[assembly: AssemblyFileVersion("0.0.122")]
-[assembly: AssemblyInformationalVersion("0.0.122")]
+// [assembly: AssemblyVersion("0.0.123")]
+[assembly: AssemblyVersion("0.0.123")]
+[assembly: AssemblyFileVersion("0.0.123")]
+[assembly: AssemblyInformationalVersion("0.0.123")]

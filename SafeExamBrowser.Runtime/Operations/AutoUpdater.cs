@@ -34,7 +34,7 @@ namespace SafeExamBrowser.Runtime.Operations
                 "; $log = " + PowerShellLiteral(logPath) + "; $exe = " + PowerShellLiteral(exePath) + "; try { " +
                 "Wait-Process -Id " + Process.GetCurrentProcess().Id + " -ErrorAction SilentlyContinue; " +
                 "$process = Start-Process -FilePath ($env:SystemRoot + '\\System32\\msiexec.exe') " +
-                "-ArgumentList ('/i \"' + $msi + '\" " + NoRestartArguments + "') -Wait -PassThru; " +
+                "-ArgumentList ('/i \"' + $msi + '\" " + NoRestartArguments + "') -Wait -PassThru -Verb RunAs; " +
                 "Add-Content -LiteralPath $log -Value ('Installer exit code: ' + $process.ExitCode); " +
                 "if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) { Start-Process -FilePath $exe } " +
                 "} catch { Add-Content -LiteralPath $log -Value $_.Exception.Message } finally { " +
