@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -35,8 +35,14 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			set { Dispatcher.Invoke(() => QuitButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed); }
 		}
 
+		public bool ShowPdfButton
+		{
+			set { } // Not implemented for mobile
+		}
+
 		public event LoseFocusRequestedEventHandler LoseFocusRequested;
 		public event QuitButtonClickedEventHandler QuitButtonClicked;
+		public event PdfButtonClickedEventHandler PdfButtonClicked;
 
 		internal Taskbar(ILogger logger)
 		{

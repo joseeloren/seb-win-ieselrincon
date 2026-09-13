@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -36,8 +36,14 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			set { Dispatcher.Invoke(() => QuitButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed); }
 		}
 
+		public bool ShowPdfButton
+		{
+			set { Dispatcher.Invoke(() => PdfButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed); }
+		}
+
 		public event LoseFocusRequestedEventHandler LoseFocusRequested;
 		public event QuitButtonClickedEventHandler QuitButtonClicked;
+		public event PdfButtonClickedEventHandler PdfButtonClicked;
 
 		internal Taskbar(ILogger logger)
 		{
@@ -144,6 +150,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			Closing += Taskbar_Closing;
 			Loaded += (o, args) => InitializeBounds();
 			QuitButton.Clicked += QuitButton_Clicked;
+			PdfButton.Clicked += PdfButton_Clicked;
 		}
 
 		public void InitializeText(IText text)
@@ -153,6 +160,8 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 				var txt = text.Get(TextKey.Shell_QuitButton);
 				QuitButton.ToolTip = txt;
 				QuitButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, txt);
+				PdfButton.ToolTip = "Ver PDF";
+				PdfButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, "Ver PDF");
 			});
 		}
 
@@ -169,6 +178,11 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		private void Activator_Activated()
 		{
 			(this as ITaskbar).Focus(true);
+		}
+
+		private void PdfButton_Clicked()
+		{
+			PdfButtonClicked?.Invoke();
 		}
 
 		private void QuitButton_Clicked(CancelEventArgs args)

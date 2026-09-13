@@ -11,7 +11,7 @@ namespace SafeExamBrowser.Runtime.Operations
 {
     public static class AutoUpdater
     {
-        private const string NoRestartArguments = "/passive /norestart REBOOT=ReallySuppress";
+        private const string NoRestartArguments = "/qn /norestart REBOOT=ReallySuppress";
 
         private static string PowerShellLiteral(string value) => "'" + value.Replace("'", "''") + "'";
 

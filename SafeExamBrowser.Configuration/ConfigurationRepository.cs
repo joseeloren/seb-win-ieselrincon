@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -99,7 +99,7 @@ namespace SafeExamBrowser.Configuration
 			{
 				var parser = new DataFormats.XmlParser(new DataCompression.GZipCompressor(logger), logger);
 				var result = parser.TryParse(stream);
-				var supported = new[] { "startURL", "allowedDisplaysMaxNumber", "hashedQuitPassword", "additionalResources", "URLFilterEnable", "URLFilterEnableContentFilter", "URLFilterRules" };
+				var supported = new[] { "startURL", "allowedDisplaysMaxNumber", "hashedQuitPassword", "additionalResources", "URLFilterEnable", "URLFilterEnableContentFilter", "URLFilterRules", "pdfUrl" };
 				if (result.Status != LoadStatus.Success || result.RawData.Keys.Any(key => !supported.Contains(key)))
 					throw new InvalidDataException("Unsupported portal exam configuration.");
 				if (!result.RawData.TryGetValue("startURL", out var start) || !(start is string startUrl) ||

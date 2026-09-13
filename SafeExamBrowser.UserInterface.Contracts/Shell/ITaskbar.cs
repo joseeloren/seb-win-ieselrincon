@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -28,9 +28,19 @@ namespace SafeExamBrowser.UserInterface.Contracts.Shell
 		bool ShowQuitButton { set; }
 
 		/// <summary>
+		/// Controls the visibility of the PDF button.
+		/// </summary>
+		bool ShowPdfButton { set; }
+
+		/// <summary>
 		/// Event fired when the user clicked the quit button in the taskbar.
 		/// </summary>
 		event QuitButtonClickedEventHandler QuitButtonClicked;
+
+		/// <summary>
+		/// Event fired when the user clicked the PDF button in the taskbar.
+		/// </summary>
+		event PdfButtonClickedEventHandler PdfButtonClicked;
 
 		/// <summary>
 		/// Event fired when the Taskbar wants to lose focus.

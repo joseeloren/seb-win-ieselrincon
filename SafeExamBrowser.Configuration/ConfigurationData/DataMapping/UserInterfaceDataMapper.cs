@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -49,6 +49,9 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 					break;
 				case Keys.UserInterface.Taskbar.ShowVerificator:
 					MapShowVerificator(settings, value);
+					break;
+				case Keys.UserInterface.Taskbar.PdfUrl:
+					MapPdfUrl(settings, value);
 					break;
 				case Keys.UserInterface.UserInterfaceMode:
 					MapUserInterfaceMode(settings, value);
@@ -153,6 +156,14 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 			if (value is bool mobile)
 			{
 				settings.UserInterface.Mode = mobile ? UserInterfaceMode.Mobile : UserInterfaceMode.Desktop;
+			}
+		}
+
+		private void MapPdfUrl(AppSettings settings, object value)
+		{
+			if (value is string url)
+			{
+				settings.UserInterface.Taskbar.PdfUrl = url;
 			}
 		}
 	}

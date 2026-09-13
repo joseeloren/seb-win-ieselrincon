@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -55,5 +55,10 @@ namespace SafeExamBrowser.Settings.UserInterface
 		/// Determines whether the verificator functionality is accessible via the taskbar.
 		/// </summary>
 		public bool ShowVerificator { get; set; }
+
+		/// <summary>
+		/// URL of the PDF to show in the taskbar.
+		/// </summary>
+		public string PdfUrl { get; set; }
 	}
 }

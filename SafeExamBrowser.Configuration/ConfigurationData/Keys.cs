@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -369,6 +369,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 				internal const string EnableTaskbar = "showTaskBar";
 				internal const string ShowApplicationLog = "showApplicationLogButton";
 				internal const string ShowVerificator = "showQRVerifyButton";
+				internal const string PdfUrl = "pdfUrl";
 			}
 		}
 	}

@@ -194,6 +194,7 @@ namespace SafeExamBrowser.Client.Operations
 				InitializeKeyboardLayoutForTaskbar();
 				InitializeClockForTaskbar();
 				InitializeQuitButtonForTaskbar();
+				InitializePdfButtonForTaskbar();
 			}
 			else
 			{
@@ -340,6 +341,29 @@ namespace SafeExamBrowser.Client.Operations
 		private void InitializeQuitButtonForTaskbar()
 		{
 			taskbar.ShowQuitButton = Context.Settings.Security.AllowTermination;
+		}
+
+		private void InitializePdfButtonForTaskbar()
+		{
+			taskbar.ShowPdfButton = !string.IsNullOrWhiteSpace(Context.Settings.UserInterface.Taskbar.PdfUrl);
+			taskbar.PdfButtonClicked += Taskbar_PdfButtonClicked;
+		}
+
+		private void Taskbar_PdfButtonClicked()
+		{
+			var url = Context.Settings.UserInterface.Taskbar.PdfUrl;
+			if (!string.IsNullOrWhiteSpace(url))
+			{
+				var browserApp = Context.Applications.FirstOrDefault(a => a is SafeExamBrowser.Browser.Contracts.IBrowserApplication) as SafeExamBrowser.Browser.Contracts.IBrowserApplication;
+				if (browserApp != null)
+				{
+					var window = browserApp.GetWindows().FirstOrDefault();
+					if (window != null)
+					{
+						window.ExecuteJavaScript($"window.open('{url}', '_blank');");
+					}
+				}
+			}
 		}
 
 		private void InitializeNetworkForActionCenter()
