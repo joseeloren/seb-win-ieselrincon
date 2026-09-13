@@ -99,7 +99,7 @@ namespace SafeExamBrowser.Configuration
 			{
 				var parser = new DataFormats.XmlParser(new DataCompression.GZipCompressor(logger), logger);
 				var result = parser.TryParse(stream);
-				var supported = new[] { "startURL", "allowedDisplaysMaxNumber", "hashedQuitPassword", "additionalResources", "URLFilterEnable", "URLFilterEnableContentFilter", "URLFilterRules", "pdfUrl" };
+				var supported = new[] { "startURL", "allowedDisplaysMaxNumber", "hashedQuitPassword", "additionalResources", "URLFilterEnable", "URLFilterEnableContentFilter", "URLFilterRules", "pdfUrl", "browserViewMode", "showTaskBar", "browserWindowAllowMinimize" };
 				if (result.Status != LoadStatus.Success || result.RawData.Keys.Any(key => !supported.Contains(key)))
 					throw new InvalidDataException("Unsupported portal exam configuration.");
 				if (!result.RawData.TryGetValue("startURL", out var start) || !(start is string startUrl) ||
