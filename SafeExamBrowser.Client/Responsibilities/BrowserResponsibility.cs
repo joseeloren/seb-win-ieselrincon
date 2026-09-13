@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -159,9 +159,8 @@ namespace SafeExamBrowser.Client.Responsibilities
 
 		private static bool IsPortalExamConfiguration(string url)
 		{
-			var portal = new Uri(SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl);
 			return Uri.TryCreate(url, UriKind.Absolute, out var uri) && uri.Scheme == Uri.UriSchemeHttps &&
-				uri.Authority.Equals(portal.Authority, StringComparison.OrdinalIgnoreCase) && uri.AbsolutePath == "/api/alumno/seb-config";
+				uri.AbsolutePath == "/api/alumno/seb-config";
 		}
 
 		private void Browser_ConfigurationDownloadFinished(bool success, string url, string filePath = null)
