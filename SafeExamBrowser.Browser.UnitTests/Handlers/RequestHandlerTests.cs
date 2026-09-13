@@ -64,10 +64,38 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 		[TestMethod]
 		public void MustBlockSpecialWindowDispositions()
 		{
-			Assert.IsTrue(sut.OnOpenUrlFromTab(default, default, default, default, WindowOpenDisposition.NewBackgroundTab, default));
-			Assert.IsTrue(sut.OnOpenUrlFromTab(default, default, default, default, WindowOpenDisposition.NewPopup, default));
-			Assert.IsTrue(sut.OnOpenUrlFromTab(default, default, default, default, WindowOpenDisposition.NewWindow, default));
+			settings.PopupPolicy = PopupPolicy.Block;
+			var browser = new Mock<IBrowser>();
+			var frame = new Mock<IFrame>();
+			browser.SetupGet(b => b.MainFrame).Returns(frame.Object);
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, default, WindowOpenDisposition.NewBackgroundTab, default));
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, default, WindowOpenDisposition.NewPopup, default));
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, default, WindowOpenDisposition.NewWindow, default));
 			Assert.IsTrue(sut.OnOpenUrlFromTab(default, default, default, default, WindowOpenDisposition.SaveToDisk, default));
+			frame.Verify(f => f.LoadUrl(It.IsAny<string>()), Times.Never);
+		}
+
+		[TestMethod]
+		[DataRow(WindowOpenDisposition.NewBackgroundTab)]
+		[DataRow(WindowOpenDisposition.NewForegroundTab)]
+		[DataRow(WindowOpenDisposition.NewPopup)]
+		[DataRow(WindowOpenDisposition.NewWindow)]
+		public void MustReuseMainFrameForAllowedNewWindows(WindowOpenDisposition disposition)
+		{
+			var browser = new Mock<IBrowser>();
+			var frame = new Mock<IFrame>();
+			browser.SetupGet(b => b.MainFrame).Returns(frame.Object);
+			frame.SetupGet(f => f.Url).Returns("https://exam.example/start");
+			settings.PopupPolicy = PopupPolicy.Allow;
+
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, "https://resource.example/page", disposition, true));
+			frame.Verify(f => f.LoadUrl("https://resource.example/page"), Times.Once);
+
+			settings.PopupPolicy = PopupPolicy.AllowSameHost;
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, "https://resource.example/blocked", disposition, true));
+			frame.Verify(f => f.LoadUrl("https://resource.example/blocked"), Times.Never);
+			Assert.IsTrue(sut.OnOpenUrlFromTab(default, browser.Object, default, "https://exam.example/next", disposition, true));
+			frame.Verify(f => f.LoadUrl("https://exam.example/next"), Times.Once);
 		}
 
 		[TestMethod]

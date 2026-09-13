@@ -109,8 +109,19 @@ namespace SafeExamBrowser.Browser.Handlers
 			switch (targetDisposition)
 			{
 				case WindowOpenDisposition.NewBackgroundTab:
+				case WindowOpenDisposition.NewForegroundTab:
 				case WindowOpenDisposition.NewPopup:
 				case WindowOpenDisposition.NewWindow:
+					var sameHost = Uri.TryCreate(browser.MainFrame.Url, UriKind.Absolute, out var currentUri) &&
+						Uri.TryCreate(targetUrl, UriKind.Absolute, out var targetUri) &&
+						string.Equals(currentUri.Host, targetUri.Host, StringComparison.OrdinalIgnoreCase);
+					if (settings.PopupPolicy == PopupPolicy.Allow || settings.PopupPolicy == PopupPolicy.AllowSameWindow ||
+						(sameHost && (settings.PopupPolicy == PopupPolicy.AllowSameHost || settings.PopupPolicy == PopupPolicy.AllowSameHostAndWindow)))
+					{
+						// Main-frame navigation still passes through OnBeforeBrowse and the exam URL filter.
+						browser.MainFrame.LoadUrl(targetUrl);
+					}
+					return true;
 				case WindowOpenDisposition.SaveToDisk:
 					return true;
 				default:

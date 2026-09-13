@@ -87,9 +87,6 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 			{
 				case PopupPolicy.Allow:
 				case PopupPolicy.AllowSameHost when sameHost:
-					Logger.Debug($"Forwarding request to open new window{(WindowSettings.UrlPolicy.CanLog() ? $" for '{targetUrl}'" : "")}...");
-					creation = PopupCreation.Continue;
-					break;
 				case PopupPolicy.AllowSameWindow:
 				case PopupPolicy.AllowSameHostAndWindow when sameHost:
 					Logger.Info($"Discarding request to open new window and loading{(WindowSettings.UrlPolicy.CanLog() ? $" '{targetUrl}'" : "")} directly...");
