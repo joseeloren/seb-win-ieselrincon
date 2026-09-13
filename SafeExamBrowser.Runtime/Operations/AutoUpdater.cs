@@ -11,7 +11,7 @@ namespace SafeExamBrowser.Runtime.Operations
 {
     public static class AutoUpdater
     {
-        private const string NoRestartArguments = "/norestart REBOOT=ReallySuppress";
+        private const string NoRestartArguments = "/passive /norestart REBOOT=ReallySuppress";
 
         private static string PowerShellLiteral(string value) => "'" + value.Replace("'", "''") + "'";
 
@@ -26,20 +26,22 @@ namespace SafeExamBrowser.Runtime.Operations
 
         private static string BuildInstallerScript(string installerPath, string logPath)
         {
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+
             // A separate process survives the runtime exiting and waits for Windows Installer.
             // Literal paths and an encoded command keep spaces/apostrophes out of shell syntax.
             return "$ErrorActionPreference = 'Stop'; $msi = " + PowerShellLiteral(installerPath) +
-                "; $log = " + PowerShellLiteral(logPath) + "; try { " +
+                "; $log = " + PowerShellLiteral(logPath) + "; $exe = " + PowerShellLiteral(exePath) + "; try { " +
                 "Wait-Process -Id " + Process.GetCurrentProcess().Id + " -ErrorAction SilentlyContinue; " +
                 "$process = Start-Process -FilePath ($env:SystemRoot + '\\System32\\msiexec.exe') " +
                 "-ArgumentList ('/i \"' + $msi + '\" " + NoRestartArguments + "') -Wait -PassThru; " +
-                "Add-Content -LiteralPath $log -Value ('Installer exit code: ' + $process.ExitCode) " +
+                "Add-Content -LiteralPath $log -Value ('Installer exit code: ' + $process.ExitCode); " +
+                "if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) { Start-Process -FilePath $exe } " +
                 "} catch { Add-Content -LiteralPath $log -Value $_.Exception.Message } finally { " +
                 "for ($attempt = 0; $attempt -lt 60; $attempt++) { try { " +
                 "if (Test-Path -LiteralPath $msi) { Remove-Item -LiteralPath $msi -Force }; break " +
                 "} catch { if ($attempt -eq 59) { Add-Content -LiteralPath $log -Value ('Cleanup failed: ' + $_.Exception.Message) }; Start-Sleep -Seconds 2 } }; " +
                 "try { [System.IO.Directory]::Delete([System.IO.Path]::GetDirectoryName($msi)) } catch {} }";
-
         }
 
         private static void LaunchInstallerAndCleanup(string installerPath, string logPath)
