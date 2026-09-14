@@ -135,6 +135,11 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			}));
 		}
 
+		public void Tile(bool left)
+		{
+			// Mobile view does not support tiling.
+		}
+
 		public void FocusBrowser()
 		{
 			Dispatcher.BeginInvoke((Action) (async () =>

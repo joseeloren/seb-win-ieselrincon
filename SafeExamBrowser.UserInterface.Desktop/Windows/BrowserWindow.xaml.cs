@@ -160,6 +160,20 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			}));
 		}
 
+		public void Tile(bool left)
+		{
+			Dispatcher.Invoke(() =>
+			{
+				WindowState = WindowState.Normal;
+				WindowStyle = WindowStyle.SingleBorderWindow;
+				ResizeMode = ResizeMode.CanResizeWithGrip;
+				Width = SystemParameters.WorkArea.Width / 2;
+				Height = SystemParameters.WorkArea.Height;
+				Top = 0;
+				Left = left ? 0 : SystemParameters.WorkArea.Width / 2;
+			});
+		}
+
 		public new void Hide()
 		{
 			Dispatcher.Invoke(base.Hide);

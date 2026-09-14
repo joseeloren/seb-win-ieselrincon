@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -111,6 +111,13 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 			Logger.Info("Opening exam PDF in a managed browser window.");
 			pdfWindow = CreateNewWindow(startUrl: url);
 			pdfUrl = url;
+
+			var mainWindow = Windows.FirstOrDefault(w => w.IsMainWindow);
+			if (mainWindow != null)
+			{
+				mainWindow.Tile(true);
+			}
+			pdfWindow.Tile(false);
 		}
 
 		private BrowserWindow CreateNewWindow(PopupRequestedEventArgs args = default, string startUrl = null)

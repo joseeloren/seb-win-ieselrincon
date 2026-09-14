@@ -250,6 +250,11 @@ namespace SafeExamBrowser.Browser
 			});
 		}
 
+		public void Tile(bool left)
+		{
+			Window.Tile(left);
+		}
+
 		public void ExecuteJavaScript(string code, Action<bool, object> callback = null)
 		{
 			Control.ExecuteJavaScript(code, result => callback?.Invoke(result.Success, result.Result));

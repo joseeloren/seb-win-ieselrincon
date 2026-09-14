@@ -150,5 +150,10 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// Executes JavaScript in the browser window.
 		/// </summary>
 		void ExecuteJavaScript(string code, Action<JavaScriptResult> callback = default);
+
+		/// <summary>
+		/// Tiles the window to a side of the screen.
+		/// </summary>
+		void Tile(bool left);
 	}
 }
