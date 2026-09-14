@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using SafeExamBrowser.Core.Contracts.OperationModel;
@@ -55,7 +56,7 @@ namespace SafeExamBrowser.Client.Operations
 					var parts = pair.Split('=');
 					if(parts.Length == 2 && parts[0] == "token") 
 					{
-						examToken = parts[1];
+						examToken = Uri.UnescapeDataString(parts[1]);
 					}
 				}
 			}
@@ -67,7 +68,7 @@ namespace SafeExamBrowser.Client.Operations
 				logger.Info($"Token found in StartUrl. Skipping TelemetryDialog. Starting continuous telemetry ping with token...");
 				
 				activeToken = examToken;
-				if (pingTask == null)
+				if (pingTask == null || pingTask.IsCompleted)
 				{
 					pingTask = Task.Run(async () => 
 					{
@@ -166,8 +167,11 @@ namespace SafeExamBrowser.Client.Operations
 		{
 			try
 			{
-				var host = Dns.GetHostEntry(Dns.GetHostName());
-				var ip = host.AddressList.FirstOrDefault(a => a.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+				var ip = NetworkInterface.GetAllNetworkInterfaces()
+					.Where(adapter => adapter.OperationalStatus == OperationalStatus.Up && adapter.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+					.SelectMany(adapter => adapter.GetIPProperties().UnicastAddresses)
+					.Select(address => address.Address)
+					.FirstOrDefault(address => address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
 				return ip?.ToString() ?? "127.0.0.1";
 			}
 			catch
