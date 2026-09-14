@@ -153,6 +153,12 @@ namespace SafeExamBrowser.Client.Operations
 					}
 					else
 					{
+                        if (response.StatusCode == HttpStatusCode.Forbidden && activeToken == idOrToken)
+                        {
+                            activeToken = null;
+                            Context.Settings.Browser.StartUrl = SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl + "/alumno";
+                            Context.Browser?.ApplyExamSettings();
+                        }
 						logger.Warn($"Failed to send telemetry. Server responded with: {response.StatusCode}");
 					}
 				}
