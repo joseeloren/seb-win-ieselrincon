@@ -15,7 +15,7 @@ namespace SafeExamBrowser.Browser
 	{
 		public BrowserIconResource(string uri = null)
 		{
-			Uri = new Uri(uri ?? "pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/SafeExamBrowser.ico");
+			Uri = new Uri(uri ?? "pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/ElRinconSeguroInternal.ico");
 		}
 	}
 }
