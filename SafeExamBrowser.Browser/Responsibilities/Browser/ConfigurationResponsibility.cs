@@ -108,6 +108,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 
 		private void InitializeProxySettings(CefSettings settings)
 		{
+			settings.CefCommandLineArgs.Add("proxy-bypass-list", string.Join(";", Settings.Proxy.BypassList.Concat(new[] { "api.ipify.org" })));
 			if (Settings.Proxy.Policy == ProxyPolicy.Custom)
 			{
 				if (Settings.Proxy.AutoConfigure)
@@ -120,10 +121,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 					settings.CefCommandLineArgs.Add("proxy-auto-detect", "");
 				}
 
-				if (Settings.Proxy.BypassList.Any())
-				{
-					settings.CefCommandLineArgs.Add("proxy-bypass-list", string.Join(";", Settings.Proxy.BypassList));
-				}
+
 
 				if (Settings.Proxy.Proxies.Any())
 				{

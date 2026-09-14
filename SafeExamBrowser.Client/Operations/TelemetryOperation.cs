@@ -110,7 +110,7 @@ namespace SafeExamBrowser.Client.Operations
 			{
 				var hostname = Environment.MachineName;
 				var localIp = GetLocalIPAddress();
-				var publicIp = ""; // The server obtains the public IP from the heartbeat request.
+				var publicIp = await GetPublicIPAddressAsync();
 				
 				var desktopName = "";
 				string json;
@@ -168,6 +168,25 @@ namespace SafeExamBrowser.Client.Operations
 				logger.Error("An error occurred while sending telemetry to the server.", ex);
 			}
 		}
+
+        private static string cachedPublicIp = "";
+        private static DateTime nextPublicIpCheck = DateTime.MinValue;
+        private async Task<string> GetPublicIPAddressAsync()
+        {
+            if (DateTime.UtcNow < nextPublicIpCheck) return cachedPublicIp;
+            nextPublicIpCheck = DateTime.UtcNow.AddMinutes(1);
+            try
+            {
+                using (var handler = new HttpClientHandler { UseProxy = false })
+                using (var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(3) })
+                {
+                    var value = (await client.GetStringAsync("https://api.ipify.org")).Trim();
+                    if (IPAddress.TryParse(value, out var address)) cachedPublicIp = address.ToString();
+                }
+            }
+            catch { /* Mantener la última IP detectada durante fallos temporales. */ }
+            return cachedPublicIp;
+        }
 
 		private string GetLocalIPAddress()
 		{
