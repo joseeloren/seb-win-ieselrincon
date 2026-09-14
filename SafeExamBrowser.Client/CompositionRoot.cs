@@ -259,7 +259,7 @@ namespace SafeExamBrowser.Client
 
 		private IOperation BuildBrowserOperation()
 		{
-			context.Settings.Browser.MainWindow.FullScreenMode = true;
+			context.Settings.Browser.MainWindow.FullScreenMode = false; // Forced Window Mode for El Rincón Seguro
 			var fileSystemDialog = BuildFileSystemDialog();
 			var keyGenerator = new KeyGenerator(context.AppConfig, context.IntegrityModule, ModuleLogger(nameof(KeyGenerator)));
 			var moduleLogger = ModuleLogger(nameof(BrowserApplication));

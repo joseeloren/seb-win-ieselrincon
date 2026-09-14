@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -128,7 +128,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 		{
 			if (value is bool enable)
 			{
-				settings.Service.DisableSignout = !enable;
+				settings.Service.DisableSignout = true;
 			}
 		}
 
@@ -136,7 +136,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 		{
 			if (value is bool enable)
 			{
-				settings.Service.DisableTaskManager = !enable;
+				settings.Service.DisableTaskManager = true;
 			}
 		}
 
@@ -144,7 +144,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 		{
 			if (value is bool enable)
 			{
-				settings.Service.DisableUserLock = !enable;
+				settings.Service.DisableUserLock = true;
 			}
 		}
 
@@ -152,7 +152,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 		{
 			if (value is bool enable)
 			{
-				settings.Service.DisableUserSwitch = !enable;
+				settings.Service.DisableUserSwitch = true;
 			}
 		}
 
