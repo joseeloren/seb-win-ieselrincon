@@ -109,7 +109,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 			}
 
 			Logger.Info("Opening exam PDF in a managed browser window.");
-			pdfWindow = CreateNewWindow(startUrl: url);
+			pdfWindow = CreateNewWindow(startUrl: url, isExamPdf: true);
 			pdfUrl = url;
 
 			var mainWindow = Windows.FirstOrDefault(w => w.IsMainWindow);
@@ -120,7 +120,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 			pdfWindow.Tile(false);
 		}
 
-		private BrowserWindow CreateNewWindow(PopupRequestedEventArgs args = default, string startUrl = null)
+		private BrowserWindow CreateNewWindow(PopupRequestedEventArgs args = default, string startUrl = null, bool isExamPdf = false)
 		{
 			var id = ++counter;
 			var windowContext = new BrowserWindowContext
@@ -129,6 +129,7 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 				HashAlgorithm = hashAlgorithm,
 				Icon = new BrowserIconResource(),
 				Id = id,
+				IsExamPdf = isExamPdf,
 				IsMainWindow = Windows.Count == 0,
 				IsPopup = args != default,
 				MessageBox = messageBox,

@@ -44,27 +44,7 @@ namespace SafeExamBrowser.Client.Responsibilities
 		{
 			var actual = Context.HashAlgorithm.GenerateHashFor(password);
 			var expected = Settings.Security.QuitPasswordHash;
-			var valid = expected.Equals(actual, StringComparison.OrdinalIgnoreCase);
-
-			if (!valid)
-			{
-				try
-				{
-					using (var client = new System.Net.WebClient())
-					{
-						string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/verify-exit?password=" + Uri.EscapeDataString(password);
-						string json = client.DownloadString(url);
-						if (json.Contains("\"valid\":true"))
-						{
-							valid = true;
-						}
-					}
-				}
-				catch
-				{
-					// Ignore network errors, just fallback to false
-				}
-			}
+			var valid = !string.IsNullOrEmpty(expected) && expected.Equals(actual, StringComparison.OrdinalIgnoreCase);
 
 			if (valid)
 			{
@@ -170,26 +150,6 @@ namespace SafeExamBrowser.Client.Responsibilities
 				{
 					var passwordHash = Context.HashAlgorithm.GenerateHashFor(result.Password);
 					var isCorrect = Settings.Security.QuitPasswordHash.Equals(passwordHash, StringComparison.OrdinalIgnoreCase);
-
-					if (!isCorrect)
-					{
-						try
-						{
-							using (var client = new System.Net.WebClient())
-							{
-								string url = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/verify-exit?password=" + Uri.EscapeDataString(result.Password);
-								string json = client.DownloadString(url);
-								if (json.Contains("\"valid\":true"))
-								{
-									isCorrect = true;
-								}
-							}
-						}
-						catch
-						{
-							// Ignore network errors
-						}
-					}
 
 					if (isCorrect)
 					{

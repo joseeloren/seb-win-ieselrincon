@@ -102,7 +102,6 @@ namespace SafeExamBrowser.Client.Operations
 			return OperationResult.Success;
 		}
 
-		private string cachedDesktopName = null;
 
 		private async Task SendTelemetryAsync(string idOrToken, string studentName, bool isTokenFlow = false)
 		{
@@ -110,43 +109,9 @@ namespace SafeExamBrowser.Client.Operations
 			{
 				var hostname = Environment.MachineName;
 				var localIp = GetLocalIPAddress();
-				var publicIp = await GetPublicIpAsync();
+				var publicIp = ""; // The server obtains the public IP from the heartbeat request.
 				
-				if (cachedDesktopName == null)
-				{
-					try
-					{
-						if (Context?.Browser != null)
-						{
-							var windows = Context.Browser.GetWindows()?.ToList();
-							if (windows != null && windows.Any())
-							{
-								var mainWindow = windows.FirstOrDefault(w => w.IsMainWindow) ?? windows.First();
-								var tcs = new TaskCompletionSource<string>();
-								mainWindow.ExecuteJavaScript("document.getElementById('statusDesktopName') ? document.getElementById('statusDesktopName').innerText : ''", (success, result) => 
-								{
-									if (success && result != null)
-									{
-										tcs.TrySetResult(result.ToString());
-									}
-									else
-									{
-										tcs.TrySetResult("");
-									}
-								});
-								
-								var jsTask = await Task.WhenAny(tcs.Task, Task.Delay(1000));
-								if (jsTask == tcs.Task)
-								{
-									cachedDesktopName = await tcs.Task;
-								}
-							}
-						}
-					}
-					catch { }
-				}
-
-				var desktopName = cachedDesktopName ?? "";
+				var desktopName = "";
 				string json;
 
 				if (isTokenFlow)
@@ -177,7 +142,7 @@ namespace SafeExamBrowser.Client.Operations
 					var content = new StringContent(json, Encoding.UTF8, "application/json");
 					
 					var serverUrl = $"{SafeExamBrowser.Core.Contracts.ApiConstants.BaseUrl}/api/telemetry";
-					logger.Debug($"Sending telemetry POST to {serverUrl} : {json}");
+					logger.Debug($"Sending heartbeat to {serverUrl}.");
 					
 					var response = await client.PostAsync(serverUrl, content);
 					
@@ -194,25 +159,6 @@ namespace SafeExamBrowser.Client.Operations
 			catch (Exception ex)
 			{
 				logger.Error("An error occurred while sending telemetry to the server.", ex);
-			}
-		}
-
-		private string cachedPublicIp = null;
-		private async Task<string> GetPublicIpAsync()
-		{
-			if (cachedPublicIp != null) return cachedPublicIp;
-			try
-			{
-				using (var client = new HttpClient())
-				{
-					client.Timeout = TimeSpan.FromSeconds(3);
-					cachedPublicIp = (await client.GetStringAsync("https://api.ipify.org")).Trim();
-					return cachedPublicIp;
-				}
-			}
-			catch
-			{
-				return "";
 			}
 		}
 

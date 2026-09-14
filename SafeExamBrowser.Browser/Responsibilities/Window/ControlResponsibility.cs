@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -44,7 +44,8 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 			Logger.Info($"Navigated{(WindowSettings.UrlPolicy.CanLog() ? $" to '{address}'" : "")}.");
 
 			Context.Url = address;
-			Window.UpdateAddress(address);
+			Window.UpdateAddress(Context.IsExamPdf ? string.Empty : address);
+			if (Context.IsExamPdf) { Control_TitleChanged("Enunciado"); return; }
 
 			if (WindowSettings.UrlPolicy == UrlPolicy.Always || WindowSettings.UrlPolicy == UrlPolicy.BeforeTitle)
 			{
@@ -100,6 +101,13 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 
 		private void Control_TitleChanged(string title)
 		{
+			if (Context.IsExamPdf)
+			{
+				Context.Title = "Enunciado";
+				Window.UpdateTitle(Context.Title);
+				TitleChanged?.Invoke(Context.Title);
+				return;
+			}
 			if (WindowSettings.UrlPolicy != UrlPolicy.Always)
 			{
 				Context.Title = title;

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -21,6 +21,8 @@ namespace SafeExamBrowser.Browser
 	{
 		internal IBrowserControl Control { get; set; }
 		internal IHashAlgorithm HashAlgorithm { get; set; }
+		internal bool IsExamPdf { get; set; }
+
 		internal BrowserIconResource Icon { get; set; }
 		internal int Id { get; set; }
 		internal bool IsMainWindow { get; set; }
