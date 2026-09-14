@@ -220,7 +220,7 @@
         Terminate El Rincón Seguro. WARNING: There will be no possibility to save data or perform any further actions, the shutdown will be initiated immediately!
     </Entry>
     <Entry key="LockScreen_Title">
-        EL RINCÓN SEGURO LOCKED
+        LOCKED
     </Entry>
     <Entry key="LockScreen_UnlockButton">
         Unlock
