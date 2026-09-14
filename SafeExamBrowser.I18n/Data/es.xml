@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Text>
     <Entry key="AboutWindow_LicenseInfo">
-        Esta aplicaci贸n est谩 sujeta a los t茅rminos de la Licencia P煤blica de Mozilla, versi贸n 2.0. El Rinc髇 Seguro utiliza los siguientes frameworks y bibliotecas de terceros:
+        Esta aplicaci贸n est谩 sujeta a los t茅rminos de la Licencia P煤blica de Mozilla, versi贸n 2.0. El Rinc贸n Seguro utiliza los siguientes frameworks y bibliotecas de terceros:
     </Entry>
     <Entry key="AboutWindow_Title">
         Versi贸n &amp; informaci贸n sobre la licencia
@@ -166,76 +166,76 @@
         No se ha encontrado la aplicaci贸n "%%NAME%%" en el sistema. Por favor, localice la carpeta que contiene el ejecutable principal "%%EXECUTABLE%%".
     </Entry>
     <Entry key="LockScreen_ApplicationIntegrityMessage">
-        Est谩 utilizando una versi贸n no oficial de SEB. Por favor, aseg煤rese de utilizar un El Rinc髇 Seguro oficial. Para desbloquear El Rinc髇 Seguro, introduzca la contrase帽a de desbloqueo correcta.
+        Est谩 utilizando una versi贸n no oficial de El Rinc贸n Seguro. Por favor, aseg煤rese de utilizar un El Rinc贸n Seguro oficial. Para desbloquear El Rinc贸n Seguro, introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_ApplicationsAllowOption">
         Permitir temporalmente las aplicaciones de la lista negra. Esto solo se aplica a las instancias y sesiones que se est茅n ejecutando en ese momento.
     </Entry>
     <Entry key="LockScreen_ApplicationsMessage">
-        Las aplicaciones de la lista negra que se indican a continuaci贸n se iniciaron y no pudieron cerrarse autom谩ticamente. Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        Las aplicaciones de la lista negra que se indican a continuaci贸n se iniciaron y no pudieron cerrarse autom谩ticamente. Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_ApplicationsTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_CursorContinueOption">
         Permitir temporalmente la configuraci贸n del cursor. Esto s贸lo se aplica a la sesi贸n que se est谩 ejecutando en ese momento.
     </Entry>
     <Entry key="LockScreen_CursorMessage">
-        Se ha detectado una configuraci贸n de cursor prohibida. Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        Se ha detectado una configuraci贸n de cursor prohibida. Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_CursorTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_DisplayConfigurationContinueOption">
         Permitir temporalmente la configuraci贸n de la pantalla. Esto s贸lo se aplica a la sesi贸n que se est谩 ejecutando en ese momento.
     </Entry>
     <Entry key="LockScreen_DisplayConfigurationMessage">
-        Se ha detectado una configuraci贸n de pantalla prohibida. Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        Se ha detectado una configuraci贸n de pantalla prohibida. Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_DisplayConfigurationTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_EaseOfAccessContinueOption">
         Permitir temporalmente la configuraci贸n de la facilidad de acceso. Esto s贸lo se aplica a la sesi贸n que se est谩 ejecutando en ese momento.
     </Entry>
     <Entry key="LockScreen_EaseOfAccessMessage">
-        Se ha detectado una configuraci贸n de facilidad de acceso prohibida para la Pantalla de Seguridad de Windows. Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        Se ha detectado una configuraci贸n de facilidad de acceso prohibida para la Pantalla de Seguridad de Windows. Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_EaseOfAccessTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_RuntimeIntegrityMessage">
-        隆La integridad de ejecuci贸n de El Rinc髇 Seguro se ha visto comprometida! Para desbloquear El Rinc髇 Seguro, introduce la contrase帽a de desbloqueo correcta.
+        隆La integridad de ejecuci贸n de El Rinc贸n Seguro se ha visto comprometida! Para desbloquear El Rinc贸n Seguro, introduce la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_SessionIntegrityMessage">
-        La 煤ltima sesi贸n con la configuraci贸n activa o la URL de inicio no se ha cerrado correctamente. Por favor, introduzca la contrase帽a correcta para desbloquear SEB.
+        La 煤ltima sesi贸n con la configuraci贸n activa o la URL de inicio no se ha cerrado correctamente. Por favor, introduzca la contrase帽a correcta para desbloquear El Rinc贸n Seguro.
     </Entry>
     <Entry key="LockScreen_StickyKeysContinueOption">
         Permitir temporalmente el estado de las teclas adhesivas. Esto s贸lo se aplica a la sesi贸n que se est谩 ejecutando en ese momento.
     </Entry>
     <Entry key="LockScreen_StickyKeysMessage">
-        Se ha detectado un estado prohibido de las teclas adhesivas. Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        Se ha detectado un estado prohibido de las teclas adhesivas. Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_StickyKeysTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_Title">
-        EL RINC覰 SEGURO BLOQUEADO
+        EL RINC脫N SEGURO BLOQUEADO
     </Entry>
     <Entry key="LockScreen_UnlockButton">
         Desbloquear
     </Entry>
     <Entry key="LockScreen_UserSessionContinueOption">
-        Desbloquear El Rinc髇 Seguro.
+        Desbloquear El Rinc贸n Seguro.
     </Entry>
     <Entry key="LockScreen_UserSessionMessage">
-        隆El usuario activo ha cambiado o el ordenador ha sido bloqueado! Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        隆El usuario activo ha cambiado o el ordenador ha sido bloqueado! Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LockScreen_UserSessionTerminateOption">
-        Finalizar El Rinc髇 Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
+        Finalizar El Rinc贸n Seguro. ADVERTENCIA: No habr谩 posibilidad de guardar datos o realizar ninguna otra acci贸n, 隆el cierre se iniciar谩 inmediatamente!
     </Entry>
     <Entry key="LockScreen_UserSwitchMessage">
-        隆El usuario activo ha cambiado! Para desbloquear El Rinc髇 Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
+        隆El usuario activo ha cambiado! Para desbloquear El Rinc贸n Seguro, seleccione una de las opciones disponibles e introduzca la contrase帽a de desbloqueo correcta.
     </Entry>
     <Entry key="LogWindow_AlwaysOnTop">
         Siempre arriba
@@ -256,7 +256,7 @@
         ADVERTENCIA: 隆Los datos de las aplicaci贸nes que no se hayan guardados podr铆an perderse!
     </Entry>
     <Entry key="MessageBox_ApplicationError">
-        Se ha producido un error irrecuperable. Por favor, consulte los archivos de registro para m谩s informaci贸n. El Rinc髇 Seguro se terminar谩 ahora...
+        Se ha producido un error irrecuperable. Por favor, consulte los archivos de registro para m谩s informaci贸n. El Rinc贸n Seguro se terminar谩 ahora...
     </Entry>
     <Entry key="MessageBox_ApplicationErrorTitle">
         Error de aplicaci贸n
@@ -301,13 +301,13 @@
         Cancelar
     </Entry>
     <Entry key="MessageBox_ClientConfigurationError">
-        La configuraci贸n local del cliente ha fallado. Por favor, consulte los archivos de registro para m谩s informaci贸n. El Rinc髇 Seguro se terminar谩 ahora...
+        La configuraci贸n local del cliente ha fallado. Por favor, consulte los archivos de registro para m谩s informaci贸n. El Rinc贸n Seguro se terminar谩 ahora...
     </Entry>
     <Entry key="MessageBox_ClientConfigurationErrorTitle">
         Error de configuraci贸n
     </Entry>
     <Entry key="MessageBox_ClientConfigurationQuestion">
-        La configuraci贸n local del cliente se ha guardado y se utilizar谩 cuando inicie El Rinc髇 Seguro la pr贸xima vez. 驴Desea salir por ahora?
+        La configuraci贸n local del cliente se ha guardado y se utilizar谩 cuando inicie El Rinc贸n Seguro la pr贸xima vez. 驴Desea salir por ahora?
     </Entry>
     <Entry key="MessageBox_ClientConfigurationQuestionTitle">
         Configuraci贸n exitosa
@@ -319,7 +319,7 @@
         Error de descargar
     </Entry>
     <Entry key="MessageBox_DisplayConfigurationError">
-        No se permite la configuraci贸n de pantalla activa. Se permiten %%_ALLOWED_COUNT_%% pantallas %%_TYPE_%%, pero se han detectado %%_INTERNAL_COUNT_%% pantallas internas y %%_EXTERNAL_COUNT_%% pantallas externas. Consulte los archivos de registro para obtener m谩s informaci贸n. El Rinc髇 Seguro se terminar谩 ahora...
+        No se permite la configuraci贸n de pantalla activa. Se permiten %%_ALLOWED_COUNT_%% pantallas %%_TYPE_%%, pero se han detectado %%_INTERNAL_COUNT_%% pantallas internas y %%_EXTERNAL_COUNT_%% pantallas externas. Consulte los archivos de registro para obtener m谩s informaci贸n. El Rinc贸n Seguro se terminar谩 ahora...
     </Entry>
     <Entry key="MessageBox_DisplayConfigurationErrorTitle">
         Configuraci贸n de pantalla prohibida
@@ -331,7 +331,7 @@
         internas o externas
     </Entry>
     <Entry key="MessageBox_DownloadNotAllowed">
-        La descarga de archivos no est谩 permitida en la configuraci贸n actual de SEB. Por favor, informe a su proveedor de examen.
+        La descarga de archivos no est谩 permitida en la configuraci贸n actual de El Rinc贸n Seguro. Por favor, informe a su proveedor de examen.
     </Entry>
     <Entry key="MessageBox_DownloadNotAllowedTitle">
         No se permiten las descargas
@@ -349,19 +349,19 @@
         Contrase帽a incorrecta
     </Entry>
     <Entry key="MessageBox_InvalidPasswordError">
-        No ha introducido la contrase帽a correcta en 5 intentos. El Rinc髇 Seguro terminar谩 ahora...
+        No ha introducido la contrase帽a correcta en 5 intentos. El Rinc贸n Seguro terminar谩 ahora...
     </Entry>
     <Entry key="MessageBox_InvalidPasswordErrorTitle">
         Contrase帽a incorrecta
     </Entry>
     <Entry key="MessageBox_InvalidQuitPassword">
-        El Rinc髇 Seguro s贸lo puede cerrarse introduciendo la contrase帽a de salida correcta.
+        El Rinc贸n Seguro s贸lo puede cerrarse introduciendo la contrase帽a de salida correcta.
     </Entry>
     <Entry key="MessageBox_InvalidQuitPasswordTitle">
         Contrase帽a de salida incorrecta
     </Entry>
     <Entry key="MessageBox_InvalidUnlockPassword">
-        El Rinc髇 Seguro s贸lo puede desbloquearse introduciendo la contrase帽a correcta.
+        El Rinc贸n Seguro s贸lo puede desbloquearse introduciendo la contrase帽a correcta.
     </Entry>
     <Entry key="MessageBox_InvalidUnlockPasswordTitle">
         Contrase帽a de desbloqueo incorrecta
@@ -403,7 +403,7 @@
         Error de terminaci贸n
     </Entry>
     <Entry key="MessageBox_ReconfigurationDenied">
-        No est谩 permitido reconfigurar SEB.
+        No est谩 permitido reconfigurar El Rinc贸n Seguro.
     </Entry>
     <Entry key="MessageBox_ReconfigurationDeniedTitle">
         Reconfiguraci贸n denegada
@@ -415,7 +415,7 @@
         Error de reconfiguraci贸n
     </Entry>
     <Entry key="MessageBox_RemoteSessionNotAllowed">
-        El sistema parece estar ejecut谩ndose en una sesi贸n remota. La configuraci贸n seleccionada no permite que El Rinc髇 Seguro se ejecute en una sesi贸n remota.
+        El sistema parece estar ejecut谩ndose en una sesi贸n remota. La configuraci贸n seleccionada no permite que El Rinc贸n Seguro se ejecute en una sesi贸n remota.
     </Entry>
     <Entry key="MessageBox_RemoteSessionNotAllowedTitle">
         Sesi贸n remota detectada
@@ -427,19 +427,19 @@
         Sesi贸n con proctoring de pantalla
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableError">
-        隆Error al inicializar el servicio SEB! El Rinc髇 Seguro terminar谩 ahora ya que el servicio est谩 configurado para ser obligatorio.
+        隆Error al inicializar el servicio SEB! El Rinc贸n Seguro terminar谩 ahora ya que el servicio est谩 configurado para ser obligatorio.
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableErrorTitle">
         Servicio no disponible
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarning">
-        Fall贸 la inicializaci贸n del servicio SEB. El Rinc髇 Seguro continuar谩 la inicializaci贸n ya que el servicio est谩 configurado para ser opcional.
+        Fall贸 la inicializaci贸n del servicio El Rinc贸n Seguro. El Rinc贸n Seguro continuar谩 la inicializaci贸n ya que el servicio est谩 configurado para ser opcional.
     </Entry>
     <Entry key="MessageBox_ServiceUnavailableWarningTitle">
         Servicio no disponible
     </Entry>
     <Entry key="MessageBox_SessionStartError">
-        El Rinc髇 Seguro no ha podido iniciar una nueva sesi贸n. Consulte los archivos de registro para obtener m谩s informaci贸n.
+        El Rinc贸n Seguro no ha podido iniciar una nueva sesi贸n. Consulte los archivos de registro para obtener m谩s informaci贸n.
     </Entry>
     <Entry key="MessageBox_SessionStartErrorTitle">
         Error al iniciar la sesi贸n
@@ -463,28 +463,28 @@
         Error de configuraci贸n
     </Entry>
     <Entry key="MessageBox_UploadNotAllowed">
-        La carga de archivos no est谩 permitida en la configuraci贸n actual de SEB. Por favor, informe a su proveedor de examen.
+        La carga de archivos no est谩 permitida en la configuraci贸n actual de El Rinc贸n Seguro. Por favor, informe a su proveedor de examen.
     </Entry>
     <Entry key="MessageBox_UploadNotAllowedTitle">
         Carga no permitida
     </Entry>
     <Entry key="MessageBox_VersionRestrictionError">
-        La versi贸n instalada de El Rinc髇 Seguro %%_VERSION_%% no puede ser utilizada ya que la configuraci贸n seleccionada requiere utilizar una versi贸n espec铆fica:%%_REQUIRED_VERSIONS_%%Por favor descargue e instale la versi贸n requerida desde el sitio web oficial (safeexambrowser.org/download) o desde el repositorio de El Rinc髇 Seguro para Windows en GitHub (github.com/safeexambrowser).
+        La versi贸n instalada de El Rinc贸n Seguro %%_VERSION_%% no puede ser utilizada ya que la configuraci贸n seleccionada requiere utilizar una versi贸n espec铆fica:%%_REQUIRED_VERSIONS_%%Por favor descargue e instale la versi贸n requerida desde el sitio web oficial (safeexambrowser.org/download) o desde el repositorio de El Rinc贸n Seguro para Windows en GitHub (github.com/safeexambrowser).
     </Entry>
     <Entry key="MessageBox_VersionRestrictionErrorTitle">
-        Versi贸n El Rinc髇 Seguro no v谩lida
+        Versi贸n El Rinc贸n Seguro no v谩lida
     </Entry>
     <Entry key="MessageBox_VersionRestrictionMinimum">
-        El Rinc髇 Seguro %%_VERSION_%% o m谩s reciente
+        El Rinc贸n Seguro %%_VERSION_%% o m谩s reciente
     </Entry>
     <Entry key="MessageBox_VideoProctoringDisclaimer">
-        La sesi贸n en curso ser谩 supervisada a distancia mediante un flujo de v铆deo y audio en directo, que se env铆a a un servidor configurado individualmente. Pregunte a su examinador sobre su pol铆tica de privacidad. El Rinc髇 Seguro por s铆 mismo no se conecta a ning煤n servidor centralizado de supervisi贸n El Rinc髇 Seguro, su proveedor de ex谩menes decide qu茅 servicio/servidor de supervisi贸n utilizar.
+        La sesi贸n en curso ser谩 supervisada a distancia mediante un flujo de v铆deo y audio en directo, que se env铆a a un servidor configurado individualmente. Pregunte a su examinador sobre su pol铆tica de privacidad. El Rinc贸n Seguro por s铆 mismo no se conecta a ning煤n servidor centralizado de supervisi贸n El Rinc贸n Seguro, su proveedor de ex谩menes decide qu茅 servicio/servidor de supervisi贸n utilizar.
     </Entry>
     <Entry key="MessageBox_VideoProctoringDisclaimerTitle">
         Sesi贸n con supervisi贸n a distancia
     </Entry>
     <Entry key="MessageBox_VirtualMachineNotAllowed">
-        Este ordenador parece ser una m谩quina virtual. La configuraci贸n seleccionada no permite ejecutar El Rinc髇 Seguro en una m谩quina virtual.
+        Este ordenador parece ser una m谩quina virtual. La configuraci贸n seleccionada no permite ejecutar El Rinc贸n Seguro en una m谩quina virtual.
     </Entry>
     <Entry key="MessageBox_VirtualMachineNotAllowedTitle">
         M谩quina virtual detectada
@@ -493,7 +493,7 @@
         S铆
     </Entry>
     <Entry key="MessageBox_ZoomNotSupported">
-        La configuraci贸n seleccionada requiere supervisi贸n remota con Zoom, que esta versi贸n de El Rinc髇 Seguro no admite. Por favor descargue e instale la versi贸n El Rinc髇 Seguro especificada por el organizador de su examen. Debido a problemas de licencia, la supervisi贸n remota con Zoom s贸lo est谩 disponible para los miembros de El Rinc髇 Seguro Alliance. Consulte https://safeexambrowser.org/alliance para obtener m谩s informaci贸n.
+        La configuraci贸n seleccionada requiere supervisi贸n remota con Zoom, que esta versi贸n de El Rinc贸n Seguro no admite. Por favor descargue e instale la versi贸n El Rinc贸n Seguro especificada por el organizador de su examen. Debido a problemas de licencia, la supervisi贸n remota con Zoom s贸lo est谩 disponible para los miembros de El Rinc贸n Seguro Alliance. Consulte https://safeexambrowser.org/alliance para obtener m谩s informaci贸n.
     </Entry>
     <Entry key="MessageBox_ZoomNotSupportedTitle">
         Supervisi贸n remota con Zoom requerido
@@ -727,7 +727,7 @@
         Finalizaci贸n del proctoring de pantalla
     </Entry>
     <Entry key="RuntimeWindow_ApplicationRunning">
-        El Rinc髇 Seguro se est谩 ejecutando.
+        El Rinc贸n Seguro se est谩 ejecutando.
     </Entry>
     <Entry key="ServerFailureDialog_Abort">
         Abortar
@@ -736,7 +736,7 @@
         Fallback
     </Entry>
     <Entry key="ServerFailureDialog_Message">
-        Se ha producido un error al intentar comunicarse con el servidor SEB.
+        Se ha producido un error al intentar comunicarse con el servidor El Rinc贸n Seguro.
     </Entry>
     <Entry key="ServerFailureDialog_Retry">
         Reintentar
