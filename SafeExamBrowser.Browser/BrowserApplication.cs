@@ -178,7 +178,7 @@ namespace SafeExamBrowser.Browser
 		private void InitializeApplicationInfo()
 		{
 			AutoStart = true;
-			Icon = new BrowserIconResource();
+			Icon = new XamlIconResource { Uri = new Uri("pack://application:,,,/SafeExamBrowser.UserInterface.Desktop;component/Images/BrowserTaskbar.xaml") };
 			Id = Guid.NewGuid();
 			Name = text.Get(TextKey.Browser_Name);
 			Tooltip = text.Get(TextKey.Browser_Tooltip);
