@@ -25,7 +25,7 @@ namespace SafeExamBrowser.Service
 			service = new ServiceInstaller();
 			service.Description = "Performs operations which require elevated privileges.";
 			service.DisplayName = "Servicio del El Rincón Seguro";
-			service.ServiceName = nameof(SafeExamBrowser);
+			service.ServiceName = "ElRinconSeguro";
 			service.StartType = ServiceStartMode.Automatic;
 
 			Installers.Add(process);

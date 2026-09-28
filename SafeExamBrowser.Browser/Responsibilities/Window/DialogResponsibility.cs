@@ -61,7 +61,8 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 			}
 			else if (string.IsNullOrEmpty(Settings.DownAndUploadDirectory))
 			{
-				initialPath = KnownFolders.Downloads.ExpandedPath;
+				initialPath = System.IO.Path.Combine(KnownFolders.Downloads.ExpandedPath, "ElRinconSeguro");
+				System.IO.Directory.CreateDirectory(initialPath);
 			}
 			else
 			{

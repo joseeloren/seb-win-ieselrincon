@@ -120,9 +120,9 @@ namespace SebWindowsConfig.Utilities
 
 		// Application path contains [MANUFACTURER]\[PRODUCT_NAME]
 		// (see also "SebWindowsPackageSetup" Project in MS Visual Studio 10)
-		public const string MANUFACTURER_LOCAL     = "SafeExamBrowser";
+		public const string MANUFACTURER_LOCAL     = "ElRinconSeguro";
         //private const string MANUFACTURER         = "Dpto. Informática IES El Rincón";
-        public const string PRODUCT_NAME           = "SafeExamBrowser";
+        public const string PRODUCT_NAME           = "ElRinconSeguro";
         public const string SEB_SERVICE_DIRECTORY = "SebWindowsServiceWCF";
         public const string SEB_BROWSER_DIRECTORY = "SebWindowsBrowser";
         private const string XUL_RUNNER_DIRECTORY = "xulrunner";

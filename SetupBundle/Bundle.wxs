@@ -3,7 +3,7 @@
     <Bundle Name="El Rincón Seguro"
             IconSourceFile="$(var.Setup.ProjectDir)Resources\Application.ico"
             Manufacturer="!(bind.packageManufacturer.SetupX86)"
-            UpgradeCode="26C1045A-99CC-4479-987B-376390379441"
+            UpgradeCode="B292DA04-045D-4B08-8B3D-6E921772A3E5"
             Version="!(bind.packageVersion.SetupX86)">
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLargeLicense">
             <bal:WixStandardBootstrapperApplication LicenseFile="$(var.Setup.ProjectDir)Resources\License.rtf"

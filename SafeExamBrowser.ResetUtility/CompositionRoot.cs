@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using SafeExamBrowser.Configuration.Contracts;
 using SafeExamBrowser.Lockdown;
 using SafeExamBrowser.Lockdown.Contracts;
 using SafeExamBrowser.Logging;
@@ -79,7 +80,7 @@ namespace SafeExamBrowser.ResetUtility
 
 		private void InitializeLogging()
 		{
-			var appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), nameof(SafeExamBrowser));
+			var appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppConfig.PRODUCT_DIRECTORY);
 			var logFolder = Path.Combine(appDataFolder, "Logs");
 			var logFilePrefix = DateTime.Now.ToString("yyyy-MM-dd\\_HH\\hmm\\mss\\s", CultureInfo.InvariantCulture);
 			var logFilePath = Path.Combine(logFolder, $"{logFilePrefix}_{nameof(ResetUtility)}.log");

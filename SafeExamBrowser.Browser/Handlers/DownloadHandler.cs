@@ -139,7 +139,9 @@ namespace SafeExamBrowser.Browser.Handlers
 			}
 			else
 			{
-				filePath = Path.Combine(KnownFolders.Downloads.ExpandedPath, downloadItem.SuggestedFileName);
+				var directory = Path.Combine(KnownFolders.Downloads.ExpandedPath, "ElRinconSeguro");
+				Directory.CreateDirectory(directory);
+				filePath = Path.Combine(directory, downloadItem.SuggestedFileName);
 			}
 
 			if (File.Exists(filePath))

@@ -26,7 +26,8 @@ namespace SafeExamBrowser.Runtime.Operations
 
         private static string BuildInstallerScript(string installerPath, string logPath)
         {
-            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string exePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                "ElRinconSeguro", "Application", "SafeExamBrowser.exe");
 
             // A separate process survives the runtime exiting and waits for Windows Installer.
             // Literal paths and an encoded command keep spaces/apostrophes out of shell syntax.

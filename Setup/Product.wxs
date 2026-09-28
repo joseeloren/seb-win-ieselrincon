@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <?define ProductReleaseVersion="0.0.181" ?>
+    <?define ProductReleaseVersion="0.0.182" ?>
     <Product Name="El Rincón Seguro $(var.ProductReleaseVersion) ($(var.Platform))" Manufacturer="Dpto. Informática IES El Rincón" Language="1034" Codepage="1252"
-             Id="*" Version="$(var.ProductReleaseVersion)" UpgradeCode="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
+             Id="*" Version="$(var.ProductReleaseVersion)" UpgradeCode="682F084A-973A-4F9C-B9AF-512075E412E9">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
         <!-- No solicitar ni ejecutar reinicios, también al abrir el MSI manualmente. -->
         <Property Id="REBOOT" Value="ReallySuppress" />
@@ -48,6 +48,12 @@
         
         <!-- Retirar la versión anterior antes de copiar la nueva, con rollback si falla. -->
         <MajorUpgrade DowngradeErrorMessage="Ya hay una versión más reciente de [ProductName] instalada." AllowSameVersionUpgrades="yes" Schedule="afterInstallInitialize" IgnoreRemoveFailure="no" />
+        <!-- Only the historical Rincon 0.0.x Spanish releases share SEB's identity. -->
+        <Upgrade Id="97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB">
+            <UpgradeVersion Minimum="0.0.1" Maximum="0.0.181" IncludeMinimum="yes" IncludeMaximum="yes" Language="1034" Property="RINCON_LEGACY" />
+            <UpgradeVersion Minimum="1.0.0" IncludeMinimum="yes" OnlyDetect="yes" Property="ORIGINAL_SEB" />
+        </Upgrade>
+        <Condition Message="La instalación antigua comparte archivos con SEB. Retire la versión antigua de El Rincón Seguro y repare SEB antes de instalar esta versión independiente.">NOT (RINCON_LEGACY AND ORIGINAL_SEB)</Condition>
         <Icon Id="ApplicationIcon" SourceFile="Resources\Application.ico" />
         <Icon Id="ConfigurationToolIcon" SourceFile="Resources\ConfigurationTool.ico" />
         <Icon Id="ResetUtilityIcon" SourceFile="Resources\ResetUtility.ico" />
@@ -62,8 +68,6 @@
             <ComponentGroupRef Id="ServiceComponents" />
             <ComponentRef Id="ShortcutComponent" />
         </Feature>
-        <InstallExecuteSequence>
-            <Custom Action="LegacyCleanupAction" After="RemoveFiles" />
-        </InstallExecuteSequence>
+
     </Product>
 </Wix>

@@ -15,19 +15,19 @@
         </xsl:copy>
         <wix:File Id="ApplicationIconFile" Source="Resources\Application.ico" />
         <wix:File Id="ConfigurationIconFile" Source="Resources\ConfigurationFile.ico" />
-        <wix:ProgId Id="ConfigurationFileExtension" Description="SEB Configuration File" Icon="ConfigurationIconFile" Advertise="no">
-            <wix:Extension Id="seb" ContentType="application/seb" Advertise="no">
+        <wix:ProgId Id="ElRinconSeguro.Configuration" Description="El Rincon Seguro Configuration File" Icon="ConfigurationIconFile" Advertise="no">
+            <wix:Extension Id="ers" ContentType="application/x-elrinconseguro" Advertise="no">
                 <wix:Verb Id="open" Command="Open" Argument="&quot;%1&quot;" TargetFile="MainExecutable" />
             </wix:Extension>
         </wix:ProgId>
-        <wix:RegistryKey Root="HKCR" Key="seb">
-            <wix:RegistryValue Value="URL:Safe Exam Browser Protocol" Type="string" />
+        <wix:RegistryKey Root="HKCR" Key="rincon">
+            <wix:RegistryValue Value="URL:El Rincon Seguro Protocol" Type="string" />
             <wix:RegistryValue Name="URL Protocol" Value="" Type="string" />
             <wix:RegistryValue Key="DefaultIcon" Value="[#ApplicationIconFile]" Type="string" />
             <wix:RegistryValue Key="shell\open\command" Value="&quot;[ApplicationDirectory]$(var.SafeExamBrowser.Runtime.TargetFileName)&quot; &quot;%1&quot;" Type="string" />
         </wix:RegistryKey>
-        <wix:RegistryKey Root="HKCR" Key="sebs">
-            <wix:RegistryValue Value="URL:Safe Exam Browser Secure Protocol" Type="string" />
+        <wix:RegistryKey Root="HKCR" Key="rincons">
+            <wix:RegistryValue Value="URL:El Rincon Seguro Secure Protocol" Type="string" />
             <wix:RegistryValue Name="URL Protocol" Value="" Type="string" />
             <wix:RegistryValue Key="DefaultIcon" Value="[#ApplicationIconFile]" Type="string" />
             <wix:RegistryValue Key="shell\open\command" Value="&quot;[ApplicationDirectory]$(var.SafeExamBrowser.Runtime.TargetFileName)&quot; &quot;%1&quot;" Type="string" />

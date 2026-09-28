@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Dpto. Informática IES El Rincón, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -34,6 +34,22 @@ namespace SafeExamBrowser.Configuration.UnitTests
 		private Mock<IResourceLoader> networkLoader;
 		private Mock<IDataParser> xmlParser;
 		private Mock<IDataSerializer> xmlSerializer;
+
+        [TestMethod]
+        public void RinconIdentityDoesNotShareOriginalSebResources()
+        {
+            var config = sut.InitializeAppConfig();
+            StringAssert.Contains(config.AppDataFilePath, @"\ElRinconSeguro\");
+            StringAssert.Contains(config.ProgramDataFilePath, @"\ElRinconSeguro\");
+            StringAssert.Contains(config.BrowserCachePath, @"\ElRinconSeguro\");
+            Assert.AreEqual("rincon", config.SebUriScheme);
+            Assert.AreEqual("rincons", config.SebUriSchemeSecure);
+            Assert.AreEqual("net.pipe://localhost/elrinconseguro/service", config.ServiceAddress);
+            Assert.AreNotEqual("safe_exam_browser_runtime_mutex", AppConfig.RUNTIME_MUTEX_NAME);
+            Assert.AreNotEqual("safe_exam_browser_client_mutex", AppConfig.CLIENT_MUTEX_NAME);
+            Assert.AreNotEqual("safe_exam_browser_reset_mutex", AppConfig.SERVICE_MUTEX_NAME);
+            StringAssert.EndsWith(config.ClientExecutablePath, "SafeExamBrowser.Client.exe");
+        }
 
 		[TestInitialize]
 		public void Initialize()

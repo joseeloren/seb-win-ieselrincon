@@ -22,7 +22,7 @@ if ($productVersion -ne $ExpectedVersion -or $productName -notmatch " $([regex]:
     throw "Version interna incorrecta: $productName / $productVersion; esperada: $ExpectedVersion"
 }
 if ((Split-Path $MsiPath -Leaf) -ne "ElRinconSeguro_$ExpectedVersion.msi") { throw 'Nombre de archivo incorrecto.' }
-if ($upgradeCode -ne '{97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB}') { throw 'UpgradeCode incompatible con versiones anteriores.' }
+if ($upgradeCode -ne '{682F084A-973A-4F9C-B9AF-512075E412E9}') { throw 'UpgradeCode incompatible con versiones anteriores.' }
 $initialize = [int](Read-MsiValue "SELECT Sequence FROM InstallExecuteSequence WHERE Action = 'InstallInitialize'")
 $remove = [int](Read-MsiValue "SELECT Sequence FROM InstallExecuteSequence WHERE Action = 'RemoveExistingProducts'")
 $install = [int](Read-MsiValue "SELECT Sequence FROM InstallExecuteSequence WHERE Action = 'InstallFiles'")
@@ -49,3 +49,33 @@ while ($file = $files.Fetch()) {
 if ($checkedFiles -eq 0) { throw 'No se encontraron los ejecutables del cliente en el MSI.' }
 Write-Host "$checkedFiles archivos del cliente con version $ExpectedVersion dentro del MSI."
 Write-Host "MSI verificado: $productName; ProductVersion=$productVersion; secuencia $initialize < $remove < $install; sin reinicios."
+
+# Inspect compiled tables without installing or executing the client.
+if ((Read-MsiValue "SELECT DefaultDir FROM Directory WHERE Directory = 'InstallFolder'") -notmatch 'ElRinconSeguro$') { throw 'Shared install directory.' }
+if ((Read-MsiValue "SELECT Name FROM ServiceInstall") -ne 'ElRinconSeguro') { throw 'Shared service.' }
+if ((Read-MsiValue "SELECT Name FROM ServiceControl") -ne 'ElRinconSeguro') { throw 'Shared service control.' }
+if ((Read-MsiValue "SELECT UpgradeCode FROM Upgrade WHERE ActionProperty = 'RINCON_LEGACY'") -ne '{97A8B13E-48FB-4BE1-A7C2-DD1863F95CCB}') { throw 'Missing legacy migration.' }
+if ((Read-MsiValue "SELECT VersionMax FROM Upgrade WHERE ActionProperty = 'RINCON_LEGACY'") -ne '0.0.181') { throw 'Unsafe legacy migration range.' }
+if ((Read-MsiValue "SELECT Language FROM Upgrade WHERE ActionProperty = 'RINCON_LEGACY'") -ne '1034') { throw 'Unsafe legacy migration language.' }
+$registry = $database.OpenView('SELECT `Root`, `Key` FROM `Registry`')
+[void]$registry.Execute()
+while ($row = $registry.Fetch()) {
+    if ($row.IntegerData(1) -eq 0 -and $row.StringData(2) -match '^(\.seb|seb|sebs|ConfigurationFileExtension)(\\|$)') { throw 'Installer modifies original SEB associations.' }
+}
+[void]$registry.Close()
+Write-Host 'Independent directories, service, associations and bounded legacy migration verified.'
+
+$legacyAttributes = [int](Read-MsiValue "SELECT Attributes FROM Upgrade WHERE ActionProperty = 'RINCON_LEGACY'")
+if (($legacyAttributes -band 7) -or (($legacyAttributes -band 768) -ne 768)) { throw 'Legacy upgrade must remove matching versions and propagate failures.' }
+if ((Read-MsiValue "SELECT VersionMin FROM Upgrade WHERE ActionProperty = 'RINCON_LEGACY'") -ne '0.0.1') { throw 'Legacy minimum version incorrect.' }
+$originalAttributes = [int](Read-MsiValue "SELECT Attributes FROM Upgrade WHERE ActionProperty = 'ORIGINAL_SEB'")
+if (!( $originalAttributes -band 2)) { throw 'Original SEB must only be detected, never removed.' }
+if ((Read-MsiValue "SELECT VersionMin FROM Upgrade WHERE ActionProperty = 'ORIGINAL_SEB'") -ne '1.0.0') { throw 'Original SEB detection incorrect.' }
+$conditions = $database.OpenView('SELECT `Condition` FROM `LaunchCondition`')
+[void]$conditions.Execute()
+$hasLegacyProtection = $false
+while ($row = $conditions.Fetch()) {
+    if ($row.StringData(1) -eq 'NOT (RINCON_LEGACY AND ORIGINAL_SEB)') { $hasLegacyProtection = $true }
+}
+[void]$conditions.Close()
+if (!$hasLegacyProtection) { throw 'Missing shared legacy protection.' }
