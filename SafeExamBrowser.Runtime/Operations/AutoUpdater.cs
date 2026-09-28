@@ -11,8 +11,6 @@ namespace SafeExamBrowser.Runtime.Operations
 {
     public static class AutoUpdater
     {
-        private const string NoRestartArguments = "/qn /norestart REBOOT=ReallySuppress";
-
         private static string PowerShellLiteral(string value) => "'" + value.Replace("'", "''") + "'";
 
         private static void DeleteDownload(string path)
@@ -24,30 +22,25 @@ namespace SafeExamBrowser.Runtime.Operations
             }
         }
 
-        private static string BuildInstallerScript(string installerPath, string logPath)
+        private static string BuildInstallerScript(string installerPath, string logPath, string expectedVersion)
         {
-            string exePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+            var process = Process.GetCurrentProcess();
+            var executable = process.MainModule.FileName;
+            var target = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
                 "ElRinconSeguro", "Application", "SafeExamBrowser.exe");
-
-            // A separate process survives the runtime exiting and waits for Windows Installer.
-            // Literal paths and an encoded command keep spaces/apostrophes out of shell syntax.
-            return "$ErrorActionPreference = 'Stop'; $msi = " + PowerShellLiteral(installerPath) +
-                "; $log = " + PowerShellLiteral(logPath) + "; $exe = " + PowerShellLiteral(exePath) + "; try { " +
-                "Wait-Process -Id " + Process.GetCurrentProcess().Id + " -ErrorAction SilentlyContinue; " +
-                "$process = Start-Process -FilePath ($env:SystemRoot + '\\System32\\msiexec.exe') " +
-                "-ArgumentList ('/i \"' + $msi + '\" " + NoRestartArguments + "') -Wait -PassThru -Verb RunAs; " +
-                "Add-Content -LiteralPath $log -Value ('Installer exit code: ' + $process.ExitCode); " +
-                "if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) { Start-Process -FilePath $exe } " +
-                "} catch { Add-Content -LiteralPath $log -Value $_.Exception.Message } finally { " +
-                "for ($attempt = 0; $attempt -lt 60; $attempt++) { try { " +
-                "if (Test-Path -LiteralPath $msi) { Remove-Item -LiteralPath $msi -Force }; break " +
-                "} catch { if ($attempt -eq 59) { Add-Content -LiteralPath $log -Value ('Cleanup failed: ' + $_.Exception.Message) }; Start-Sleep -Seconds 2 } }; " +
-                "try { [System.IO.Directory]::Delete([System.IO.Path]::GetDirectoryName($msi)) } catch {} }";
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SafeExamBrowser.Runtime.Operations.InstallUpdate.ps1"))
+            using (var reader = new StreamReader(stream))
+            {
+                return "$msi = " + PowerShellLiteral(installerPath) + "; $log = " + PowerShellLiteral(logPath) +
+                    "; $exe = " + PowerShellLiteral(target) + "; $oldExe = " + PowerShellLiteral(executable) +
+                    "; $parentId = " + process.Id + "; $parentStart = " + PowerShellLiteral(process.StartTime.ToUniversalTime().Ticks.ToString()) +
+                    "; $expectedVersion = " + PowerShellLiteral(expectedVersion) + "; " + reader.ReadToEnd();
+            }
         }
 
-        private static void LaunchInstallerAndCleanup(string installerPath, string logPath)
+        private static void LaunchInstallerAndCleanup(string installerPath, string logPath, string expectedVersion)
         {
-            string script = BuildInstallerScript(installerPath, logPath);
+            string script = BuildInstallerScript(installerPath, logPath, expectedVersion);
             Process.Start(new ProcessStartInfo
             {
                 FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
@@ -58,7 +51,7 @@ namespace SafeExamBrowser.Runtime.Operations
             });
         }
 
-        public static void CheckForUpdatesAndRun()
+        public static bool CheckForUpdatesAndRun()
         {
             try
             {
@@ -153,7 +146,7 @@ namespace SafeExamBrowser.Runtime.Operations
                                     File.SetAttributes(tempPath, FileAttributes.Hidden);
                                     // MajorUpgrade del MSI sustituye la versión anterior automáticamente.
                                     File.AppendAllText(logPath, $"[{DateTime.Now}] Launching upgrade installer: {tempPath}\n");
-                                    LaunchInstallerAndCleanup(tempPath, logPath);
+                                    LaunchInstallerAndCleanup(tempPath, logPath, apiVersion);
                                     cleanupHandedOff = true;
                                 }
                             }
@@ -167,7 +160,7 @@ namespace SafeExamBrowser.Runtime.Operations
                                 }
                             }
 
-                            Environment.Exit(0);
+                            return false;
                         }
                         else
                         {
@@ -186,8 +179,9 @@ namespace SafeExamBrowser.Runtime.Operations
                 catch { }
 
                 MessageBox.Show("No se pudo comprobar la versión de El Rincón Seguro. Compruebe su conexión a internet.", "Error de conexión", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(1);
+                return false;
             }
+            return true;
         }
     }
 }

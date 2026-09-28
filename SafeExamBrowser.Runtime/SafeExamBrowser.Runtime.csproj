@@ -137,6 +137,7 @@
     <Compile Include="Responsibilities\SessionResponsibility.cs" />
     <Compile Include="RuntimeController.cs" />
     <Compile Include="RuntimeContext.cs" />
+    <EmbeddedResource Include="Operations\InstallUpdate.ps1" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

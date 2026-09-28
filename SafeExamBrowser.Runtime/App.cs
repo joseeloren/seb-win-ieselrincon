@@ -39,7 +39,10 @@ namespace SafeExamBrowser.Runtime
 		private static void StartApplication()
 		{
 			// Checking for updates before anything else
-			SafeExamBrowser.Runtime.Operations.AutoUpdater.CheckForUpdatesAndRun();
+			if (!SafeExamBrowser.Runtime.Operations.AutoUpdater.CheckForUpdatesAndRun())
+            {
+                return;
+            }
 
 			if (NoInstanceRunning())
 			{

@@ -33,3 +33,26 @@ sin ejecutarlo. Pruebas de configuración: 69/72 con cultura española, incluida
 las nuevas comprobaciones de aislamiento; los tres tests de serialización que
 usan Convert.ToDouble sin cultura pasan al repetirlos con en-US.
 Pendiente: prueba real de migración en un Windows separado, antes de publicar.
+
+## Corrección del actualizador 0.0.183
+
+Se observaron procesos de inicio antiguos activos y sus auxiliares detenidos en
+Wait-Process, sin que se hubiera lanzado Windows Installer. El inicio ahora devuelve
+el control a Main y libera el mutex antes de terminar. El auxiliar espera 15 segundos
+y, si es necesario, cierra exclusivamente el PID solicitante después de comprobar
+su hora de inicio y ejecutable. No busca ni cierra procesos por nombre.
+
+El MSI se ejecuta con registro detallado, sin reinicios. Se comprueba su código de
+salida, la existencia del ejecutable y la coincidencia con la versión anunciada
+antes de reabrir. Los errores se muestran y conservan la descarga para diagnóstico.
+El registro MSI está junto al registro del actualizador, con sufijo .msi.log.
+
+Las versiones anteriores que ya se bloquean antes de instalar requieren ejecutar
+manualmente el nuevo MSI una vez. No pueden recibir la corrección de su propio
+actualizador hasta completar esa instalación. Cancelar primero sus auxiliares
+pendientes; después cerrar los procesos de inicio antiguos. No cerrar un examen.
+
+Pruebas sin instalar: test_updater.ps1 ejecuta el flujo real con procesos y MSI
+simulados en nueve escenarios: salida normal, bloqueo, PID reutilizado, ejecutable
+inesperado, error MSI, cancelación UAC, ejecutable ausente, versión equivocada y
+código 3010 sin reinicio. verify_updater.ps1 analiza el script incrustado compilado.
