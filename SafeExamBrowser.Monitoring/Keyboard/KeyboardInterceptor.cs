@@ -48,6 +48,11 @@ namespace SafeExamBrowser.Monitoring.Keyboard
 		{
 			var block = false;
 			var key = KeyInterop.KeyFromVirtualKey(keyCode);
+			if (key == Key.LeftCtrl || key == Key.RightCtrl || key == Key.LeftAlt || key == Key.RightAlt ||
+				key == Key.LeftShift || key == Key.RightShift || key == Key.LWin || key == Key.RWin)
+			{
+				logger.Debug($"[KeyboardState] {key} {state}; flags={modifier}.");
+			}
 
 			// RDP may carry modifiers into the secure desktop. Never swallow their
 			// releases, including injected releases used to recover keyboard state.

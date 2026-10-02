@@ -32,6 +32,23 @@
             CefSharp.PostMessage({ Type: 'RemoteDesktopKeyboard', Active: value });
         }
     }
+    function diagnose(name, viewer, event, key) {
+        var pressed = viewer && viewer.keyboard.pressed || {};
+        CefSharp.PostMessage({ Type: 'RemoteDesktopKeyboardDiagnostic', Event: name, Key: key || 'None',
+            Viewer: !!viewer, Focused: !!(event && isInput(viewer, event.target)),
+            Ctrl: !!(event && event.ctrlKey), Alt: !!(event && event.altKey),
+            Shift: !!(event && event.shiftKey), Meta: !!(event && event.metaKey),
+            RemoteCtrl: !!(pressed[0xffe3] || pressed[0xffe4]),
+            RemoteAlt: !!(pressed[0xffe9] || pressed[0xffea]),
+            RemoteShift: !!(pressed[0xffe1] || pressed[0xffe2]),
+            RemoteMeta: !!(pressed[0xffeb] || pressed[0xffec]) });
+    }
+    function diagnosticKey(event) {
+        if (['Control', 'Alt', 'Shift', 'Meta'].indexOf(event.key) !== -1) return event.key;
+        // Only shortcut categories are recorded, never typed text or clipboard data.
+        if (event.ctrlKey && ['KeyA', 'KeyC', 'KeyV', 'KeyX'].indexOf(event.code) !== -1) return event.code;
+        return null;
+    }
     function reset(viewer) {
         if (!viewer) return;
         viewer.keyboard.reset();
@@ -72,17 +89,50 @@
         var focused = isInput(viewer, event.target);
         notify(focused);
         if (!focused) return;
+        var key = diagnosticKey(event);
+        if (key) diagnose('KeyDownBefore', viewer, event, key);
         synchronize(viewer, event);
+        if (key) diagnose('KeyDownAfter', viewer, event, key);
         if (event.ctrlKey && !event.altKey && !event.metaKey && (event.code === 'KeyV' || (event.key || '').toLowerCase() === 'v')) sendClipboard(viewer);
     }, true);
-    document.addEventListener('focusin', function (event) { notify(isInput(findViewer(), event.target)); }, true);
-    function leave() { reset(findViewer()); notify(false); }
+    document.addEventListener('focusin', function (event) {
+        var viewer = findViewer();
+        var focused = isInput(viewer, event.target);
+        diagnose('FocusInBefore', viewer, event);
+        // The password dialog and the viewer can exchange focus without a
+        // window blur. Discard remote modifiers from the previous interaction;
+        // the next keydown restores physically held modifiers from its flags.
+        if (focused && !active) reset(viewer);
+        notify(focused);
+        diagnose('FocusInAfter', viewer, event);
+    }, true);
+    document.addEventListener('focusout', function (event) {
+        var viewer = findViewer();
+        if (isInput(viewer, event.target) && !isInput(viewer, event.relatedTarget)) {
+            diagnose('FocusOutBefore', viewer, event);
+            reset(viewer);
+            notify(false);
+            diagnose('FocusOutAfter', viewer, event);
+        }
+    }, true);
+    document.addEventListener('keyup', function (event) {
+        var viewer = findViewer();
+        var key = diagnosticKey(event);
+        if (key && isInput(viewer, event.target)) diagnose('KeyUp', viewer, event, key);
+    }, true);
+    function leave() {
+        var viewer = findViewer();
+        diagnose('LeaveBefore', viewer);
+        reset(viewer); notify(false);
+        diagnose('LeaveAfter', viewer);
+    }
     window.addEventListener('blur', leave);
     document.addEventListener('visibilitychange', function () { if (document.visibilityState !== 'visible') leave(); });
     window.addEventListener('pagehide', leave);
     var timer = window.setInterval(function () {
         var viewer = findViewer();
         if ((viewer && (!previous || viewer.keyboard !== previous.keyboard || viewer.client !== previous.client)) || (!viewer && previous)) {
+            diagnose('ViewerChanged', viewer);
             reset(previous); reset(viewer);
             previous = viewer ? { keyboard: viewer.keyboard, client: viewer.client } : null;
         }

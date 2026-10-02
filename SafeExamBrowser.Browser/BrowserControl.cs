@@ -222,6 +222,17 @@ namespace SafeExamBrowser.Browser
 			try
 			{
 				var message = e.ConvertMessageTo<RemoteKeyboardMessage>();
+				if (message?.Type == "RemoteDesktopKeyboardDiagnostic")
+				{
+					var diagnostic = e.ConvertMessageTo<RemoteKeyboardDiagnostic>();
+					var events = new[] { "KeyDownBefore", "KeyDownAfter", "KeyUp", "FocusInBefore", "FocusInAfter", "FocusOutBefore", "FocusOutAfter", "LeaveBefore", "LeaveAfter", "ViewerChanged" };
+					var keys = new[] { "None", "Control", "Alt", "Shift", "Meta", "KeyA", "KeyC", "KeyV", "KeyX" };
+					if (diagnostic != null && events.Contains(diagnostic.Event) && keys.Contains(diagnostic.Key))
+					{
+						logger.Info($"[RemoteKeyboard] {diagnostic.Event}; key={diagnostic.Key}; viewer={diagnostic.Viewer}; focused={diagnostic.Focused}; browser Ctrl={diagnostic.Ctrl}, Alt={diagnostic.Alt}, Shift={diagnostic.Shift}, Win={diagnostic.Meta}; remote Ctrl={diagnostic.RemoteCtrl}, Alt={diagnostic.RemoteAlt}, Shift={diagnostic.RemoteShift}, Win={diagnostic.RemoteMeta}.");
+					}
+					return;
+				}
 				if (message?.Type == "RemoteDesktopKeyboard" && keyboardHandler is Handlers.KeyboardHandler handler)
 				{
 					handler.RemoteDesktopActive = message.Active;
@@ -232,5 +243,20 @@ namespace SafeExamBrowser.Browser
 		}
 
 		private class RemoteKeyboardMessage { public string Type { get; set; } public bool Active { get; set; } }
+		private class RemoteKeyboardDiagnostic
+		{
+			public string Event { get; set; }
+			public string Key { get; set; }
+			public bool Viewer { get; set; }
+			public bool Focused { get; set; }
+			public bool Ctrl { get; set; }
+			public bool Alt { get; set; }
+			public bool Shift { get; set; }
+			public bool Meta { get; set; }
+			public bool RemoteCtrl { get; set; }
+			public bool RemoteAlt { get; set; }
+			public bool RemoteShift { get; set; }
+			public bool RemoteMeta { get; set; }
+		}
 	}
 }
