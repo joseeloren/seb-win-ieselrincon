@@ -50,7 +50,7 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 
 			sut.HomeNavigationRequested += () => homeRequested = true;
 
-			var handled = sut.OnKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.Home, default(int), default(CefEventFlags), default(bool));
+			var handled = sut.OnKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.Home, default(int), CefEventFlags.AltDown, default(bool));
 
 			Assert.IsTrue(homeRequested);
 			Assert.IsFalse(handled);
@@ -60,6 +60,12 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 
 			Assert.IsFalse(homeRequested);
 			Assert.IsFalse(handled);
+
+			foreach (var modifiers in new[] { (CefEventFlags) 0, CefEventFlags.ControlDown, CefEventFlags.ShiftDown, CefEventFlags.AltDown | CefEventFlags.ControlDown })
+			{
+				sut.OnKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.Home, default(int), modifiers, false);
+				Assert.IsFalse(homeRequested, "Editing Home shortcuts must not navigate away.");
+			}
 		}
 
 		[TestMethod]

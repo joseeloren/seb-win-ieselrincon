@@ -90,6 +90,22 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 			InitializeComponent();
 			InitializeBrowserWindow(browserControl);
+			Activated += (sender, args) => RecoverRemoteKeyboard();
+			Microsoft.Win32.SystemEvents.SessionSwitch += RemoteSessionChanged;
+			Closed += (sender, args) => Microsoft.Win32.SystemEvents.SessionSwitch -= RemoteSessionChanged;
+		}
+
+		private void RemoteSessionChanged(object sender, Microsoft.Win32.SessionSwitchEventArgs args)
+		{
+			if (args.Reason == Microsoft.Win32.SessionSwitchReason.RemoteConnect || args.Reason == Microsoft.Win32.SessionSwitchReason.SessionUnlock)
+			{
+				Dispatcher.BeginInvoke(new Action(() => { if (IsActive) RecoverRemoteKeyboard(); }));
+			}
+		}
+
+		private void RecoverRemoteKeyboard()
+		{
+			if (!WindowExtensions.ReleaseRemoteModifiers()) logger.Warn("Could not release remote keyboard modifiers.");
 		}
 
 		public void BringToForeground()

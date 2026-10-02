@@ -21,7 +21,11 @@ if (typeof SafeExamBrowser.clipboard === 'undefined') {
 
 		getContentEncoded: function () {
 			var bytes = new TextEncoder().encode(this.text);
-			var base64 = btoa(String.fromCodePoint(...bytes));
+			var binary = "";
+			for (var offset = 0; offset < bytes.length; offset += 8192) {
+				binary += String.fromCharCode(...bytes.subarray(offset, offset + 8192));
+			}
+			var base64 = btoa(binary);
 
 			return base64;
 		},
@@ -40,7 +44,7 @@ if (typeof SafeExamBrowser.clipboard === 'undefined') {
 
 if (typeof copySelection === 'undefined') {
 	function copySelection(e) {
-		if (e.target.contentEditable && e.target.setRangeText) {
+		if (typeof e.target.setRangeText === 'function' && e.target.selectionStart !== null) {
 			SafeExamBrowser.clipboard.text = e.target.value.substring(e.target.selectionStart, e.target.selectionEnd);
 			SafeExamBrowser.clipboard.ranges = [];
 		} else {
@@ -59,7 +63,8 @@ if (typeof copySelection === 'undefined') {
 
 if (typeof cutSelection === 'undefined') {
 	function cutSelection(e) {
-		if (e.target.contentEditable && e.target.setRangeText) {
+		if (typeof e.target.setRangeText === 'function' && e.target.selectionStart !== null) {
+			if (e.target.readOnly || e.target.disabled) return;
 			e.target.setRangeText("", e.target.selectionStart, e.target.selectionEnd, 'select');
 		} else {
 			var designMode = e.target.ownerDocument.designMode;
@@ -87,9 +92,10 @@ if (typeof cutSelection === 'undefined') {
 
 if (typeof pasteContent === 'undefined') {
 	function pasteContent(e) {
-		if (e.target.contentEditable && e.target.setRangeText) {
-			e.target.setRangeText("", e.target.selectionStart, e.target.selectionEnd, 'select');
-			e.target.setRangeText(SafeExamBrowser.clipboard.text, e.target.selectionStart, e.target.selectionStart + SafeExamBrowser.clipboard.text.length, 'end');
+		if (typeof e.target.setRangeText === 'function' && e.target.selectionStart !== null) {
+			if (e.target.readOnly || e.target.disabled) return;
+			// Replace only the selection; preserve the text after the caret.
+			e.target.setRangeText(SafeExamBrowser.clipboard.text, e.target.selectionStart, e.target.selectionEnd, 'end');
 		} else {
 			var targetWindow = e.target.ownerDocument.defaultView;
 			var designMode = e.target.ownerDocument.designMode;

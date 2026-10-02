@@ -30,6 +30,7 @@ namespace SafeExamBrowser.Browser.Handlers
 		{
 			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
 			var shift = modifiers.HasFlag(CefEventFlags.ShiftDown);
+			var alt = modifiers.HasFlag(CefEventFlags.AltDown);
 
 			if (type == KeyType.KeyUp)
 			{
@@ -38,7 +39,7 @@ namespace SafeExamBrowser.Browser.Handlers
 					FindRequested?.Invoke();
 				}
 
-				if (keyCode == (int) Keys.Home)
+				if (alt && !ctrl && !shift && keyCode == (int) Keys.Home)
 				{
 					HomeNavigationRequested?.Invoke();
 				}

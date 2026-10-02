@@ -17,7 +17,7 @@ namespace SafeExamBrowser.WindowsApi.Hooks
 {
 	internal class KeyboardHook
 	{
-		private bool altPressed, ctrlPressed;
+		private bool leftAltPressed, rightAltPressed, leftCtrlPressed, rightCtrlPressed;
 		private KeyboardHookCallback callback;
 		private IntPtr handle;
 		private HookDelegate hookDelegate;
@@ -91,12 +91,12 @@ namespace SafeExamBrowser.WindowsApi.Hooks
 
 			TrackCtrlAndAlt(keyData, wParam);
 
-			if (altPressed || keyData.Flags.HasFlag(KBDLLHOOKSTRUCTFlags.LLKHF_ALTDOWN))
+			if (leftAltPressed || rightAltPressed || keyData.Flags.HasFlag(KBDLLHOOKSTRUCTFlags.LLKHF_ALTDOWN))
 			{
 				modifier |= KeyModifier.Alt;
 			}
 
-			if (ctrlPressed)
+			if (leftCtrlPressed || rightCtrlPressed)
 			{
 				modifier |= KeyModifier.Ctrl;
 			}
@@ -113,20 +113,16 @@ namespace SafeExamBrowser.WindowsApi.Hooks
 		{
 			var keyCode = keyData.KeyCode;
 
-			if (keyCode == (uint) VirtualKeyCode.LeftControl || keyCode == (uint) VirtualKeyCode.RightControl)
-			{
-				ctrlPressed = IsPressed(wParam);
-			}
-			else if (keyCode == (uint) VirtualKeyCode.LeftAlt || keyCode == (uint) VirtualKeyCode.RightAlt)
-			{
-				altPressed = IsPressed(wParam);
-			}
+			if (keyCode == (uint) VirtualKeyCode.LeftControl) leftCtrlPressed = IsPressed(wParam);
+			if (keyCode == (uint) VirtualKeyCode.RightControl) rightCtrlPressed = IsPressed(wParam);
+			if (keyCode == (uint) VirtualKeyCode.LeftAlt) leftAltPressed = IsPressed(wParam);
+			if (keyCode == (uint) VirtualKeyCode.RightAlt) rightAltPressed = IsPressed(wParam);
 
-			if (ctrlPressed && altPressed && keyCode == (uint) VirtualKeyCode.Delete)
+			if ((leftCtrlPressed || rightCtrlPressed) && (leftAltPressed || rightAltPressed) && keyCode == (uint) VirtualKeyCode.Delete)
 			{
 				// When the Secure Attention Sequence is pressed, the WM_KEYUP / WM_SYSKEYUP messages for CTRL and ALT get lost...
-				ctrlPressed = false;
-				altPressed = false;
+				leftCtrlPressed = rightCtrlPressed = false;
+				leftAltPressed = rightAltPressed = false;
 			}
 		}
 

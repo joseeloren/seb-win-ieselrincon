@@ -26,6 +26,44 @@ namespace SafeExamBrowser.UserInterface.Shared.Utilities
 
 		private static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
 
+		// Recover modifiers carried across RDP focus/desktop changes. Only key-up
+		// events are sent, so recovery cannot invoke a shortcut or type text.
+		public static bool ReleaseRemoteModifiers()
+		{
+			if (GetSystemMetrics(0x1000) == 0) return true; // SM_REMOTESESSION
+			var keys = new ushort[] { 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0x5B, 0x5C };
+			var inputs = new System.Collections.Generic.List<RecoveryInput>();
+			foreach (var key in keys)
+			{
+				if ((GetAsyncKeyState(key) & 0x8000) != 0)
+				{
+					inputs.Add(new RecoveryInput { Type = 1, Data = new RecoveryUnion {
+						Keyboard = new RecoveryKeyboard { Key = key, Flags = 2 | (key == 0xA3 || key == 0xA5 || key == 0x5B || key == 0x5C ? 1u : 0u) }
+					} });
+				}
+			}
+			return inputs.Count == 0 || SendInput((uint) inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(RecoveryInput))) == inputs.Count;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		private struct RecoveryInput { public uint Type; public RecoveryUnion Data; }
+		[StructLayout(LayoutKind.Explicit)]
+		private struct RecoveryUnion
+		{
+			[FieldOffset(0)] public RecoveryKeyboard Keyboard;
+			[FieldOffset(0)] public RecoveryMouse Mouse; // Preserves native INPUT union size/alignment.
+		}
+		[StructLayout(LayoutKind.Sequential)]
+		private struct RecoveryKeyboard { public ushort Key, Scan; public uint Flags, Time; public UIntPtr Extra; }
+		[StructLayout(LayoutKind.Sequential)]
+		private struct RecoveryMouse { public int X, Y; public uint Data, Flags, Time; public UIntPtr Extra; }
+		[DllImport("user32.dll")]
+		private static extern int GetSystemMetrics(int index);
+		[DllImport("user32.dll")]
+		private static extern short GetAsyncKeyState(int key);
+		[DllImport("user32.dll", SetLastError = true)]
+		private static extern uint SendInput(uint count, RecoveryInput[] inputs, int size);
+
 		public static void DisableCloseButton(this Window window)
 		{
 			var helper = new WindowInteropHelper(window);
