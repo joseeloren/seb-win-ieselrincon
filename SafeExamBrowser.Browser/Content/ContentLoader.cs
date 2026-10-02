@@ -99,6 +99,16 @@ namespace SafeExamBrowser.Browser.Content
 			return clipboard;
 		}
 
+		internal string LoadRemoteDesktop()
+		{
+			var assembly = Assembly.GetAssembly(typeof(ContentLoader));
+			using (var stream = assembly.GetManifestResourceStream($"{typeof(ContentLoader).Namespace}.RemoteDesktop.js"))
+			using (var reader = new StreamReader(stream))
+			{
+				return reader.ReadToEnd();
+			}
+		}
+
 		internal string LoadPageZoom()
 		{
 			if (pageZoom == default)

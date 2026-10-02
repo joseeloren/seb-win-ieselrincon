@@ -43,6 +43,7 @@ namespace SafeExamBrowser.Browser.Handlers
 			var pageZoomScript = contentLoader.LoadPageZoom();
 
 			frame.ExecuteJavaScriptAsync(api);
+			frame.ExecuteJavaScriptAsync(contentLoader.LoadRemoteDesktop());
 
 			if (!settings.AllowPageZoom)
 			{

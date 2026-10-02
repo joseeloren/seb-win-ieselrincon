@@ -118,7 +118,10 @@ namespace SafeExamBrowser.Browser
 		{
 			clipboard.Changed += Clipboard_Changed;
 
-			control.AddressChanged += (o, e) => AddressChanged?.Invoke(e.Address);
+			control.AddressChanged += (o, e) => {
+				if (keyboardHandler is Handlers.KeyboardHandler handler) handler.RemoteDesktopActive = false;
+				AddressChanged?.Invoke(e.Address);
+			};
 			control.AuthCredentialsRequired += (w, b, o, i, h, p, r, s, c, a) => a.Value = requestHandler.GetAuthCredentials(w, b, o, i, h, p, r, s, c);
 			control.BeforeBrowse += (w, b, f, r, u, i, a) => a.Value = requestHandler.OnBeforeBrowse(w, b, f, r, u, i);
 			control.BeforeContextMenu += (w, b, f, p, m) => contextMenuHandler.OnBeforeContextMenu(w, b, f, p, m);
@@ -216,7 +219,18 @@ namespace SafeExamBrowser.Browser
 
 		private void WebBrowser_JavascriptMessageReceived(object sender, JavascriptMessageReceivedEventArgs e)
 		{
+			try
+			{
+				var message = e.ConvertMessageTo<RemoteKeyboardMessage>();
+				if (message?.Type == "RemoteDesktopKeyboard" && keyboardHandler is Handlers.KeyboardHandler handler)
+				{
+					handler.RemoteDesktopActive = message.Active;
+				}
+			}
+			catch (System.Exception exception) { logger.Debug($"Could not read remote keyboard state: {exception.Message}"); }
 			clipboard.Update(e);
 		}
+
+		private class RemoteKeyboardMessage { public string Type { get; set; } public bool Active { get; set; } }
 	}
 }

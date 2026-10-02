@@ -25,9 +25,11 @@ namespace SafeExamBrowser.Browser.Handlers
 		internal event TabPressedEventHandler TabPressed;
 
 		private int? currentKeyDown = null;
+		internal bool RemoteDesktopActive { get; set; }
 
 		public bool OnKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
 		{
+			if (RemoteDesktopActive) { currentKeyDown = null; return false; }
 			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
 			var shift = modifiers.HasFlag(CefEventFlags.ShiftDown);
 			var alt = modifiers.HasFlag(CefEventFlags.AltDown);
@@ -76,6 +78,7 @@ namespace SafeExamBrowser.Browser.Handlers
 
 		public bool OnPreKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey, ref bool isKeyboardShortcut)
 		{
+			if (RemoteDesktopActive) return false;
 			if (type == KeyType.KeyUp && keyCode == (int) Keys.F5)
 			{
 				ReloadRequested?.Invoke();

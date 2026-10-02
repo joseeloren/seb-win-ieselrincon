@@ -44,6 +44,27 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 		}
 
 		[TestMethod]
+		public void MustLeaveShortcutsToRemoteDesktop()
+		{
+			var actions = 0;
+			sut.FindRequested += () => actions++;
+			sut.HomeNavigationRequested += () => actions++;
+			sut.ReloadRequested += () => actions++;
+			sut.FocusAddressBarRequested += () => actions++;
+			sut.RemoteDesktopActive = true;
+			foreach (var key in new[] { Keys.A, Keys.C, Keys.V, Keys.X, Keys.F, Keys.L, Keys.Home, Keys.F5 })
+			{
+				var shortcut = false;
+				Assert.IsFalse(sut.OnPreKeyEvent(null, null, KeyType.KeyUp, (int) key, 0, CefEventFlags.ControlDown, false, ref shortcut));
+				Assert.IsFalse(sut.OnKeyEvent(null, null, KeyType.KeyUp, (int) key, 0, CefEventFlags.ControlDown, false));
+			}
+			Assert.AreEqual(0, actions);
+			sut.RemoteDesktopActive = false;
+			sut.OnKeyEvent(null, null, KeyType.KeyUp, (int) Keys.F, 0, CefEventFlags.ControlDown, false);
+			Assert.AreEqual(1, actions);
+		}
+
+		[TestMethod]
 		public void MustDetectHomeNavigationCommand()
 		{
 			var homeRequested = false;

@@ -175,6 +175,9 @@ if (typeof notifyInput === 'undefined') {
 
 if (typeof onCopy === 'undefined') {
 	function onCopy(e) {
+		if (SafeExamBrowser.remoteDesktop && SafeExamBrowser.remoteDesktop.isInput(e.target)) {
+			e.preventDefault(); return false;
+		}
 		try {
 			SafeExamBrowser.clipboard.clear();
 
@@ -193,6 +196,9 @@ if (typeof onCopy === 'undefined') {
 
 if (typeof onCut === 'undefined') {
 	function onCut(e) {
+		if (SafeExamBrowser.remoteDesktop && SafeExamBrowser.remoteDesktop.isInput(e.target)) {
+			e.preventDefault(); return false;
+		}
 		try {
 			SafeExamBrowser.clipboard.clear();
 
@@ -215,6 +221,10 @@ if (typeof onCut === 'undefined') {
 
 if (typeof onPaste === 'undefined') {
 	function onPaste(e) {
+		if (SafeExamBrowser.remoteDesktop && SafeExamBrowser.remoteDesktop.isInput(e.target)) {
+			SafeExamBrowser.remoteDesktop.paste(e.target);
+			e.preventDefault(); return false;
+		}
 		try {
 			pasteContent(e);
 
