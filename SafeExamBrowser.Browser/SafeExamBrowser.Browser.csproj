@@ -115,6 +115,7 @@
     <Compile Include="Handlers\RenderProcessMessageHandler.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="Handlers\ResourceHandler.cs" />
+    <Compile Include="Handlers\PortalResourcePolicy.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Integrations\EdxIntegration.cs" />
     <Compile Include="Integrations\GenericIntegration.cs" />

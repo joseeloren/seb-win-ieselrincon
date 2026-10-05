@@ -193,6 +193,8 @@ namespace SafeExamBrowser.Browser.Handlers
 
 		private bool Block(IRequest request)
 		{
+			// Portal exams are filtered dynamically, including per-student HTTPS paths.
+			if (PortalResourcePolicy.Managed(settings)) return false;
 			var block = false;
 
 			if (settings.Filter.ProcessMainRequests || settings.Filter.ProcessContentRequests)
