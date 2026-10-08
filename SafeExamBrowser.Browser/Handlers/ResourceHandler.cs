@@ -89,12 +89,14 @@ namespace SafeExamBrowser.Browser.Handlers
    {
     var target = request.Url;
     var navigation = request.ResourceType == ResourceType.MainFrame || request.ResourceType == ResourceType.SubFrame;
+    // Complete mutations before scheduling Continue: cached policy decisions can
+    // resume and dispose the native request immediately on the worker thread.
+    AppendCustomHeaders(webBrowser, request);
+    ReplaceSebScheme(request);
     Task.Run(async () => {
      var allowed = await PortalResourcePolicy.PermittedAsync(target, settings, navigation);
      using (callback) { if (!callback.IsDisposed) callback.Continue(allowed); }
     });
-    AppendCustomHeaders(webBrowser, request);
-    ReplaceSebScheme(request);
     return CefReturnValue.ContinueAsync;
    }
 

@@ -63,6 +63,31 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 		}
 
 		[TestMethod]
+		public void ManagedRequestMustFinishMutationsBeforeResuming()
+		{
+			var browser = new Mock<IWebBrowser>();
+			var request = new Mock<IRequest>();
+			var callback = new Mock<IRequestCallback>();
+			using (var resumed = new ManualResetEventSlim())
+			{
+				settings.StartUrl = "https://elrinconseguro.ieselrincon.es/?token=test";
+				browser.SetupGet(b => b.Address).Returns(settings.StartUrl);
+				request.SetupGet(r => r.Url).Returns(settings.StartUrl);
+				request.SetupGet(r => r.ResourceType).Returns(ResourceType.MainFrame);
+				request.SetupGet(r => r.Headers).Returns(new NameValueCollection());
+				request.SetupSet(r => r.Headers = It.IsAny<NameValueCollection>()).Callback(() =>
+				{
+					Assert.IsFalse(resumed.Wait(300), "Request resumed before headers were assigned.");
+				});
+				callback.Setup(c => c.Continue(true)).Callback(() => resumed.Set());
+				var result = sut.OnBeforeResourceLoad(browser.Object, Mock.Of<IBrowser>(), Mock.Of<IFrame>(), request.Object, callback.Object);
+				Assert.AreEqual(CefReturnValue.ContinueAsync, result);
+				Assert.IsTrue(resumed.Wait(5000));
+				request.VerifySet(r => r.Headers = It.IsAny<NameValueCollection>(), Times.Once);
+			}
+		}
+
+		[TestMethod]
 		public void MustAppendCustomHeadersForSameDomain()
 		{
 			var browser = new Mock<IWebBrowser>();
