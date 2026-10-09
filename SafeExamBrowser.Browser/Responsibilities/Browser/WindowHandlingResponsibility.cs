@@ -13,6 +13,7 @@ using SafeExamBrowser.Applications.Contracts.Events;
 using SafeExamBrowser.Browser.Contracts.Events;
 using SafeExamBrowser.Browser.Events;
 using SafeExamBrowser.Configuration.Contracts.Cryptography;
+using SafeExamBrowser.Core.Contracts;
 using SafeExamBrowser.I18n.Contracts;
 using SafeExamBrowser.Settings;
 using SafeExamBrowser.UserInterface.Contracts;
@@ -95,6 +96,13 @@ namespace SafeExamBrowser.Browser.Responsibilities.Browser
 			if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeHttp))
 			{
 				throw new ArgumentException("Invalid exam PDF URL.", nameof(url));
+			}
+
+			// Existing exam configurations may still contain the raw PDF endpoint.
+			// Use the portal viewer so the button does not depend on Chromium's PDF extension.
+			if (uri.Host.Equals(new Uri(ApiConstants.BaseUrl).Host, StringComparison.OrdinalIgnoreCase) && uri.AbsolutePath == "/api/alumno/pdf")
+			{
+				url = new UriBuilder(uri) { Path = "/alumno/enunciado", Fragment = string.Empty }.Uri.AbsoluteUri;
 			}
 
 			if (pdfWindow != null && Windows.Contains(pdfWindow) && pdfUrl == url)
